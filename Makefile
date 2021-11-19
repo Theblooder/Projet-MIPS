@@ -21,7 +21,7 @@ debug: $(BIN)                 # J'ai rajouter une option pour faire l'executable
 	ddd $<
 
 $(BIN): $(OBJ)
-	$(CC) $(OBJECTSPATH)$^ $(CFLAGS) -o $@
+	$(CC) $(OBJECTSPATH)*.o $(CFLAGS) -o $@
 	 
 %.o: %.c                   # Je rejoute l'option -g pour pouvoir utiliser le debugger   
 	$(CC) -g -c $< -o $(OBJECTSPATH)$@
