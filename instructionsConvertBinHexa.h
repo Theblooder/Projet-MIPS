@@ -5,6 +5,12 @@
 /* Prototypes */
 
 
+
+
+int instructionValue(const char *instruction, int *tabValues);
+
+
+
 int convertIntoBinaireADD(const char *instruction, char *binnaire);
 
 

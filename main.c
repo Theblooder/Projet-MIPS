@@ -28,12 +28,19 @@ int main(int argc, char * argv[])
 	// fclose(fic);
 
 
-	char instruction[32] = "ADD $1 $2 $3";
+	char instruction[32] = "ADD $3 $34";
 	char binaireInstruction[33];
+	int values[3];
 
-	convertIntoBinaireADD(instruction, binaireInstruction);
+	instructionValue(instruction, values);
 
-	printf("%s\n", binaireInstruction);
+	printf("%d\n", values[0]);
+	printf("%d\n", values[1]);
+	printf("%d\n", values[2]);
+
+	//convertIntoBinaireADD(instruction, binaireInstruction);
+
+	//printf("%s\n", binaireInstruction);
 
 	return 0;
 }
