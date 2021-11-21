@@ -1,6 +1,8 @@
 #include "instructionsConvertBinHexa.h"
 #include <math.h>
+#include <string.h>
 #include "stdio.h"
+
 
 int instructionValue(const char *instruction, int *tabValues, char *operation)
 {
@@ -44,12 +46,175 @@ int instructionValue(const char *instruction, int *tabValues, char *operation)
     return 0;
 }
 
-
-
-
-int convertBinaireIntoHex(const char *binnaire, char *hex)
+int TestTexte(char *operation, char *Texte)
 {
+    int i = 0;
+    int value = 1;
+    int tailleOp = strlen(operation);
+    int tailleTe = strlen(Texte);
+    if(tailleOp != tailleTe)
+    {
+        value = 0;
+    }
+    while (operation[i] != '\0' && value == 1)
+    {
+        if(operation[i]!=Texte[i])
+        {
+            value = 0;
+        }
+        i++;
+    }
+    return value;
+}
 
+int FunctionChoice(char *operation, int *tabValue, int *binaireInstruction, int *hexadecimalInstruction)
+{
+    if(TestTexte(operation,"ADD"))      BinaryADD(operation, tabValue, binaireInstruction, hexadecimalInstruction);
+    else if(TestTexte(operation,"ADDI"))     BinaryADDI(operation, tabValue, binaireInstruction, hexadecimalInstruction);
+    else if(TestTexte(operation,"AND"))      BinaryAND(operation, tabValue, binaireInstruction, hexadecimalInstruction);
+    else if(TestTexte(operation,"BEQ"));
+    else if(TestTexte(operation,"BGTZ"));
+    else if(TestTexte(operation,"BLEZ"));
+    else if(TestTexte(operation,"BNE"));
+    else if(TestTexte(operation,"DIV"));
+    else if(TestTexte(operation,"J"));
+    else if(TestTexte(operation,"JAL"));
+    else if(TestTexte(operation,"JR"));
+    else if(TestTexte(operation,"LUI"));
+    else if(TestTexte(operation,"LW"));
+    else if(TestTexte(operation,"MFHI"));
+    else if(TestTexte(operation,"MLFO"));
+    else if(TestTexte(operation,"MULT"));
+    else if(TestTexte(operation,"NOP"));
+    else if(TestTexte(operation,"OR"))       BinaryOR(operation, tabValue, binaireInstruction, hexadecimalInstruction);
+    else if(TestTexte(operation,"ROTR"));
+    else if(TestTexte(operation,"SLL"));
+    else if(TestTexte(operation,"SLT"));
+    else if(TestTexte(operation,"SRL"));
+    else if(TestTexte(operation,"SUB"));
+    else if(TestTexte(operation,"SW"));
+    else if(TestTexte(operation,"SYSCALL"));
+    else if(TestTexte(operation,"XOR"));
+
+    return 1;
+}
+
+int putToZero(int *binaireInstruction, int start, int end)
+{
+    int i;
+    for(i = start;i < end; i++)
+    {
+        binaireInstruction[i] = 0;
+    }
+    
+    return 1;
+}
+
+int putToValue(int *binaireInstruction, int start, int value)
+{
+    int i;
+    for(i = start; value > 0; i--)  
+    {  
+        binaireInstruction[i] = value%2;  
+        value = value/2;  
+    }
+
+    return 1;
+}
+
+int DisplayBinary(int *binaireInstruction)
+{
+    int i;
+    printf("Binary :");
+    for(i=0; i <= 31; i++)  
+    {  
+        if(i%4 == 0) printf(" ");
+        printf("%d",binaireInstruction[i]);  
+    }
+
+    printf("\n");
+
+    return 1;
+}
+
+int DisplayHexadecimal(int *hexadecimalInstruction)
+{
+    int i;
+    printf("Hexadecimal :");
+    for(i=0; i <= 7; i++)  
+    {  
+        if(i%2 == 0) printf(" ");
+        printf("%x",hexadecimalInstruction[i]);  
+    }
+
+    printf("\n");
+
+    return 1;
+}
+
+int BinaryADD(char *operation, int *tabValue, int *binaireInstruction, int *hexadecimalInstruction)
+{ 
+    putToZero(binaireInstruction,0,5);
+    putToValue(binaireInstruction,10,tabValue[1]);
+    putToValue(binaireInstruction,15,tabValue[2]);
+    putToValue(binaireInstruction,20,tabValue[0]);
+    putToZero(binaireInstruction,21,25);
+    putToValue(binaireInstruction,31,32);   
+    DisplayBinary(binaireInstruction);
+    convertBinaireIntoHex(binaireInstruction, hexadecimalInstruction);
+}
+
+int BinaryADDI(char *operation, int *tabValue, int *binaireInstruction, int *hexadecimalInstruction)
+{ 
+    putToValue(binaireInstruction,5,8);
+    putToValue(binaireInstruction,10,tabValue[1]);
+    putToValue(binaireInstruction,15,tabValue[0]);
+    putToValue(binaireInstruction,31,tabValue[2]);  
+    DisplayBinary(binaireInstruction);
+    convertBinaireIntoHex(binaireInstruction, hexadecimalInstruction);
+}
+
+int BinaryAND(char *operation, int *tabValue, int *binaireInstruction, int *hexadecimalInstruction)
+{ 
+    putToZero(binaireInstruction,0,5);
+    putToValue(binaireInstruction,10,tabValue[1]);
+    putToValue(binaireInstruction,15,tabValue[2]);
+    putToValue(binaireInstruction,20,tabValue[0]);
+    putToZero(binaireInstruction,21,25);
+    putToValue(binaireInstruction,31,36);   
+    DisplayBinary(binaireInstruction);
+    convertBinaireIntoHex(binaireInstruction, hexadecimalInstruction);
+}
+
+int BinaryOR(char *operation, int *tabValue, int *binaireInstruction, int *hexadecimalInstruction)
+{ 
+    putToZero(binaireInstruction,0,5);
+    putToValue(binaireInstruction,10,tabValue[1]);
+    putToValue(binaireInstruction,15,tabValue[2]);
+    putToValue(binaireInstruction,20,tabValue[0]);
+    putToZero(binaireInstruction,21,25);
+    putToValue(binaireInstruction,31,37);   
+    DisplayBinary(binaireInstruction);
+    convertBinaireIntoHex(binaireInstruction, hexadecimalInstruction);
+}
+
+
+
+int convertBinaireIntoHex(int *binaireInstruction, int *hexadecimalInstruction)
+{
+    int i,a,j,n = 0;
+    for(i=0;i<8;i++)
+    {
+        for(j = 3;j >= 0; j--)
+        {
+            hexadecimalInstruction[i] = hexadecimalInstruction[i] +  (int)pow(2, j)*binaireInstruction[n];
+            n++;
+        }
+    }
+
+    DisplayHexadecimal(hexadecimalInstruction);
+
+    return 1;
 }
 
 
