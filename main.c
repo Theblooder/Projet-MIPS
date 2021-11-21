@@ -28,7 +28,7 @@ int main(int argc, char * argv[])
 	// fclose(fic);
 
 
-	char instruction[32] = "ADD $3 $34";
+	char instruction[32] = "ADD $3 $2 $3";
 	char binaireInstruction[33];
 	int values[3];
 

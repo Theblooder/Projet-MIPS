@@ -9,9 +9,9 @@
 
 int instructionValue(const char *instruction, int *tabValues);
 
+int convertBinaireIntoHex(const char *binnaire, char *hex);
 
-
-int convertIntoBinaireADD(const char *instruction, char *binnaire);
+int convertIntoBinaireADD(char *binnaire, int *tabValue);
 
 
 

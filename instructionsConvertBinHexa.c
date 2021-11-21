@@ -4,7 +4,7 @@
 
 int instructionValue(const char *instruction, int *tabValues)
 {
-    int i = 0; int j; int indiceValue = 0; int lengthValue = 1; int k; int numberOfValues = 3;/*Pour limiter l'écriture de seulement 3 valeurs max dans le tableau de value */
+    int i = 0; int j; int indiceValue = 0; int lengthValue = 1; int k; int numberOfValues = 3; /*Pour limiter l'écriture de seulement 3 valeurs max dans le tableau de value */
 
     while(instruction[i] != '\0' && numberOfValues != 0) {
         if(instruction[i] == ' ') {
@@ -35,7 +35,14 @@ int instructionValue(const char *instruction, int *tabValues)
 
 
 
-int convertIntoBinaireADD(const char *instruction, char *binnaire)
+
+int convertBinaireIntoHex(const char *binnaire, char *hex)
+{
+
+}
+
+
+int convertIntoBinaireADD(char *binnaire, int *tabValue)
 {
     int rs, rt, rd;
 
