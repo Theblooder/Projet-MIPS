@@ -28,8 +28,8 @@ int main(int argc, char * argv[])
 	// fclose(fic);
 
 
-	//char instruction[32] = "ADD $3 $2 $3";
-	char instruction[32] = "ADDI $3 $2 200";
+	char instruction[32] = "ADD $3 $2 $3";
+	//char instruction[32] = "ADDI $3 $2 32700";
 	int binaireInstruction[32] = {0};
 	int hexadecimalInstruction[8]= {0};
 	char operation[5];
@@ -41,7 +41,7 @@ int main(int argc, char * argv[])
 	printf("%d\n", values[1]);
 	printf("%d\n", values[2]);
 	
-	//printf("%d\n", strlen(operation));	//Erreur
+	//printf("%ld\n", strlen(operation));	//Erreur
 
 	FunctionChoice(operation, values, binaireInstruction, hexadecimalInstruction);
 

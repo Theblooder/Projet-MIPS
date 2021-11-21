@@ -69,7 +69,7 @@ int TestTexte(char *operation, char *Texte)
 
 int FunctionChoice(char *operation, int *tabValue, int *binaireInstruction, int *hexadecimalInstruction)
 {
-    if(TestTexte(operation,"ADD"))      BinaryADD(operation, tabValue, binaireInstruction, hexadecimalInstruction);
+    if(TestTexte(operation,"ADD"))           BinaryADD(operation, tabValue, binaireInstruction, hexadecimalInstruction);
     else if(TestTexte(operation,"ADDI"))     BinaryADDI(operation, tabValue, binaireInstruction, hexadecimalInstruction);
     else if(TestTexte(operation,"AND"))      BinaryAND(operation, tabValue, binaireInstruction, hexadecimalInstruction);
     else if(TestTexte(operation,"BEQ"));
@@ -102,7 +102,7 @@ int FunctionChoice(char *operation, int *tabValue, int *binaireInstruction, int 
 int putToZero(int *binaireInstruction, int start, int end)
 {
     int i;
-    for(i = start;i < end; i++)
+    for(i = start;i <= end; i++)
     {
         binaireInstruction[i] = 0;
     }
@@ -113,7 +113,7 @@ int putToZero(int *binaireInstruction, int start, int end)
 int putToValue(int *binaireInstruction, int start, int value)
 {
     int i;
-    for(i = start; value > 0; i--)  
+    for(i = start; value > 0; i++)  
     {  
         binaireInstruction[i] = value%2;  
         value = value/2;  
@@ -126,10 +126,10 @@ int DisplayBinary(int *binaireInstruction)
 {
     int i;
     printf("Binary :");
-    for(i=0; i <= 31; i++)  
+    for(i=32; i > 0; i--)  
     {  
         if(i%4 == 0) printf(" ");
-        printf("%d",binaireInstruction[i]);  
+        printf("%d",binaireInstruction[i-1]);  
     }
 
     printf("\n");
@@ -154,12 +154,12 @@ int DisplayHexadecimal(int *hexadecimalInstruction)
 
 int BinaryADD(char *operation, int *tabValue, int *binaireInstruction, int *hexadecimalInstruction)
 { 
-    putToZero(binaireInstruction,0,5);
-    putToValue(binaireInstruction,10,tabValue[1]);
-    putToValue(binaireInstruction,15,tabValue[2]);
-    putToValue(binaireInstruction,20,tabValue[0]);
-    putToZero(binaireInstruction,21,25);
-    putToValue(binaireInstruction,31,32);   
+    putToValue(binaireInstruction,0,32);
+    putToZero(binaireInstruction,6,10);
+    putToValue(binaireInstruction,11,tabValue[0]);
+    putToValue(binaireInstruction,16,tabValue[2]);
+    putToValue(binaireInstruction,21,tabValue[1]);   
+    putToZero(binaireInstruction,26,31); 
     DisplayBinary(binaireInstruction);
     convertBinaireIntoHex(binaireInstruction, hexadecimalInstruction);
 }
@@ -203,9 +203,9 @@ int BinaryOR(char *operation, int *tabValue, int *binaireInstruction, int *hexad
 int convertBinaireIntoHex(int *binaireInstruction, int *hexadecimalInstruction)
 {
     int i,a,j,n = 0;
-    for(i=0;i<8;i++)
+    for(i=7;i>=0;i--)
     {
-        for(j = 3;j >= 0; j--)
+        for(j = 0;j <=3; j++)
         {
             hexadecimalInstruction[i] = hexadecimalInstruction[i] +  (int)pow(2, j)*binaireInstruction[n];
             n++;
