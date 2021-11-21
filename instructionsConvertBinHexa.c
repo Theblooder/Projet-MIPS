@@ -11,7 +11,7 @@ int instructionValue(const char *instruction, int *tabValues, char *operation)
 
     while(instruction[i] != '\0' && numberOfValues != 0) {
         if(instruction[i] == ' ') {
-            /* To end the string */
+            /* To end the string */ 
             getInstructionBool = i;
             operation[getInstructionBool] = '\0';
             /* To remove the '$' from the number */
@@ -67,7 +67,7 @@ int TestTexte(char *operation, char *Texte)
     return value;
 }
 
-int FunctionChoice(char *operation, int *tabValue, int *binaireInstruction, int *hexadecimalInstruction)
+int createBinaryInstruction(char *operation, int *tabValue, int *binaireInstruction, int *hexadecimalInstruction)
 {
     if(TestTexte(operation,"ADD"))           BinaryADD(operation, tabValue, binaireInstruction, hexadecimalInstruction);
     else if(TestTexte(operation,"ADDI"))     BinaryADDI(operation, tabValue, binaireInstruction, hexadecimalInstruction);
@@ -118,7 +118,6 @@ int putToValue(int *binaireInstruction, int start, int value)
         binaireInstruction[i] = value%2;  
         value = value/2;  
     }
-
     return 1;
 }
 
@@ -202,7 +201,7 @@ int BinaryOR(char *operation, int *tabValue, int *binaireInstruction, int *hexad
 
 int convertBinaireIntoHex(int *binaireInstruction, int *hexadecimalInstruction)
 {
-    int i,a,j,n = 0;
+    int i,j,n = 0;
     for(i=7;i>=0;i--)
     {
         for(j = 0;j <=3; j++)
@@ -215,12 +214,4 @@ int convertBinaireIntoHex(int *binaireInstruction, int *hexadecimalInstruction)
     DisplayHexadecimal(hexadecimalInstruction);
 
     return 1;
-}
-
-
-int convertIntoBinaireADD(char *binnaire, int *tabValue)
-{
-    int rs, rt, rd;
-
-    int i;
 }

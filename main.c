@@ -43,7 +43,7 @@ int main(int argc, char * argv[])
 	
 	//printf("%ld\n", strlen(operation));	//Erreur
 
-	FunctionChoice(operation, values, binaireInstruction, hexadecimalInstruction);
+	createBinaryInstruction(operation, values, binaireInstruction, hexadecimalInstruction);
 
 	
 

@@ -11,11 +11,10 @@ int instructionValue(const char *instruction, int *tabValues, char *operation);
 
 int convertBinaireIntoHex(int *binaireInstruction, int *hexadecimalInstruction);
 
-int convertIntoBinaireADD(char *binnaire, int *tabValue);
 
 int TestTexte(char *operation, char *Texte);
 
-int FunctionChoice(char *operation, int *tabValue, int *binaireInstruction, int *hexadecimalInstruction);
+int createBinaryInstruction(char *operation, int *tabValue, int *binaireInstruction, int *hexadecimalInstruction);
 
 int putToZero(int *binaireInstruction, int start, int end);
 
