@@ -7,7 +7,7 @@
 
 
 
-int instructionValue(const char *instruction, int *tabValues);
+int instructionValue(const char *instruction, int *tabValues, char *operation);
 
 int convertBinaireIntoHex(const char *binnaire, char *hex);
 

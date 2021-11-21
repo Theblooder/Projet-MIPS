@@ -30,9 +30,14 @@ int main(int argc, char * argv[])
 
 	char instruction[32] = "ADD $3 $2 $3";
 	char binaireInstruction[33];
+	char operation[5];
 	int values[3];
 
-	instructionValue(instruction, values);
+	instructionValue(instruction, values, operation);
+
+	printf("%s\n", operation);
+	printf("%d\n", strlen(operation));
+
 
 	printf("%d\n", values[0]);
 	printf("%d\n", values[1]);
