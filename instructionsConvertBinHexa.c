@@ -97,7 +97,7 @@ int createBinaryInstruction(char *operation, int *tabValue, int *binaireInstruct
     else if(testTexte(operation, "SYSCALL"))  binarySYSCALL(tabValue, binaireInstruction);
     else if(testTexte(operation, "XOR"))      binaryXOR(tabValue, binaireInstruction);
     else {
-        printf("Opération non reconnu");
+        printf("Opération non reconnu\n");
         return -1;
     }
 
