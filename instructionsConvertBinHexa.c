@@ -359,13 +359,6 @@ int binarySW(int *tabValue, int *binaireInstruction)
     putToValue(binaireInstruction,26,0);
 }
 
-int binarySW(int *tabValue, int *binaireInstruction)
-{ 
-    putToValue(binaireInstruction,0,tabValue[1]);
-    putToValue(binaireInstruction,16,tabValue[0]);
-    putToValue(binaireInstruction,21,tabValue[2]);
-    putToValue(binaireInstruction,26,0);
-}
 
 int convertBinaireIntoHex(int *binaireInstruction, int *hexadecimalInstruction)
 {
