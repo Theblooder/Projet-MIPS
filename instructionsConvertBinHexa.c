@@ -70,31 +70,31 @@ int testTexte(char *operation, char *Texte)
 
 int createBinaryInstruction(char *operation, int *tabValue, int *binaireInstruction)
 {
-    if(testTexte(operation, "ADD"))           binaryADD(operation, tabValue, binaireInstruction);
-    else if(testTexte(operation, "ADDI"))     binaryADDI(operation, tabValue, binaireInstruction);
-    else if(testTexte(operation, "AND"))      binaryAND(operation, tabValue, binaireInstruction);
-    else if(testTexte(operation, "BEQ"));
-    else if(testTexte(operation, "BGTZ"));
-    else if(testTexte(operation, "BLEZ"));
-    else if(testTexte(operation, "BNE"));
-    else if(testTexte(operation, "DIV"));
-    else if(testTexte(operation, "J"));
-    else if(testTexte(operation, "JAL"));
-    else if(testTexte(operation, "JR"));
-    else if(testTexte(operation, "LUI"));
-    else if(testTexte(operation, "LW"));
-    else if(testTexte(operation, "MFHI"));
-    else if(testTexte(operation, "MLFO"));
-    else if(testTexte(operation, "MULT"));
-    else if(testTexte(operation, "NOP"));
-    else if(testTexte(operation, "OR"))       binaryOR(operation, tabValue, binaireInstruction);
-    else if(testTexte(operation, "ROTR"));
-    else if(testTexte(operation, "SLL"));
-    else if(testTexte(operation, "SLT"));
-    else if(testTexte(operation, "SRL"));
-    else if(testTexte(operation, "SUB"));
-    else if(testTexte(operation, "SW"));
-    else if(testTexte(operation, "SYSCALL"));
+    if(testTexte(operation, "ADD"))           binaryADD(tabValue, binaireInstruction);
+    else if(testTexte(operation, "ADDI"))     binaryADDI(tabValue, binaireInstruction);
+    else if(testTexte(operation, "AND"))      binaryAND(tabValue, binaireInstruction);
+    else if(testTexte(operation, "BEQ"))      binaryBEQ(tabValue, binaireInstruction);
+    else if(testTexte(operation, "BGTZ"))     binaryBGTZ(tabValue, binaireInstruction);
+    else if(testTexte(operation, "BLEZ"))     binaryBLEZ(tabValue, binaireInstruction);
+    else if(testTexte(operation, "BNE"))      binaryBNE(tabValue, binaireInstruction);
+    else if(testTexte(operation, "DIV"))      binaryDIV(tabValue, binaireInstruction);
+    else if(testTexte(operation, "J"))        binaryJ(tabValue, binaireInstruction);
+    else if(testTexte(operation, "JAL"))      binaryJAL(tabValue, binaireInstruction);
+    else if(testTexte(operation, "JR"))       binaryJR(tabValue, binaireInstruction);
+    else if(testTexte(operation, "LUI"))      binaryLUI(tabValue, binaireInstruction);
+    else if(testTexte(operation, "LW"))       binaryLW(tabValue, binaireInstruction);
+    else if(testTexte(operation, "MFHI"))     binaryMFHI(tabValue, binaireInstruction);
+    else if(testTexte(operation, "MLFO"))     binaryMLFO(tabValue, binaireInstruction);
+    else if(testTexte(operation, "MULT"))     binaryMULT(tabValue, binaireInstruction);
+    else if(testTexte(operation, "NOP"))      binaryNOP(tabValue, binaireInstruction);
+    else if(testTexte(operation, "OR"))       binaryOR(tabValue, binaireInstruction);
+    else if(testTexte(operation, "ROTR"))     binaryROTR(tabValue, binaireInstruction);
+    else if(testTexte(operation, "SLL"))      binarySLL(tabValue, binaireInstruction);
+    else if(testTexte(operation, "SLT"))      binarySLT(tabValue, binaireInstruction);
+    else if(testTexte(operation, "SRL"))      binarySRL(tabValue, binaireInstruction);
+    else if(testTexte(operation, "SUB"))      binarySUB(tabValue, binaireInstruction);
+    else if(testTexte(operation, "SW"))       binarySW(tabValue, binaireInstruction);
+    else if(testTexte(operation, "SYSCALL")) ;
     else if(testTexte(operation, "XOR"));
 
     return 1;
@@ -151,7 +151,7 @@ int displayHexadecimal(int *hexadecimalInstruction)
     return 1;
 }
 
-int binaryADD(char *operation, int *tabValue, int *binaireInstruction)
+int binaryADD(int *tabValue, int *binaireInstruction)
 { 
     putToValue(binaireInstruction,0,32);
     putToZero(binaireInstruction,6,10);
@@ -161,35 +161,211 @@ int binaryADD(char *operation, int *tabValue, int *binaireInstruction)
     putToZero(binaireInstruction,26,31);
 }
 
-int binaryADDI(char *operation, int *tabValue, int *binaireInstruction)
+int binaryADDI(int *tabValue, int *binaireInstruction)
 { 
-    putToValue(binaireInstruction,5,8);
-    putToValue(binaireInstruction,10,tabValue[1]);
-    putToValue(binaireInstruction,15,tabValue[0]);
-    putToValue(binaireInstruction,31,tabValue[2]);
+    putToValue(binaireInstruction,0,tabValue[2]);
+    putToValue(binaireInstruction,16,tabValue[0]);
+    putToValue(binaireInstruction,21,tabValue[1]);
+    putToValue(binaireInstruction,26,8);
 }
 
-int binaryAND(char *operation, int *tabValue, int *binaireInstruction)
+int binaryAND(int *tabValue, int *binaireInstruction)
 { 
-    putToZero(binaireInstruction,0,5);
-    putToValue(binaireInstruction,10,tabValue[1]);
-    putToValue(binaireInstruction,15,tabValue[2]);
-    putToValue(binaireInstruction,20,tabValue[0]);
-    putToZero(binaireInstruction,21,25);
-    putToValue(binaireInstruction,31,36);
+    putToValue(binaireInstruction,0,36);
+    putToValue(binaireInstruction,6,0);
+    putToValue(binaireInstruction,11,tabValue[0]);
+    putToValue(binaireInstruction,16,tabValue[2]);
+    putToValue(binaireInstruction,21,tabValue[1]);
+    putToValue(binaireInstruction,26,0);
 }
 
-int binaryOR(char *operation, int *tabValue, int *binaireInstruction)
+int binaryBEQ(int *tabValue, int *binaireInstruction)
 { 
-    putToZero(binaireInstruction,0,5);
-    putToValue(binaireInstruction,10,tabValue[1]);
-    putToValue(binaireInstruction,15,tabValue[2]);
-    putToValue(binaireInstruction,20,tabValue[0]);
-    putToZero(binaireInstruction,21,25);
-    putToValue(binaireInstruction,31,37);
+    putToValue(binaireInstruction,0,tabValue[2]);
+    putToValue(binaireInstruction,16,tabValue[1]);
+    putToValue(binaireInstruction,21,tabValue[0]);
+    putToValue(binaireInstruction,26,4);
 }
 
+int binaryBGTZ(int *tabValue, int *binaireInstruction)
+{ 
+    putToValue(binaireInstruction,0,tabValue[1]);
+    putToValue(binaireInstruction,16,0);
+    putToValue(binaireInstruction,21,tabValue[0]);
+    putToValue(binaireInstruction,26,7);
+}
 
+int binaryBLEZ(int *tabValue, int *binaireInstruction)
+{ 
+    putToValue(binaireInstruction,0,tabValue[1]);
+    putToValue(binaireInstruction,16,0);
+    putToValue(binaireInstruction,21,tabValue[0]);
+    putToValue(binaireInstruction,26,6);
+}
+
+int binaryBNE(int *tabValue, int *binaireInstruction)
+{ 
+    putToValue(binaireInstruction,0,tabValue[2]);
+    putToValue(binaireInstruction,16,tabValue[1]);
+    putToValue(binaireInstruction,21,tabValue[0]);
+    putToValue(binaireInstruction,26,5);
+}
+
+int binaryDIV(int *tabValue, int *binaireInstruction)
+{ 
+    putToValue(binaireInstruction,0,26);
+    putToValue(binaireInstruction,6,0);
+    putToValue(binaireInstruction,16,tabValue[1]);
+    putToValue(binaireInstruction,21,tabValue[0]);
+    putToValue(binaireInstruction,26,0);
+}
+
+int binaryJUMP(int *tabValue, int *binaireInstruction)
+{ 
+    putToValue(binaireInstruction,0,tabValue[0]>>2);
+    putToValue(binaireInstruction,26,2);
+}
+
+int binaryJAL(int *tabValue, int *binaireInstruction)
+{ 
+    putToValue(binaireInstruction,0,tabValue[0]>>2);
+    putToValue(binaireInstruction,26,3);
+}
+
+int binaryJR(int *tabValue, int *binaireInstruction)
+{ 
+    putToValue(binaireInstruction,0,8);
+    putToValue(binaireInstruction,6,3);
+    putToValue(binaireInstruction,11,0);
+    putToValue(binaireInstruction,21,tabValue[0]);
+    putToValue(binaireInstruction,26,0);
+}
+
+int binaryLUI(int *tabValue, int *binaireInstruction)
+{ 
+    putToValue(binaireInstruction,0,tabValue[1]);
+    putToValue(binaireInstruction,16,tabValue[0]);
+    putToValue(binaireInstruction,21,0);
+    putToValue(binaireInstruction,26,15);
+}
+
+int binaryLW(int *tabValue, int *binaireInstruction)
+{ 
+    putToValue(binaireInstruction,0,tabValue[1]);
+    putToValue(binaireInstruction,16,tabValue[0]);
+    putToValue(binaireInstruction,21,tabValue[2]);
+    putToValue(binaireInstruction,26,35);
+}
+
+int binaryMFHI(int *tabValue, int *binaireInstruction)
+{ 
+    putToValue(binaireInstruction,0,16);
+    putToValue(binaireInstruction,6,0);
+    putToValue(binaireInstruction,11,tabValue[0]);
+    putToValue(binaireInstruction,16,0);
+    putToValue(binaireInstruction,26,0);
+}
+
+int binaryMFLO(int *tabValue, int *binaireInstruction)
+{ 
+    putToValue(binaireInstruction,0,18);
+    putToValue(binaireInstruction,6,0);
+    putToValue(binaireInstruction,16,tabValue[1]);
+    putToValue(binaireInstruction,21,tabValue[0]);
+    putToValue(binaireInstruction,26,0);
+}
+
+int binaryMULT(int *tabValue, int *binaireInstruction)
+{ 
+    putToValue(binaireInstruction,0,24);
+    putToValue(binaireInstruction,6,0);
+    putToValue(binaireInstruction,11,tabValue[0]);
+    putToValue(binaireInstruction,16,0);
+    putToValue(binaireInstruction,26,0);
+}
+
+int binaryNOP(int *tabValue, int *binaireInstruction)
+{ 
+    putToValue(binaireInstruction,0,0);
+}
+
+int binaryOR(int *tabValue, int *binaireInstruction)
+{ 
+    putToValue(binaireInstruction,0,37);
+    putToValue(binaireInstruction,6,0);
+    putToValue(binaireInstruction,11,tabValue[0]);
+    putToValue(binaireInstruction,16,tabValue[2]);
+    putToValue(binaireInstruction,21,tabValue[1]);
+    putToValue(binaireInstruction,26,0);
+}
+
+int binaryROTR(int *tabValue, int *binaireInstruction)
+{ 
+    putToValue(binaireInstruction,0,2);
+    putToValue(binaireInstruction,6,tabValue[2]);
+    putToValue(binaireInstruction,11,tabValue[0]);
+    putToValue(binaireInstruction,16,tabValue[1]);
+    putToValue(binaireInstruction,21,1);
+    putToValue(binaireInstruction,22,0);
+    putToValue(binaireInstruction,26,0);
+}
+
+int binarySLL(int *tabValue, int *binaireInstruction)
+{ 
+    putToValue(binaireInstruction,0,0);
+    putToValue(binaireInstruction,6,tabValue[2]);
+    putToValue(binaireInstruction,11,tabValue[0]);
+    putToValue(binaireInstruction,16,tabValue[1]);
+    putToValue(binaireInstruction,21,0);
+    putToValue(binaireInstruction,26,0);
+}
+
+int binarySLT(int *tabValue, int *binaireInstruction)
+{ 
+    putToValue(binaireInstruction,0,42);
+    putToValue(binaireInstruction,6,0);
+    putToValue(binaireInstruction,11,tabValue[0]);
+    putToValue(binaireInstruction,16,tabValue[2]);
+    putToValue(binaireInstruction,21,tabValue[1]);
+    putToValue(binaireInstruction,26,0);
+}
+
+int binarySRL(int *tabValue, int *binaireInstruction)
+{ 
+    putToValue(binaireInstruction,0,2);
+    putToValue(binaireInstruction,6,tabValue[2]);
+    putToValue(binaireInstruction,11,tabValue[0]);
+    putToValue(binaireInstruction,16,tabValue[1]);
+    putToValue(binaireInstruction,21,0);
+    putToValue(binaireInstruction,22,0);
+    putToValue(binaireInstruction,26,0);
+}   
+
+int binarySUB(int *tabValue, int *binaireInstruction)
+{ 
+    putToValue(binaireInstruction,0,34);
+    putToValue(binaireInstruction,6,0);
+    putToValue(binaireInstruction,11,tabValue[0]);
+    putToValue(binaireInstruction,16,tabValue[2]);
+    putToValue(binaireInstruction,21,tabValue[1]);
+    putToValue(binaireInstruction,26,0);
+}
+
+int binarySW(int *tabValue, int *binaireInstruction)
+{ 
+    putToValue(binaireInstruction,0,tabValue[1]);
+    putToValue(binaireInstruction,16,tabValue[0]);
+    putToValue(binaireInstruction,21,tabValue[2]);
+    putToValue(binaireInstruction,26,0);
+}
+
+int binarySW(int *tabValue, int *binaireInstruction)
+{ 
+    putToValue(binaireInstruction,0,tabValue[1]);
+    putToValue(binaireInstruction,16,tabValue[0]);
+    putToValue(binaireInstruction,21,tabValue[2]);
+    putToValue(binaireInstruction,26,0);
+}
 
 int convertBinaireIntoHex(int *binaireInstruction, int *hexadecimalInstruction)
 {
