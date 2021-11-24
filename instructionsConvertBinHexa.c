@@ -94,10 +94,14 @@ int createBinaryInstruction(char *operation, int *tabValue, int *binaireInstruct
     else if(testTexte(operation, "SRL"))      binarySRL(tabValue, binaireInstruction);
     else if(testTexte(operation, "SUB"))      binarySUB(tabValue, binaireInstruction);
     else if(testTexte(operation, "SW"))       binarySW(tabValue, binaireInstruction);
-    else if(testTexte(operation, "SYSCALL")) ;
-    else if(testTexte(operation, "XOR"));
+    else if(testTexte(operation, "SYSCALL"))  binarySYSCALL(tabValue, binaireInstruction);
+    else if(testTexte(operation, "XOR"))      binaryXOR(tabValue, binaireInstruction);
+    else {
+        printf("Opération non reconnu");
+        return -1;
+    }
 
-    return 1;
+    return 0;
 }
 
 int putToZero(int *binaireInstruction, int start, int end)
@@ -108,7 +112,7 @@ int putToZero(int *binaireInstruction, int start, int end)
         binaireInstruction[i] = 0;
     }
     
-    return 1;
+    return 0;
 }
 
 int putToValue(int *binaireInstruction, int start, int value)
@@ -119,7 +123,7 @@ int putToValue(int *binaireInstruction, int start, int value)
         binaireInstruction[i] = value % 2;  
         value = value / 2;  
     }
-    return 1;
+    return 0;
 }
 
 int displayBinary(int *binaireInstruction)
@@ -134,7 +138,7 @@ int displayBinary(int *binaireInstruction)
 
     printf("\n");
 
-    return 1;
+    return 0;
 }
 
 int displayHexadecimal(int *hexadecimalInstruction)
@@ -148,7 +152,7 @@ int displayHexadecimal(int *hexadecimalInstruction)
     }
     printf("\n");
 
-    return 1;
+    return 0;
 }
 
 int binaryADD(int *tabValue, int *binaireInstruction)
@@ -359,13 +363,23 @@ int binarySW(int *tabValue, int *binaireInstruction)
     putToValue(binaireInstruction,26,0);
 }
 
-int binarySW(int *tabValue, int *binaireInstruction)
-{ 
-    putToValue(binaireInstruction,0,tabValue[1]);
-    putToValue(binaireInstruction,16,tabValue[0]);
-    putToValue(binaireInstruction,21,tabValue[2]);
+int binarySYSCALL(int *tabValue, int *binaireInstruction)
+{
+    putToValue(binaireInstruction,0,12);
+    putToValue(binaireInstruction,6,0);
     putToValue(binaireInstruction,26,0);
 }
+
+int binaryXOR(int *tabValue, int *binaireInstruction)
+{
+    putToValue(binaireInstruction,0,38);
+    putToValue(binaireInstruction,6,0);
+    putToValue(binaireInstruction,11,tabValue[0]);
+    putToValue(binaireInstruction,16,tabValue[2]);
+    putToValue(binaireInstruction,21,tabValue[1]);
+    putToValue(binaireInstruction,26,0);
+}
+
 
 int convertBinaireIntoHex(int *binaireInstruction, int *hexadecimalInstruction)
 {
@@ -378,5 +392,5 @@ int convertBinaireIntoHex(int *binaireInstruction, int *hexadecimalInstruction)
             n++;
         }
     }
-    return 1;
+    return 0;
 }
