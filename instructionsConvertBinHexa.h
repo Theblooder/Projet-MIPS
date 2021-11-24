@@ -12,24 +12,24 @@ int instructionValue(const char *instruction, int *tabValues, char *operation);
 int convertBinaireIntoHex(int *binaireInstruction, int *hexadecimalInstruction);
 
 
-int TestTexte(char *operation, char *Texte);
+int testTexte(char *operation, char *Texte);
 
-int createBinaryInstruction(char *operation, int *tabValue, int *binaireInstruction, int *hexadecimalInstruction);
+int createBinaryInstruction(char *operation, int *tabValue, int *binaireInstruction);
 
 int putToZero(int *binaireInstruction, int start, int end);
 
 int putToValue(int *binaireInstruction, int start, int value);
 
-int DisplayBinary(int *binaireInstruction);
+int displayBinary(int *binaireInstruction);
 
-int BinaryADD(char *operation, int *tabValue, int *binaireInstruction, int *hexadecimalInstruction);
+int binaryADD(char *operation, int *tabValue, int *binaireInstruction);
 
-int BinaryADDI(char *operation, int *tabValue, int *binaireInstruction, int *hexadecimalInstruction);
+int binaryADDI(char *operation, int *tabValue, int *binaireInstruction);
 
-int BinaryAND(char *operation, int *tabValue, int *binaireInstruction, int *hexadecimalInstruction);
+int binaryAND(char *operation, int *tabValue, int *binaireInstruction);
 
-int BinaryOR(char *operation, int *tabValue, int *binaireInstruction, int *hexadecimalInstruction);
+int binaryOR(char *operation, int *tabValue, int *binaireInstruction);
 
-int DisplayHexadecimal(int *hexadecimalInstruction);
+int displayHexadecimal(int *hexadecimalInstruction);
 
 #endif

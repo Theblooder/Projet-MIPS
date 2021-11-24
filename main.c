@@ -43,7 +43,13 @@ int main(int argc, char * argv[])
 	
 	//printf("%ld\n", strlen(operation));	//Erreur
 
-	createBinaryInstruction(operation, values, binaireInstruction, hexadecimalInstruction);
+	createBinaryInstruction(operation, values, binaireInstruction);
+
+	convertBinaireIntoHex(binaireInstruction, hexadecimalInstruction);
+	
+	displayBinary(binaireInstruction);
+
+	displayHexadecimal(hexadecimalInstruction);
 
 	
 
