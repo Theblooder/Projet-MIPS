@@ -35,16 +35,16 @@ int main(int argc, char * argv[])
 			int values[3];
 
 			instructionValue(instruction, values, operation);
-			printf("%s\n", operation);
-			printf("%d\n", values[0]);
-			printf("%d\n", values[1]);
-			printf("%d\n", values[2]);
+			// printf("%s\n", operation);
+			// printf("%d\n", values[0]);
+			// printf("%d\n", values[1]);
+			// printf("%d\n", values[2]);
 
 			createBinaryInstruction(operation, values, binaireInstruction);
 
 			convertBinaireIntoHex(binaireInstruction, hexadecimalInstruction);
 	
-			displayBinary(binaireInstruction);
+			//displayBinary(binaireInstruction);
 
 			displayHexadecimal(hexadecimalInstruction);
 		}

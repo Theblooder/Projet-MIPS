@@ -56,6 +56,8 @@ int binaryMULT(int *tabValue, int *binaireInstruction);
 
 int binaryNOP(int *tabValue, int *binaireInstruction);
 
+int binaryOR(int *tabValue, int *binaireInstruction);
+
 int binaryROTR(int *tabValue, int *binaireInstruction);
 
 int binarySLL(int *tabValue, int *binaireInstruction);
@@ -67,6 +69,10 @@ int binarySRL(int *tabValue, int *binaireInstruction);
 int binarySUB(int *tabValue, int *binaireInstruction);
 
 int binarySW(int *tabValue, int *binaireInstruction);
+
+int binarySYSCALL(int *tabValue, int *binaireInstruction);
+
+int binaryXOR(int *tabValue, int *binaireInstruction);
 
 int displayHexadecimal(int *hexadecimalInstruction);
 
