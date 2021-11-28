@@ -8,12 +8,12 @@ int instructionValue(const char *instruction, int *tabValues, char *operation)
 {
     int i = 0; int j; int indiceValue = 0; int lengthValue = 1; int k; int numberOfValues = 3; /*Pour limiter l'écriture de seulement 3 valeurs max dans le tableau de value */
     int getInstructionBool = 0;
+    int indiceStartInstruction = 0; int indiceEndInstruction = 0;
 
     while(instruction[i] != '\0' && numberOfValues != 0) {
-        if(instruction[i] == ' ') {
-            /* To end the string */ 
-            getInstructionBool = i;
-            operation[getInstructionBool] = '\0';
+        if(instruction[i] == ' ' && indiceEndInstruction != 0) {
+            getInstructionBool = 1;
+            operation[indiceEndInstruction] = '\0';
             /* To remove the '$' from the number */
             if(instruction[i+1] == '$') {
                 j = i+2;
@@ -38,12 +38,29 @@ int instructionValue(const char *instruction, int *tabValues, char *operation)
             lengthValue = 1;
         }
         /* Get the operation of the instruction */
-        if(!getInstructionBool) {
-            operation[i] = instruction[i];
+        if(!getInstructionBool && instruction[i] != ' ') {
+            operation[indiceStartInstruction++] = instruction[i];
+            indiceEndInstruction = i+1;
+        }
+        if(instruction[i+1] == '\0') {
+            operation[indiceEndInstruction] = '\0';
         }
         i++;
     }
     return 0;
+}
+
+int isStringFullOfSpaces(char *string)
+{
+    int i = 0;
+    int isFullOfSpaces = 1;
+
+    while(string[i] != '\0' && isFullOfSpaces) {
+        if(string[i++] != ' ') {
+            isFullOfSpaces = 0;
+        }
+    }
+    return isFullOfSpaces;
 }
 
 int testTexte(char *operation, char *Texte)

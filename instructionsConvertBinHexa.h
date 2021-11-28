@@ -9,6 +9,8 @@
 
 int instructionValue(const char *instruction, int *tabValues, char *operation);
 
+int isStringFullOfSpaces(char *string);
+
 int convertBinaireIntoHex(int *binaireInstruction, int *hexadecimalInstruction);
 
 

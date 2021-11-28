@@ -29,24 +29,27 @@ int main(int argc, char * argv[])
 			instruction[cmptChar] = '\0';
 			cmptChar = 0;
 
-			int binaireInstruction[32] = {0};
-			int hexadecimalInstruction[8]= {0};
-			char operation[5];
-			int values[3];
+			if(!isStringFullOfSpaces(instruction)) {
+				int binaireInstruction[32] = {0};
+				int hexadecimalInstruction[8]= {0};
+				char operation[5];
+				int values[3];
 
-			instructionValue(instruction, values, operation);
-			// printf("%s\n", operation);
-			// printf("%d\n", values[0]);
-			// printf("%d\n", values[1]);
-			// printf("%d\n", values[2]);
+				instructionValue(instruction, values, operation);
+				// printf("%s\n", operation);
+				// printf("%d\n", values[0]);
+				// printf("%d\n", values[1]);
+				// printf("%d\n", values[2]);
 
-			createBinaryInstruction(operation, values, binaireInstruction);
+				createBinaryInstruction(operation, values, binaireInstruction);
 
-			convertBinaireIntoHex(binaireInstruction, hexadecimalInstruction);
-	
-			//displayBinary(binaireInstruction);
+				convertBinaireIntoHex(binaireInstruction, hexadecimalInstruction);
+		
+				//displayBinary(binaireInstruction);
 
-			displayHexadecimal(hexadecimalInstruction);
+				displayHexadecimal(hexadecimalInstruction);
+			}
+
 		}
 		else {
 			instruction[cmptChar++] = charInstruction;
