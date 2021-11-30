@@ -1,5 +1,5 @@
 1) Il  faut faire pour écrire un chiffre négatif, regarder sur internet complément à deux, ainsi pour toute les valeurs immédiates le dernier bit est un bit signé.
-
+Check
 
 
 2) Commencer à construire la mémoire ou les registres

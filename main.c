@@ -18,12 +18,17 @@ int main(int argc, char * argv[])
 		exit(0);
 	}
 
-	
+	liste L = NULL;
 	char charInstruction;
 	char instruction[32];
-
+	int i = 1;
 	int cmptChar = 0;
-
+	
+	// insererElement(5,1,&L);
+	// insererElement(9,2,&L);
+	// insererElement(5,3,&L);
+	// insererElement(2,3,&L);
+	// afficherListe(&L);
 	while(!feof(fic)) {
 		fscanf(fic, "%c", &charInstruction);
 		if(charInstruction == '\n') {
@@ -49,6 +54,7 @@ int main(int argc, char * argv[])
 				//displayBinary(binaireInstruction);
 
 				displayHexadecimal(hexadecimalInstruction);
+				insererElement(binaireInstruction,i,&L);
 			}
 
 		}
@@ -57,7 +63,7 @@ int main(int argc, char * argv[])
 		}
 
 	}
-
+	afficherListe(&L);
 	fclose(fic);
 
 	return 0;

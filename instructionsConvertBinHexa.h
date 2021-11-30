@@ -14,6 +14,22 @@
  * @param operation 
  * @return int
  */
+
+#include <stdlib.h>
+
+typedef struct element element;
+
+struct element {
+    int adresse;
+	unsigned long int valeur;/* valeur de l’élément */
+	element *suivant;/* adresse du successeur */
+};
+typedef element* liste;
+
+void afficherListe(liste *l);
+void insererElement(unsigned long int x,int Adresse, liste *l);
+
+
 int instructionValue(const char *instruction, int *tabValues, char *operation);
 
 int isStringFullOfSpaces(const char *string);

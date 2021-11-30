@@ -175,11 +175,29 @@ int putToZero(int *binaireInstruction, int start, int end)
 int putToValue(int *binaireInstruction, int start, int value)
 {
     int i;
+    int Signed = 0;
+    if(value < 0)
+    {
+        Signed = 1;
+        value = value * -1;
+    }
+
     for(i=start; value>0; i++)  
     {  
         binaireInstruction[i] = value % 2;  
         value = value / 2;  
     }
+    if (Signed == 1)
+    {
+        for(i=start; i<start+4; i++)  
+        {  
+            printf("%d\n",binaireInstruction[i]);
+            if (binaireInstruction[i] == 0) binaireInstruction[i] = 1;
+            else binaireInstruction[i] = 0;
+            printf("%d\n",binaireInstruction[i]);
+        }
+    }
+    
     return 0;
 }
 
@@ -450,4 +468,114 @@ int convertBinaireIntoHex(int *binaireInstruction, int *hexadecimalInstruction)
         }
     }
     return 0;
+}
+
+
+void afficherListe(liste *l)
+{
+	element *actuel = *l;
+
+	while(actuel != NULL)
+	{
+		printf("%ld\n", actuel->valeur);
+		actuel = actuel->suivant;
+	}	
+	return;
+}
+
+element* elementLibre() {
+	/*Allocation de mémoire*/
+	element* e = (element*) malloc(sizeof(element));	
+
+	/*DEBUG DE MEMOIRE MALLOC/FREE*/
+	#ifdef DEBUG_MEM
+		mcheck(&no_op);
+	#endif
+	
+
+	/*Initialisation*/
+	(*e).valeur = 0;
+	(*e).suivant = NULL;
+	return e;
+}
+
+void insererElement(unsigned long int x, int Adresse, liste *l)
+{
+
+    element *select, *suiv, *libre;
+
+	select = NULL;
+	suiv = *l;
+	
+	/*Détermination de la position de l'insertion*/
+	while ( (suiv != NULL) && ((*suiv).adresse != Adresse) ){
+		select = suiv;
+		suiv = (*select).suivant;
+        
+	}
+	
+	/*Insertion*/
+    if(suiv == NULL)
+    {
+        libre = elementLibre();
+	    if (select == NULL) {
+	    	(*l) = libre;
+	    }else{
+	    	(*select).suivant = libre;
+	    }
+        (*libre).adresse = Adresse;
+	    (*libre).valeur = x;
+	    (*libre).suivant = suiv;
+    }
+	else
+    {
+        (*suiv).valeur = x;
+    }
+	
+	//printf("Insertion de %d OK\n", x);
+
+    // element *actuel = *l;
+	// element *precedent = NULL;
+	
+	// element *e = (element*) malloc(sizeof(element));
+	// e->valeur = x;
+
+	// while(actuel != NULL && actuel->adresse != Adresse) {
+	// 	precedent = actuel;
+	// 	actuel = actuel->suivant;
+    //     printf("%d",actuel->adresse);
+	// }
+
+	// if(precedent == NULL) {
+	// 	*l = e;
+	// 	e->suivant = actuel;
+    //     e->adresse = Adresse;
+	// }
+	// else {
+	// 	e->suivant = actuel;
+
+	// 	precedent->suivant = e;
+	// }
+
+    // element *current = malloc(sizeof(*current));
+    // while (current != NULL && (current->adresse != Adresse))
+    // {
+    //     printf("%d\n",current->adresse);
+    //     current = current->suivant;
+    // }
+    // printf("\n");
+    // if(current == NULL)
+    // {
+    //     element *new = malloc(sizeof(*new));
+    //     new->valeur = x;
+    //     new->adresse = Adresse;
+    //     new->suivant = *l;
+    //     *l = new;
+    // }
+    // else
+    // {
+    //     printf("dd");
+    //     current->valeur = x;
+    // }
+
 }
