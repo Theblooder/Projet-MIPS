@@ -23,3 +23,70 @@ Pour la mémmoire :
 3) faire les registres mais on le fera ensemble je pense : après tu peux juste créer la structure maus faudra réfléchir sur le fonctionenemnt de nos registre PC, SP etc.. 
 
 
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct element element;
+
+struct element {
+	int valeur;/* valeur de l’élément */
+	element *suivant;/* adresse du successeur */
+};
+typedef element* liste;
+
+void afficherListe(liste *l);
+void insererElement(int x, liste *l);
+
+
+int main(void)
+{
+	liste L = NULL;
+
+
+	insererElement(2, &L);
+	insererElement(3, &L);
+	insererElement(1, &L);
+	insererElement(4, &L);
+	insererElement(2, &L);
+	insererElement(10, &L);
+
+	afficherListe(&L);
+
+	return 0;
+}
+
+void afficherListe(liste *l)
+{
+	element *actuel = *l;
+
+	while(actuel != NULL)
+	{
+		printf("%d\n", actuel->valeur);
+		actuel = actuel->suivant;
+	}	
+	return;
+}
+
+void insererElement(int x, liste *l)
+{
+	element *actuel = *l;
+	element *precedent = NULL;
+	
+	element *e = (element*) malloc(sizeof(element));
+	e->valeur = x;
+
+	while(actuel != NULL && actuel->valeur < x) {
+		precedent = actuel;
+		actuel = actuel->suivant;
+	}
+
+	if(precedent == NULL) {
+		*l = e;
+		e->suivant = actuel;
+	}
+	else {
+		e->suivant = actuel;
+
+		precedent->suivant = e;
+	}
+}
