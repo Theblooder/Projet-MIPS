@@ -1,37 +1,64 @@
 #include "instructionsConvertBinHexa.h"
 #include <math.h>
 #include <string.h>
-#include "stdio.h"
+#include <stdio.h>
 
 
 int instructionValue(const char *instruction, int *tabValues, char *operation)
 {
-    int i = 0; int j; int indiceValue = 0; int lengthValue = 1; int k; int numberOfValues = 3; /*Pour limiter l'écriture de seulement 3 valeurs max dans le tableau de value */
+    int i = 0; int j; int indiceValue = 0; int lengthValue = 1; int k; ; int negativeValue; int numberOfValues = 3; /*Pour limiter l'écriture de seulement 3 valeurs max dans le tableau de value */
     int getInstructionBool = 0;
     int indiceStartInstruction = 0; int indiceEndInstruction = 0;
 
-    while(instruction[i] != '\0' && numberOfValues != 0) {
-        if(instruction[i] == ' ' && indiceEndInstruction != 0) {
+    while(instruction[i] != '\0' && instruction[i] != '#' && numberOfValues != 0) {
+        if((instruction[i] == ' ' || instruction[i] == ',' || instruction[i] == '(') && indiceEndInstruction != 0) {
             getInstructionBool = 1;
             operation[indiceEndInstruction] = '\0';
             /* To remove the '$' from the number */
-            if(instruction[i+1] == '$') {
-                j = i+2;
+            if(instruction[i+1] == ' ') {
+                if(instruction[i+2] == '$') {
+                    j = i+3;
+                }
+                else {
+                    j = i+2;
+                }
             }
             else {
-                j = i+1;
+                if(instruction[i+1] == '$') {
+                    j = i+2;
+                }
+                else {
+                    j = i+1;
+                }
+            }
+            
+            int temp = j;
+
+            /* If there is a negative value I just go 1 char after and remember it */
+            if(instruction[temp] == '-') {
+                temp++;   /*When we count the length of the number */
+                j++;     /* When we will convert the char into int */
+                negativeValue = 1;
+            }
+            else {
+                negativeValue = 0;
             }
             /* Get the length if the value */
-            int temp = j;
-            while(instruction[temp+1] != ' ' && instruction[temp+1] != '\0') {
+            while(instruction[temp+1] != ',' && instruction[temp+1] != '(' && instruction[temp+1] != ')' && instruction[temp+1] != ' ' && instruction[temp+1] != '#' && instruction[temp+1] != '\0') {
                 lengthValue += 1;
                 temp++;
             }
+            /*We can go throw all the part of the insrtruction */
+            i += lengthValue;
+
             /* Add the value to the list */
             tabValues[indiceValue] = 0;
             for(k=lengthValue; k>0; k--) {
                 tabValues[indiceValue] += (int) (instruction[j]-48) * pow(10, k-1);
                 j++;
+            }
+            if(negativeValue) {
+                tabValues[indiceValue] *= -1;
             }
             numberOfValues--;
             indiceValue++;
@@ -50,7 +77,7 @@ int instructionValue(const char *instruction, int *tabValues, char *operation)
     return 0;
 }
 
-int isStringFullOfSpaces(char *string)
+int isStringFullOfSpaces(const char *string)
 {
     int i = 0;
     int isFullOfSpaces = 1;
@@ -61,6 +88,19 @@ int isStringFullOfSpaces(char *string)
         }
     }
     return isFullOfSpaces;
+}
+
+int isBeginWithCommentCharBeforeAnyCharOtherThanSpace(char *string)
+{   
+    int i = 0;
+    int isCommentLine = 0;
+
+    while(string[i] != '\0' && (string[i] == ' ' || string[i] == '#')) {
+        if(string[i++] == '#') {
+            isCommentLine = 1;
+        }
+    }
+    return isCommentLine;
 }
 
 int testTexte(char *operation, char *Texte)
@@ -291,7 +331,7 @@ int binaryMFLO(int *tabValue, int *binaireInstruction)
 { 
     putToValue(binaireInstruction,0,18);
     putToValue(binaireInstruction,6,0);
-    putToValue(binaireInstruction,11,tabValue[1]);
+    putToValue(binaireInstruction,11,tabValue[0]);
     putToValue(binaireInstruction,16,0);
     putToValue(binaireInstruction,26,0);
 }
@@ -377,7 +417,7 @@ int binarySW(int *tabValue, int *binaireInstruction)
     putToValue(binaireInstruction,0,tabValue[1]);
     putToValue(binaireInstruction,16,tabValue[0]);
     putToValue(binaireInstruction,21,tabValue[2]);
-    putToValue(binaireInstruction,26,0);
+    putToValue(binaireInstruction,26,43);
 }
 
 int binarySYSCALL(int *tabValue, int *binaireInstruction)

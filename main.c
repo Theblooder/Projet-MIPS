@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "instructionsConvertBinHexa.h"
+#include "memory.h"
 
 int main(int argc, char * argv[])
 {
@@ -29,17 +30,17 @@ int main(int argc, char * argv[])
 			instruction[cmptChar] = '\0';
 			cmptChar = 0;
 
-			if(!isStringFullOfSpaces(instruction)) {
+			if(!isStringFullOfSpaces(instruction) && !isBeginWithCommentCharBeforeAnyCharOtherThanSpace(instruction)) {
 				int binaireInstruction[32] = {0};
 				int hexadecimalInstruction[8]= {0};
 				char operation[5];
 				int values[3];
 
 				instructionValue(instruction, values, operation);
-				// printf("%s\n", operation);
-				// printf("%d\n", values[0]);
-				// printf("%d\n", values[1]);
-				// printf("%d\n", values[2]);
+				printf("%s\n", operation);
+				printf("%d\n", values[0]);
+				printf("%d\n", values[1]);
+				printf("%d\n", values[2]);
 
 				createBinaryInstruction(operation, values, binaireInstruction);
 

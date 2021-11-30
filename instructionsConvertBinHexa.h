@@ -6,10 +6,19 @@
 
 
 
-
+/**
+ * @brief To get the values and the operation of an instruction
+ * 
+ * @param instruction
+ * @param tabValues 
+ * @param operation 
+ * @return int
+ */
 int instructionValue(const char *instruction, int *tabValues, char *operation);
 
-int isStringFullOfSpaces(char *string);
+int isStringFullOfSpaces(const char *string);
+
+int isBeginWithCommentCharBeforeAnyCharOtherThanSpace(char *string);
 
 int convertBinaireIntoHex(int *binaireInstruction, int *hexadecimalInstruction);
 

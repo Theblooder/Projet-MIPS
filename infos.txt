@@ -1,0 +1,25 @@
+1) Il  faut faire pour écrire un chiffre négatif, regarder sur internet complément à deux, ainsi pour toute les valeurs immédiates le dernier bit est un bit signé.
+
+
+
+2) Commencer à construire la mémoire ou les registres
+
+Pour la mémmoire :
+
+    - elle fait 4 Go
+
+    - il faut écrire les instructions dans la mémoire avec le type BIG ENDIAN (chaque instruction est codés sur 4 octets).
+
+
+    - il faut créer une structure de type liste chainée ou dans chaque éléments de la liste il y a une structure contenant l'adresse de la mémoire et sa valeurs (l'adresse va de x00000000 à 0xFFFFFFFF donc l'adresse est aussi coder sur 32 bits)
+
+    - il faut faire une fonction qui pourras écrire dans la mémoire en lui donnant les arguments (adresse et valeur) si on écrit dans la mémoire alors on crée un nouveau morceau dans notre structure de liste
+
+    - et une fonction qui lit les donnée dans la mémoire
+
+
+
+
+3) faire les registres mais on le fera ensemble je pense : après tu peux juste créer la structure maus faudra réfléchir sur le fonctionenemnt de nos registre PC, SP etc.. 
+
+
