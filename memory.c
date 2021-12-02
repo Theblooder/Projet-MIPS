@@ -1,72 +1,68 @@
 #include <math.h>
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include "memory.h"
 
-void afficherListe(liste *l)
+void readMemory(liste *memory)
 {
-	element *actuel = *l;
+	element *actuel = *memory;
 
 	while(actuel != NULL)
 	{
-		printf("%d\n", actuel->valeur);
+		printf("adresse : %d\n", actuel->adress);
+		for(int i=0; i<8;i++) {
+			printf("[%d] ", actuel->valeur[i]);
+		}
+		printf("\n");
 		actuel = actuel->suivant;
 	}	
 	return;
 }
 
-element* elementLibre() {
-	/*Allocation de mémoire*/
-	element* e = (element*) malloc(sizeof(element));	
+void insertInMemory(int *value8bits, int adresse, liste *memory)
+{
+	element *actuel = *memory;
+	element *precedent = NULL;
+	int i;
 
-	/*DEBUG DE MEMOIRE MALLOC/FREE*/
-	#ifdef DEBUG_MEM
-		mcheck(&no_op);
-	#endif
-	
+	while(actuel != NULL) {
+		if(actuel->adress == adresse) {
+            for(i=0; i<8; i++) {
+				actuel->valeur[i] = value8bits[i];
+			}
+			return;
+		}
+		precedent = actuel;
+		actuel = actuel->suivant;
+	}
 
-	/*Initialisation*/
-	(*e).valeur = NULL;
-	(*e).suivant = NULL;
-	return e;
+	element *e = (element*) malloc(sizeof(element));
+	for(i=0; i<8; i++) {
+		e->valeur[i] = value8bits[i];
+	}
+	e->adress = adresse;
+
+	if(precedent == NULL) {
+		*memory = e;
+		e->suivant = actuel;
+	}
+	else {
+		e->suivant = actuel;
+
+		precedent->suivant = e;
+	}
 }
 
-void insererElement(int *x, int Adresse, liste *l)
+void writeFourOctetsInMemory(int *value32bits, int startAddress, liste *memory)
 {
-    int i;
-    element *select, *suiv, *libre;
+	int i; int j;
+	int value8bits[8];
 
-	select = NULL;
-	suiv = *l;
-	
-	/*Détermination de la position de l'insertion*/
-	while ( (suiv != NULL) && ((*suiv).adresse != Adresse) ){
-		select = suiv;
-		suiv = (*select).suivant;
-        
+	for(i=0; i<4; i++) {
+		for(j=0; j<8; j++) {
+			value8bits[j] = value32bits[8*i + j];
+		}
+		insertInMemory(value8bits, startAddress+i, memory);
 	}
-	
-	/*Insertion*/
-    if(suiv == NULL)
-    {
-        libre = elementLibre();
-	    if (select == NULL) {
-	    	(*l) = libre;
-	    }else{
-	    	(*select).suivant = libre;
-	    }
-        (*libre).adresse = Adresse;
-        for(i=0;i<7;i++)
-        {
-            (*libre).valeur[i] = x[i];
-        }
-	    (*libre).suivant = suiv;
-    }
-	else
-    {
-        for(i=0;i<7;i++)
-        {
-            (*suiv).valeur[i] = x[i];
-        }
-    }
 }
