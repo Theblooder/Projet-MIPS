@@ -16,7 +16,7 @@ int main(int argc, char * argv[])
 
 	int binaire2[32] = {1,1,0,1,1,1,0,0,0,1,0,1,1,0,1,0,1,0,0,0,1,1,1,0,1,0,1,1,0,1,1,1};
 
-	writeFourOctetsInMemory(binaire2, 4, &memory);
+	writeFourOctetsInMemory(binaire2, 0, &memory);
 	readMemory(&memory);
 
 

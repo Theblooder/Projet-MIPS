@@ -48,7 +48,7 @@ int instructionValue(const char *instruction, int *tabValues, char *operation)
                 lengthValue += 1;
                 temp++;
             }
-            /*We can go throw all the part of the insrtruction */
+            /*We can go throw all the part of the instruction */
             i += lengthValue;
 
             /* Add the value to the list */
