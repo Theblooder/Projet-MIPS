@@ -15,7 +15,11 @@ void readMemory(liste *memory);
 
 void insertInMemory(int *value8bits, int adresse, liste *memory);
 
+void getValueFromMemory(int *value8bits, int adresse, liste *memory);
+
 void writeFourOctetsInMemory(int *value32bits, int startAddress, liste *memory);
+
+void readFourOctetsInMemory(int *value32bits, int startAddress, liste *memory);
 
 
 

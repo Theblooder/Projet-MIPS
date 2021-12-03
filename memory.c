@@ -20,6 +20,25 @@ void readMemory(liste *memory)
 	return;
 }
 
+void getValueFromMemory(int *value8bits, int adresse, liste *memory)
+{
+	element *actuel = *memory;
+	element *precedent = NULL;
+	int i;
+
+	while(actuel != NULL) {
+		if(actuel->adress == adresse) {
+            for(i=0; i<8; i++) {
+				value8bits[i] = actuel->valeur[i];
+			}
+			return;
+		}
+		precedent = actuel;
+		actuel = actuel->suivant;
+	}
+	printf("Cette adresse de la mémoire ne contient pas de valeur\n");
+}
+
 void insertInMemory(int *value8bits, int adresse, liste *memory)
 {
 	element *actuel = *memory;
@@ -64,5 +83,19 @@ void writeFourOctetsInMemory(int *value32bits, int startAddress, liste *memory)
 			value8bits[j] = value32bits[8*i + j];
 		}
 		insertInMemory(value8bits, startAddress+i, memory);
+	}
+}
+
+void readFourOctetsInMemory(int *value32bits, int startAddress, liste *memory)
+{
+	int i; int j;
+
+	int value8bits[8];
+
+	for(i=0; i<4; i++) {
+		getValueFromMemory(value8bits, startAddress+i, memory);
+		for(j=0; j<8; j++) {
+			value32bits[8*i + j] = value8bits[j];
+		}
 	}
 }

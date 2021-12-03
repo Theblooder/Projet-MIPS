@@ -9,15 +9,16 @@ int main(int argc, char * argv[])
 {
 	liste memory = NULL;
 
-	int binaire[32] = {0,1,0,1,1,1,0,0,0,1,0,1,1,0,1,0,1,0,0,0,1,1,1,0,1,0,1,1,0,1,1,0};
+	int binaire[32] = {1,1,0,1,1,1,0,0,0,1,0,1,1,0,1,0,1,0,0,0,1,1,1,0,1,0,1,1,0,1,1,1};
 
-	writeFourOctetsInMemory(binaire, 0, &memory);
-	readMemory(&memory);
+	writeFourOctetsInMemory(binaire, 12, &memory);
 
-	int binaire2[32] = {1,1,0,1,1,1,0,0,0,1,0,1,1,0,1,0,1,0,0,0,1,1,1,0,1,0,1,1,0,1,1,1};
+	int binaire2[32];
 
-	writeFourOctetsInMemory(binaire2, 0, &memory);
-	readMemory(&memory);
+	readFourOctetsInMemory(binaire2, 12, &memory);
+	for(int i=0; i<32; i++) {
+		printf("[%d] ", binaire2[i]);
+	}
 
 
 	// FILE *fic;
