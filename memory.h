@@ -21,7 +21,8 @@ void writeFourOctetsInMemory(int *value32bits, int startAddress, liste *memory);
 
 void readFourOctetsInMemory(int *value32bits, int startAddress, liste *memory);
 
+int addTwoBinaryRegister(int *register1, int *register2, int *destinationRegister);
 
-
+int subTwoBinaryRegister(int *register1, int *register2, int *destinationRegister);
 
 #endif

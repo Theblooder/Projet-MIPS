@@ -22,6 +22,8 @@ Pour la mémmoire :
 
 3) faire les registres mais on le fera ensemble je pense : après tu peux juste créer la structure maus faudra réfléchir sur le fonctionenemnt de nos registre PC, SP etc.. 
 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
+YOU'RE FAT AND YOU KNOW IT 
 
 #include <stdio.h>
 #include <stdlib.h>

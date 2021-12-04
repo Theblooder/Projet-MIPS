@@ -99,3 +99,113 @@ void readFourOctetsInMemory(int *value32bits, int startAddress, liste *memory)
 		}
 	}
 }
+
+
+//Ne fonctionne pas avec des chiffres négatifs, je me pose la question si ADD à le droit d'avoir des chiffres négatif, ADDI oui mais juste pour le immediate j'ai l'impression
+//alors que je crois me rappeler qu'on a toujours eu le droit d'avoir des registres avec des chiffres négatifs...
+//Faut qu'on regarde, puis je ferais les modifs en conséquence
+
+int addTwoBinaryRegister(int *register1, int *register2, int *destinationRegister)
+{
+	int i;
+	int carry = 0;
+	int overflowed = 0;
+	for(i=31;i>=0;i--)
+	{
+		destinationRegister[i] = register1[i] + register2[i] + carry;
+		carry = 0;
+		if(destinationRegister[i] == 2)
+		{
+			destinationRegister[i] = 0;
+			carry = 1;
+		}
+		else if(destinationRegister[i] == 3)
+		{
+			destinationRegister[i] = 1;
+			carry = 1;
+		}
+	}
+	if(carry == 1)	overflowed = 1;
+	
+	return overflowed;
+}
+
+int subTwoBinaryRegister(int *register1, int *register2, int *destinationRegister)
+{
+	int i = 31;
+	int carry = 0;
+	int overflowed = 0;
+	while (register2[i] != 1)
+	{
+		i--;
+	}
+	
+	for(i=i-1; i>=0; i--)  
+    {	
+        if (register2[i] == 0)
+            register2[i] = 1;
+        else register2[i] = 0;
+    }
+
+	for(i=31;i>=0;i--)
+	{
+		destinationRegister[i] = register1[i] + register2[i] + carry;
+		carry = 0;
+		if(destinationRegister[i] == 2)
+		{
+			destinationRegister[i] = 0;
+			carry = 1;
+		}
+		else if(destinationRegister[i] == 3)
+		{
+			destinationRegister[i] = 1;
+			carry = 1;
+		}
+	}
+	if(carry == 1)	overflowed = 1;
+	
+	return overflowed;
+
+	/*
+	int tempRegister[32] = {0};
+
+	for(i=15; i>=0; i--)  
+    {	
+        tempRegister[i] = register2[i];
+    }
+
+	i = 31;
+
+	while (tempRegister[i] != 1)
+	{
+		i--;
+	}
+	
+	for(i=i-1; i>=0; i--)  
+    {	
+        if (tempRegister[i] == 0)
+            tempRegister[i] = 1;
+        else tempRegister[i] = 0;
+    }
+
+	for(i=31;i>=0;i--)
+	{
+		destinationRegister[i] = register1[i] + register2[i] + carry;
+		carry = 0;
+		if(destinationRegister[i] == 2)
+		{
+			destinationRegister[i] = 0;
+			carry = 1;
+		}
+		else if(destinationRegister[i] == 3)
+		{
+			destinationRegister[i] = 1;
+			carry = 1;
+		}
+	}
+	if(carry == 1)	overflowed = 1;
+	
+	return overflowed;
+
+	*/
+}
