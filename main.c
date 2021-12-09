@@ -7,13 +7,12 @@
 
 int main(int argc, char * argv[])
 {
-	liste memory = NULL;
+	memory RAM = NULL; /* RAM size is 4GB */
 
-	int binaire[32] = {0,1,0,1,1,1,0,0,0,1,0,1,1,0,1,0,1,0,0,0,1,1,1,0,1,0,1,1,0,1,1,1};
 	int binaire2[32] = {0,0,1,1,0,1,0,1,0,0,0,0,1,1,1,1,1,0,0,0,0,1,1,1,1,0,0,1,0,1,0,1};
 	int binaire7[32] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,0,0,0,1,1,0,1,0,1,0};
 
-	writeFourOctetsInMemory(binaire, 12, &memory);
+
 	writeFourOctetsInMemory(binaire2, 50, &memory);
 	writeFourOctetsInMemory(binaire7, 130, &memory);
 	

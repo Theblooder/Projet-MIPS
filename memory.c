@@ -4,9 +4,9 @@
 #include <stdlib.h>
 #include "memory.h"
 
-void readMemory(liste *memory)
+void readMemory(memory *m)
 {
-	element *actuel = *memory;
+	element *actuel = *m;
 
 	while(actuel != NULL)
 	{
@@ -20,9 +20,9 @@ void readMemory(liste *memory)
 	return;
 }
 
-void getValueFromMemory(int *value8bits, int adresse, liste *memory)
+void getValueFromMemory(int *value8bits, int adresse, memory *m)
 {
-	element *actuel = *memory;
+	element *actuel = *m;
 	element *precedent = NULL;
 	int i;
 
@@ -39,9 +39,9 @@ void getValueFromMemory(int *value8bits, int adresse, liste *memory)
 	printf("Cette adresse de la mémoire ne contient pas de valeur\n");
 }
 
-void insertInMemory(int *value8bits, int adresse, liste *memory)
+void insertInMemory(int *value8bits, int adresse, memory *m)
 {
-	element *actuel = *memory;
+	element *actuel = *m;
 	element *precedent = NULL;
 	int i;
 
@@ -63,7 +63,7 @@ void insertInMemory(int *value8bits, int adresse, liste *memory)
 	e->adress = adresse;
 
 	if(precedent == NULL) {
-		*memory = e;
+		*m = e;
 		e->suivant = actuel;
 	}
 	else {
@@ -73,7 +73,7 @@ void insertInMemory(int *value8bits, int adresse, liste *memory)
 	}
 }
 
-void writeFourOctetsInMemory(int *value32bits, int startAddress, liste *memory)
+void writeFourOctetsInMemory(int *value32bits, int startAddress, memory *m)
 {
 	int i; int j;
 	int value8bits[8];
@@ -82,18 +82,18 @@ void writeFourOctetsInMemory(int *value32bits, int startAddress, liste *memory)
 		for(j=0; j<8; j++) {
 			value8bits[j] = value32bits[8*i + j];
 		}
-		insertInMemory(value8bits, startAddress+i, memory);
+		insertInMemory(value8bits, startAddress+i, m);
 	}
 }
 
-void readFourOctetsInMemory(int *value32bits, int startAddress, liste *memory)
+void readFourOctetsInMemory(int *value32bits, int startAddress, memory *m)
 {
 	int i; int j;
 
 	int value8bits[8];
 
 	for(i=0; i<4; i++) {
-		getValueFromMemory(value8bits, startAddress+i, memory);
+		getValueFromMemory(value8bits, startAddress+i, m);
 		for(j=0; j<8; j++) {
 			value32bits[8*i + j] = value8bits[j];
 		}

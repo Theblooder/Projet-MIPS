@@ -8,18 +8,18 @@ struct element {
 	int adress;
 	element *suivant;/* adresse du successeur */
 };
-typedef element* liste;
+typedef element* memory;
 
 
-void readMemory(liste *memory);
+void readMemory(memory *memory);
 
-void insertInMemory(int *value8bits, int adresse, liste *memory);
+void insertInMemory(int *value8bits, int adresse, memory *memory);
 
-void getValueFromMemory(int *value8bits, int adresse, liste *memory);
+void getValueFromMemory(int *value8bits, int adresse, memory *memory);
 
-void writeFourOctetsInMemory(int *value32bits, int startAddress, liste *memory);
+void writeFourOctetsInMemory(int *value32bits, int startAddress, memory *memory);
 
-void readFourOctetsInMemory(int *value32bits, int startAddress, liste *memory);
+void readFourOctetsInMemory(int *value32bits, int startAddress, memory *memory);
 
 int addTwoBinaryRegister(int *register1, int *register2, int *destinationRegister);
 
