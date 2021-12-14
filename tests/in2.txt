@@ -1,0 +1,14 @@
+#Dans ce fichier nous avons tout les tests pour les chiffres négatifs mais aussi pour les espaces en trop si il y a des virgules ou pas entre les registres et plein d'autres tests pour éviter que les instructions ne marchent pas si la personne ne respecte pas absolument la syntaxe voulu
+
+
+ADDI $2,$0,355000
+
+
+ADDI  $2 , $0 , -5  
+
+ADDI $2 $0 -5
+
+SW $3,10($0)
+
+SW $3 10( $0 )  #pas d'espaces entre offset et parenthèse
+    SW    $3 , 10(  $0   )   

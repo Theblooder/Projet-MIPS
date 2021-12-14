@@ -1,4 +1,6 @@
-ADDI $2,$0,5
+#même que le fichier de test donnée sur chamilo
+
+ADDI $2,$0,-5
    ADDI $3,$0,7
 
 # some comment

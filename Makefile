@@ -1,4 +1,4 @@
-BIN = prog
+BIN = emul-mips
 TAR = defalt_name
 
 SRC = $(wildcard *.c)
@@ -15,7 +15,9 @@ CC = gcc
 
 
 all: $(BIN)
-	./$< in1.txt
+	./$< in2.txt exa1.txt
+
+exe: $(BIN)
 
 debug: $(BIN)                 # J'ai rajouter une option pour faire l'executable tout en l'executant avec le debugger ddd
 	ddd $<

@@ -49,7 +49,12 @@ int instructionValue(const char *instruction, int *tabValues, char *operation)
                 temp++;
             }
             /*We can go throw all the part of the instruction */
-            i += lengthValue;
+            if(instruction[temp+1] == ' ' && instruction[temp+2] == ',') {
+                i = temp + 1;
+            }
+            else {
+                i = temp;
+            }
 
             /* Add the value to the list */
             tabValues[indiceValue] = 0;
@@ -69,6 +74,7 @@ int instructionValue(const char *instruction, int *tabValues, char *operation)
             operation[indiceStartInstruction++] = instruction[i];
             indiceEndInstruction = i+1;
         }
+        /* For NOP operation */
         if(instruction[i+1] == '\0') {
             operation[indiceEndInstruction] = '\0';
         }
@@ -155,8 +161,8 @@ int createBinaryInstruction(char *operation, int *tabValue, int *binaireInstruct
     else if(testTexte(operation, "SYSCALL"))  binarySYSCALL(tabValue, binaireInstruction);
     else if(testTexte(operation, "XOR"))      binaryXOR(tabValue, binaireInstruction);
     else {
-        printf("Opération non reconnu\n");
-        return -1;
+        //printf("Opération non reconnu\n");
+        return 1;
     }
 
     int temp;
@@ -192,18 +198,23 @@ int putToValue(int *binaireInstruction, int start, int value)
         value *= -1;
     }
 
-    for(i=start; value>0; i++) {  
+    for(i=start; value>0; i++) {
         binaireInstruction[i] = value % 2;  
         value = value / 2;  
     }
     if(isSigned)
     {
-        for(i=start; i<start+16; i++)  
+        for(i=start; i<start+16; i++)  /* 16 is the number of bits for the immediates values */
         {
-            if (binaireInstruction[i] == 0)
-                binaireInstruction[i] = 1;
-            else binaireInstruction[i] = 0;
+            binaireInstruction[i] ^= 1;
         }
+        /* complement to 2 */
+        i = 0;
+        while(binaireInstruction[i] != 0) {
+            binaireInstruction[i] = 0;
+            i++;
+        }
+        binaireInstruction[i] = 1;
     }
     
     return 0;
@@ -227,13 +238,13 @@ int displayBinary(int *binaireInstruction)
 int displayHexadecimal(int *hexadecimalInstruction)
 {
     int i;
-    printf("Hexadecimal :");
+    //printf("Hexadecimal :");
     for(i=0; i<=7; i++)  
     {  
         if(i%2 == 0) printf(" ");
         printf("%x", hexadecimalInstruction[i]);  
     }
-    printf("\n");
+    //printf("\n");
 
     return 0;
 }
