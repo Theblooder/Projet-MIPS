@@ -83,100 +83,132 @@ int main(int argc, char * argv[])
 
 	// // printf("\n");
 
-	if(argc <= 2) {
-		printf("Erreur : veuillez rentrer un fichier d'entrée et de sortie\n");
-		exit(0);
-	}
 
-	FILE *inputFile;	
-	char inputFilename[32];
-	char *PathTests = "tests/";
-	strcpy(inputFilename, PathTests);
-	strcat(inputFilename, argv[1]);
 
-	inputFile = fopen(inputFilename, "r");
-	if(inputFile == NULL) {
-		perror("Probleme ouverture du fichier test");
-		exit(0);
-	}
 
-	FILE *outputFile;
-	char outputFilename[32];
-	char *PathHexified = "hexified/";
-	strcpy(outputFilename, PathHexified);
-	strcat(outputFilename, argv[2]);
 
-	outputFile = fopen(outputFilename, "w");
-	if(outputFile == NULL) {
-		perror("Probleme ouverture du fichier hexified");
-		exit(0);
-	}
-
-	char charInstruction;
-	char instruction[64];
-
-	int cmptChar = 0;
-	int isOneSpaceChar = 0;
-	int insNotBegin = 1;
-	int numberOfRow = 1;
-
-	while(!feof(inputFile)) {
-		fscanf(inputFile, "%c", &charInstruction);
+	memory RAM = NULL;
+	Register tableRegister[32] = {0} ;
 	
-		if(charInstruction == '\n' || feof(inputFile)) {
-			instruction[cmptChar] = '\0';
-			cmptChar = 0;
+	int value = 30;
+	int i;
 
-			if(!isStringFullOfSpaces(instruction) && !isBeginWithCommentCharBeforeAnyCharOtherThanSpace(instruction)) {
-				int binaireInstruction[32] = {0};
-				int hexadecimalInstruction[8] = {0};
-				char operation[10];
-				int values[3];
+	for(i=0; value>0; i++) {
+        tableRegister[4].registre[i] = value % 2;  
+        value = value / 2;  
+    }
+	value = 40;
+	for(i=0; value>0; i++) {
+        tableRegister[0].registre[i] = value % 2;  
+        value = value / 2;  
+    }
+	
+	int binaireInstruction2[32] = {0};
+	int binaire3[32] = {0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0};
+	writeFourOctetsInMemory(binaire3, 0, &RAM);
+	readAndDecodeInstruction(0,binaireInstruction2, tableRegister, &RAM);
 
-				instructionValue(instruction, values, operation);
-				// printf("%s\n", operation);
-				// printf("%d\n", values[0]);
-				// printf("%d\n", values[1]);
-				// printf("%d\n", values[2]);
 
-				if(!createBinaryInstruction(operation, values, binaireInstruction)) {
-					convertBinaireIntoHex(binaireInstruction, hexadecimalInstruction);
+
+
+
+
+	// if(argc <= 2) {
+	// 	printf("Erreur : veuillez rentrer un fichier d'entrée et de sortie\n");
+	// 	exit(0);
+	// }
+
+	// FILE *inputFile;	
+	// char inputFilename[32];
+	// char *PathTests = "tests/";
+	// strcpy(inputFilename, PathTests);
+	// strcat(inputFilename, argv[1]);
+
+	// inputFile = fopen(inputFilename, "r");
+	// if(inputFile == NULL) {
+	// 	perror("Probleme ouverture du fichier test");
+	// 	exit(0);
+	// }
+
+	// FILE *outputFile;
+	// char outputFilename[32];
+	// char *PathHexified = "hexified/";
+	// strcpy(outputFilename, PathHexified);
+	// strcat(outputFilename, argv[2]);
+
+	// outputFile = fopen(outputFilename, "w");
+	// if(outputFile == NULL) {
+	// 	perror("Probleme ouverture du fichier hexified");
+	// 	exit(0);
+	// }
+
+	// char charInstruction;
+	// char instruction[64];
+
+	// char registres[32] = {0};
+
+	// int cmptChar = 0;
+	// int isOneSpaceChar = 0;
+	// int insNotBegin = 1;
+	// int numberOfRow = 1;
+
+	// while(!feof(inputFile)) {
+	// 	fscanf(inputFile, "%c", &charInstruction);
+	
+	// 	if(charInstruction == '\n' || feof(inputFile)) {
+	// 		instruction[cmptChar] = '\0';
+	// 		cmptChar = 0;
+
+	// 		if(!isStringFullOfSpaces(instruction) && !isBeginWithCommentCharBeforeAnyCharOtherThanSpace(instruction)) {
+	// 			int binaireInstruction[32] = {0};
+	// 			int hexadecimalInstruction[8] = {0};
+	// 			char operation[10];
+	// 			int values[3];
+
+	// 			instructionValue(instruction, values, operation);
+	// 			// printf("%s\n", operation);
+	// 			// printf("%d\n", values[0]);
+	// 			// printf("%d\n", values[1]);
+	// 			// printf("%d\n", values[2]);
+
+	// 			if(!createBinaryInstruction(operation, values, binaireInstruction)) {
+	// 				convertBinaireIntoHex(binaireInstruction, hexadecimalInstruction);
 		
-					//displayBinary(binaireInstruction);
+	// 				//displayBinary(binaireInstruction);
 			
-					displayHexadecimal(hexadecimalInstruction);
-					printf(" : {%s}\n", instruction);
+	// 				displayHexadecimal(hexadecimalInstruction);
+	// 				printf(" : {%s}\n", instruction);
 
-					/* writing exa in output file */
-					for(int i=0; i<8; i++) {
-						fprintf(outputFile, "%x", hexadecimalInstruction[i]);
-					}
-					fputc('\n', outputFile);
-				}
-				else {
-					printf("Erreur de syntaxe ligne : %d\n", numberOfRow);
-					break;
-				}
-			}
-			numberOfRow++;
-		}
-		else if(charInstruction == ' ' && (isOneSpaceChar || insNotBegin)){
-			1 == 1;
-		}
-		else if(cmptChar <= 62){
-			instruction[cmptChar++] = charInstruction;
-			insNotBegin = 0;
-		}
+	// 				/* writing exa in output file */
+	// 				for(int i=0; i<8; i++) {
+	// 					fprintf(outputFile, "%x", hexadecimalInstruction[i]);
+	// 				}
+	// 				fputc('\n', outputFile);
+	// 			}
+	// 			else {
+	// 				printf("Erreur de syntaxe ligne : %d\n", numberOfRow);
+	// 				break;
+	// 			}
+	// 		}
+	// 		numberOfRow++;
+	// 	}
+	// 	else if(charInstruction == ' ' && (isOneSpaceChar || insNotBegin)){
+	// 		1 == 1;
+	// 	}
+	// 	else if(cmptChar <= 62){
+	// 		instruction[cmptChar++] = charInstruction;
+	// 		insNotBegin = 0;
+	// 	}
 
-		if(charInstruction == ' ') {
-			isOneSpaceChar = 1;
-		}
-		else {isOneSpaceChar = 0;}
+	// 	if(charInstruction == ' ') {
+	// 		isOneSpaceChar = 1;
+	// 	}
+	// 	else {isOneSpaceChar = 0;}
 
-	}
+	// }
 
-	fclose(inputFile);
-	fclose(outputFile);
+	// fclose(inputFile);
+	// fclose(outputFile);
 
 	return 0;
 }

@@ -10,6 +10,20 @@ struct element {
 };
 typedef element* memory;
 
+// typedef struct Register Register;
+
+// struct Register {
+// 	int registre[32];
+// };
+// typedef Register* tableRegister[32];
+typedef struct Register Register;
+
+struct Register {
+	int registre[32];
+};
+
+
+
 
 void readMemory(memory *memory);
 
@@ -24,5 +38,19 @@ void readFourOctetsInMemory(int *value32bits, int startAddress, memory *memory);
 int addTwoBinaryRegister(int *register1, int *register2, int *destinationRegister);
 
 int subTwoBinaryRegister(int *register1, int *register2, int *destinationRegister);
+
+void readAndDecodeInstruction(int Sp,int *binaireInstruction, Register *tableRegister, memory *m);
+
+void readInstructionInMemory(int Sp,int *binaireInstruction,memory *memory);
+
+int decodeInstruction(int *binaireInstruction);
+
+int executeTheGoodOperation(int Operation, int *binaireInstruction, Register *tableRegister);
+
+int returnArgument(int *binaireInstruction, int start, int end);
+
+void ADD_Operation(int *binaireInstruction, Register *tableRegister);
+
+void ADDI_Operation(int *binaireInstruction,Register *tableRegistesr);
 
 #endif
