@@ -94,20 +94,23 @@ int main(int argc, char * argv[])
 	int i;
 
 	for(i=0; value>0; i++) {
-        tableRegister[4].registre[i] = value % 2;  
+        tableRegister[1].registre[i] = value % 2;  
         value = value / 2;  
     }
-	value = 40;
+	value = 55;
 	for(i=0; value>0; i++) {
-        tableRegister[0].registre[i] = value % 2;  
+        tableRegister[2].registre[i] = value % 2;  
         value = value / 2;  
     }
 	
 	int binaireInstruction2[32] = {0};
-	int binaire3[32] = {0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0};
+	//int binaire3[32] = {0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0}; 	//ADD R01 + R02 --> R04
+	//int binaire3[32] = {0,0,1,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,1,0,0,0};		//ADDI 17412 + R02 --> R04
+	//int binaire3[32] =   {0,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0}; 	//SUB R01 - R02 --> R04
+	//int binaire3[32] =   {0,0,1,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0}; 	//AND R01 & R02 --> R04
+	int binaire3[32] =   {1,0,0,1,0,1,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0};   	//OR  R01 | R02 --> R04
 	writeFourOctetsInMemory(binaire3, 0, &RAM);
 	readAndDecodeInstruction(0,binaireInstruction2, tableRegister, &RAM);
-
 
 
 
