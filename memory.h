@@ -59,8 +59,30 @@ void AND_Operation(int *binaireInstruction,Register *tableRegister);
 
 void OR_Operation(int *binaireInstruction,Register *tableRegister);
 
+void SLL_Operation(int *binaireInstruction,Register *tableRegister);
+
+void SLT_Operation(int *binaireInstruction,Register *tableRegister);
+
+void XOR_Operation(int *binaireInstruction,Register *tableRegister); 
+
+void SRL_Operation(int *binaireInstruction,Register *tableRegister);
+
+void ROTR_Operation(int *binaireInstruction,Register *tableRegister);
+
+void NOP_Operation(int *binaireInstruction,Register *tableRegister);
+
 void andTwoBinaryRegister(int *register1, int *register2, int *destinationRegister);
 
 void orTwoBinaryRegister(int *register1, int *register2, int *destinationRegister);
+
+void sllTwoBinaryRegister(int *register1, int deplacement, int *destinationRegister);
+
+void sltTwoBinaryRegister(int *register1, int *register2, int *destinationRegister);
+
+void xorTwoBinaryRegister(int *register1, int *register2, int *destinationRegister);
+
+void srlTwoBinaryRegister(int *register1, int deplacement, int *destinationRegister);
+
+void rotrTwoBinaryRegister(int *register1, int deplacement, int *destinationRegister);
 
 #endif
