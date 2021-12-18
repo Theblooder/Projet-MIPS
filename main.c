@@ -90,9 +90,9 @@ int main(int argc, char * argv[])
 	memory RAM = NULL;
 	Register tableRegister[32] = {0} ;
 	
-	int value = 30;
-	int i;
-
+	unsigned long long int value = 909005850;
+	int i;						   
+								   
 	for(i=0; value>0; i++) {
         tableRegister[1].registre[i] = value % 2;  
         value = value / 2;  
@@ -126,7 +126,9 @@ int main(int argc, char * argv[])
 	//int binaire3[32] =   {0,1,0,1,0,1,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0};	//SLT R02 < R01 ? --> R04
 	//int binaire3[32] =   {0,1,1,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0};	//XOR R01 XOR R02 --> R04
 	//int binaire3[32] = {0,1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0}; 	//SLL R02 >> 2 --> R04
-	int binaire3[32] = {0,1,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0}; 	//ROTR R02 >> 2 --> R04
+	//int binaire3[32] = {0,1,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0}; 	//ROTR R02 >> 2 --> R04
+	int binaire3[32] = {0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0};
+
 	writeFourOctetsInMemory(binaire3, 0, &RAM);
 	readAndDecodeInstruction(0,binaireInstruction2, tableRegister, &RAM);
 

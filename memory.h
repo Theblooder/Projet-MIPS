@@ -71,6 +71,8 @@ void ROTR_Operation(int *binaireInstruction,Register *tableRegister);
 
 void NOP_Operation(int *binaireInstruction,Register *tableRegister);
 
+void MULT_Operation(int *binaireInstruction,Register *tableRegister);
+
 void andTwoBinaryRegister(int *register1, int *register2, int *destinationRegister);
 
 void orTwoBinaryRegister(int *register1, int *register2, int *destinationRegister);
@@ -84,5 +86,7 @@ void xorTwoBinaryRegister(int *register1, int *register2, int *destinationRegist
 void srlTwoBinaryRegister(int *register1, int deplacement, int *destinationRegister);
 
 void rotrTwoBinaryRegister(int *register1, int deplacement, int *destinationRegister);
+
+void multTwoBinaryRegister(int *register1, int multiplication,Register *tableRegister);
 
 #endif

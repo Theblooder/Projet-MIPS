@@ -170,7 +170,7 @@ int executeTheGoodOperation(int Operation, int *binaireInstruction, Register *ta
 	// else if(Operation == 35)		LW_Operation(Operation, binaireInstruction); 		//LW
 	// else if(Operation == -16)		MFHI_Operation(Operation, binaireInstruction);		//MFHI
 	// else if(Operation == -18)		MFLO_Operation(Operation, binaireInstruction);	 	//MFLO
-	// else if(Operation == -24)		MULT_Operation(Operation, binaireInstruction); 		//MULT
+	else if(Operation == -24)		MULT_Operation(binaireInstruction, tableRegister); 		//MULT
 	else if(Operation == 0)			NOP_Operation(binaireInstruction, tableRegister);		//NOP	//Pareil
 	else if(Operation == -37)		OR_Operation(binaireInstruction, tableRegister); 		//OR
 	else if(Operation == 1000)		ROTR_Operation(binaireInstruction, tableRegister); 		//ROTR 	
@@ -320,10 +320,27 @@ void AND_Operation(int *binaireInstruction,Register *tableRegister)
 
 // }
 
-// void MULT_Operation(int *binaireInstruction, tableRegister *tableRegister)
-// {
+void MULT_Operation(int *binaireInstruction,Register *tableRegister)
+{
+	int registre1 = returnArgument(binaireInstruction,16,21);
+	int registre2 = returnArgument(binaireInstruction,21,26);
 
-// }
+	multTwoBinaryRegister(tableRegister[registre2].registre,registre1,tableRegister);
+
+	int k;
+	printf("R%d * %d --> R26/27\n",registre2,registre1);
+	for(k=31;k>=0;k--)
+	{
+		printf("%d",tableRegister[26].registre[k]);
+	}
+	printf("\n");
+
+	for(k=31;k>=0;k--)
+	{
+		printf("%d",tableRegister[27].registre[k]);
+	}
+	printf("\n");
+}
 
 void NOP_Operation(int *binaireInstruction,Register *tableRegister)
 {
@@ -761,6 +778,38 @@ void rotrTwoBinaryRegister(int *register1, int deplacement, int *destinationRegi
 	{
 		destinationRegister[i] = register1[i];
 	}
+}
+
+void multTwoBinaryRegister(int *register1, int multiplication,Register *tableRegister)
+{
+	int i;
+	int k;
+	unsigned long long int tempValueRegistre1 = 0;
+	for(k=31;k>=0;k--)
+	{
+		printf("%d",register1[k]);
+	}
+	printf("\n");
+	
+	for(i=31;i>=0;i--)
+	{
+		tempValueRegistre1 += (unsigned long long int) (pow(2, i) * register1[i]);
+	}
+	printf("%lld\n",tempValueRegistre1);
+
+	tempValueRegistre1 *= multiplication;
+
+	printf("%lld\n",tempValueRegistre1);
+	
+	for(i=0; tempValueRegistre1>0 && i<32; i++) {
+        tableRegister[26].registre[i] = tempValueRegistre1 % 2;  
+        tempValueRegistre1 = tempValueRegistre1 / 2;  
+    }
+
+	for(i=0; tempValueRegistre1>0; i++) {
+     	tableRegister[27].registre[i] = tempValueRegistre1 % 2;  
+    	tempValueRegistre1 = tempValueRegistre1 / 2;  
+    }
 }
 
 
