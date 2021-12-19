@@ -162,12 +162,12 @@ int executeTheGoodOperation(int Operation, int *binaireInstruction, Register *ta
 	if(Operation == -32)          	ADD_Operation(binaireInstruction, tableRegister); 		//ADD
     else if(Operation == 8)     	ADDI_Operation(binaireInstruction, tableRegister); 		//ADDI
     else if(Operation == -36)		AND_Operation(binaireInstruction, tableRegister);	 	//AND
-    // else if(Operation == 4)			BEQ_Operation(Operation, binaireInstruction); 		//BEQ
-    // else if(Operation == 7)			BGTZ_Operation(Operation, binaireInstruction);	 	//BGTZ
-	// else if(Operation == 6)			BLEZ_Operation(Operation, binaireInstruction);	 	//BLEZ
-	// else if(Operation == 5)			BNE_Operation(Operation, binaireInstruction);	 	//BNE
-	// else if(Operation == -26)		DIV_Operation(Operation, binaireInstruction); 		//DIV
-	else if(Operation == 2)			J_Operation(binaireInstruction, tableRegister); 			//J
+    else if(Operation == 4)			BEQ_Operation(binaireInstruction, tableRegister); 		//BEQ
+    else if(Operation == 7)			BGTZ_Operation(binaireInstruction, tableRegister);	 	//BGTZ
+	else if(Operation == 6)			BLEZ_Operation(binaireInstruction, tableRegister);	 	//BLEZ
+	else if(Operation == 5)			BNE_Operation(binaireInstruction, tableRegister);	 	//BNE
+	else if(Operation == -26)		DIV_Operation(binaireInstruction, tableRegister); 		//DIV
+	else if(Operation == 2)			J_Operation(binaireInstruction, tableRegister); 		//J
 	else if(Operation == 3)			JAL_Operation(binaireInstruction, tableRegister); 		//JAL
 	else if(Operation == -8)		JR_Operation(binaireInstruction, tableRegister);	 	//JR
 	else if(Operation == 15)		LUI_Operation(binaireInstruction, tableRegister); 		//LUI
@@ -175,10 +175,10 @@ int executeTheGoodOperation(int Operation, int *binaireInstruction, Register *ta
 	else if(Operation == -16)		MFHI_Operation(binaireInstruction, tableRegister);		//MFHI
 	else if(Operation == -18)		MFLO_Operation(binaireInstruction, tableRegister);	 	//MFLO
 	else if(Operation == -24)		MULT_Operation(binaireInstruction, tableRegister); 		//MULT
-	else if(Operation == 0)			NOP_Operation(binaireInstruction, tableRegister);		//NOP	//Pareil
+	else if(Operation == 0)			NOP_Operation(binaireInstruction, tableRegister);		//NOP	
 	else if(Operation == -37)		OR_Operation(binaireInstruction, tableRegister); 		//OR
 	else if(Operation == 1000)		ROTR_Operation(binaireInstruction, tableRegister); 		//ROTR 	
-	else if(Operation == 2000)		SLL_Operation(binaireInstruction, tableRegister);	 	//SLL	//Pareil
+	else if(Operation == 2000)		SLL_Operation(binaireInstruction, tableRegister);	 	//SLL	
 	else if(Operation == -42)		SLT_Operation(binaireInstruction, tableRegister);	 	//SLT
 	else if(Operation == -2)		SRL_Operation(binaireInstruction, tableRegister);	 	//SRL	
 	else if(Operation == -34)		SUB_Operation(binaireInstruction, tableRegister);	 	//SUB
@@ -264,30 +264,98 @@ void AND_Operation(int *binaireInstruction,Register *tableRegister)
 	printf("\n");
 }
 
-// void BEQ_Operation(int *binaireInstruction, tableRegister *tableRegister)
-// {
+void BEQ_Operation(int *binaireInstruction,Register *tableRegister)
+{
+	int registre1 = returnArgument(binaireInstruction,0,16);
+	int registre2 = returnArgument(binaireInstruction,16,21);
+	int registre3 = returnArgument(binaireInstruction,21,26);
 
-// }
+	beqTwoBinaryRegister(tableRegister[registre2].registre,tableRegister[registre3].registre,registre1, tableRegister);
 
-// void BGTZ_Operation(int *binaireInstruction, tableRegister *tableRegister)
-// {
+	int i;
 
-// }
+	printf("BEQ R%d = R%d ? --> PC  + %d\n",registre2,registre3,registre1);
+	for(i=31;i>=0;i--)
+	{
+		printf("%d",tableRegister[29].registre[i]);
+	}
+	printf("\n");
+}
 
-// void BLEZ_Operation(int *binaireInstruction, tableRegister *tableRegister)
-// {
+void BGTZ_Operation(int *binaireInstruction,Register *tableRegister)
+{
+	int registre1 = returnArgument(binaireInstruction,0,16);
+	int registre2 = returnArgument(binaireInstruction,21,26);
 
-// }
+	bgtzTwoBinaryRegister(tableRegister[registre2].registre,registre1, tableRegister);
 
-// void BNE_Operation(int *binaireInstruction, tableRegister *tableRegister)
-// {
+	int i;
 
-// }
+	printf("BGTZ R%d > 0 ? --> PC  + %d\n",registre2,registre1);
+	for(i=31;i>=0;i--)
+	{
+		printf("%d",tableRegister[29].registre[i]);
+	}
+	printf("\n");
+}
 
-// void DIV_Operation(int *binaireInstruction, tableRegister *tableRegister)
-// {
+void BLEZ_Operation(int *binaireInstruction,Register *tableRegister)
+{
+	int registre1 = returnArgument(binaireInstruction,0,16);
+	int registre2 = returnArgument(binaireInstruction,21,26);
 
-// }
+	blezTwoBinaryRegister(tableRegister[registre2].registre,registre1, tableRegister);
+
+	int i;
+
+	printf("BLEZ R%d <= 0 ? --> PC  + %d\n",registre2,registre1);
+	for(i=31;i>=0;i--)
+	{
+		printf("%d",tableRegister[29].registre[i]);
+	}
+	printf("\n");
+}
+
+void BNE_Operation(int *binaireInstruction,Register *tableRegister)
+{
+	int registre1 = returnArgument(binaireInstruction,0,16);
+	int registre2 = returnArgument(binaireInstruction,16,21);
+	int registre3 = returnArgument(binaireInstruction,21,26);
+
+	bneTwoBinaryRegister(tableRegister[registre2].registre,tableRegister[registre3].registre,registre1, tableRegister);
+
+	int i;
+
+	printf("BNE R%d != R%d ? --> PC  + %d\n",registre2,registre3,registre1);
+	for(i=31;i>=0;i--)
+	{
+		printf("%d",tableRegister[29].registre[i]);
+	}
+	printf("\n");
+}
+
+void DIV_Operation(int *binaireInstruction,Register *tableRegister)
+{
+	int registre1 = returnArgument(binaireInstruction,16,21);
+	int registre2 = returnArgument(binaireInstruction,21,26);
+
+	divTwoBinaryRegister(tableRegister[registre2].registre,tableRegister[registre2].registre, tableRegister);
+
+	int i;
+
+	printf("DIV R%d / R%d --> R26/27\n",registre2,registre1);
+	for(i=31;i>=0;i--)
+	{
+		printf("%d",tableRegister[26].registre[i]);
+	}
+	printf("\n");
+
+	for(i=31;i>=0;i--)
+	{
+		printf("%d",tableRegister[27].registre[i]);
+	}
+	printf("\n");
+}
 
 void J_Operation(int *binaireInstruction,Register *tableRegister)
 {
@@ -1019,4 +1087,192 @@ void jTwoBinaryRegister(int register1,Register *tableRegister)
     }
 
 	sllTwoBinaryRegister(newSpRegister,2,tableRegister[29].registre);
+}
+
+void bneTwoBinaryRegister(int *register1, int *register2, int offset,  Register *tableRegister)
+{
+	int i;
+	int k;
+	int tempValueRegistre1 = 0;
+	int tempValueRegistre2 = 0;
+	int tempValueoffset[32] = {0};
+
+	for(k=31;k>=0;k--)
+	{
+		printf("%d",register1[k]);
+	}
+	printf("\n");
+
+	for(k=31;k>=0;k--)
+	{
+		printf("%d",register2[k]);
+	}
+	printf("\n");
+	
+	for(i=30;i>=0;i--)
+	{
+		tempValueRegistre1 += (unsigned long long int) (pow(2, i) * register1[i]);
+		tempValueRegistre2 += (unsigned long long int) (pow(2, i) * register2[i]);
+	}
+
+	if(register1[31] == 1) tempValueRegistre1 *= -1;
+	if(register2[31] == 1) tempValueRegistre2 *= -1;
+
+	if (tempValueRegistre1 != tempValueRegistre2)
+	{
+		for(i=0; offset>0; i++) {
+        tempValueoffset[i] = offset % 2;  
+        offset = offset / 2;  
+    	}
+		addTwoBinaryRegister(tableRegister[29].registre,tempValueoffset,tableRegister[29].registre);
+	}
+	
+}	
+
+void bgtzTwoBinaryRegister(int *register1, int offset,  Register *tableRegister)
+{
+	int i;
+	int k;
+	int tempValueRegistre1 = 0;
+	int tempValueoffset[32] = {0};
+
+	for(k=31;k>=0;k--)
+	{
+		printf("%d",register1[k]);
+	}
+	printf("\n");
+	
+	for(i=30;i>=0;i--)
+	{
+		tempValueRegistre1 += (unsigned long long int) (pow(2, i) * register1[i]);
+	}
+
+	if(register1[31] == 1) tempValueRegistre1 *= -1;
+
+	if (tempValueRegistre1 > 0)
+	{
+		for(i=0; offset>0; i++) {
+        tempValueoffset[i] = offset % 2;  
+        offset = offset / 2;  
+    	}
+		addTwoBinaryRegister(tableRegister[29].registre,tempValueoffset,tableRegister[29].registre);
+	}
+	
+}	
+
+void blezTwoBinaryRegister(int *register1, int offset,  Register *tableRegister)
+{
+	int i;
+	int k;
+	int tempValueRegistre1 = 0;
+	int tempValueoffset[32] = {0};
+
+	for(k=31;k>=0;k--)
+	{
+		printf("%d",register1[k]);
+	}
+	printf("\n");
+	
+	for(i=30;i>=0;i--)
+	{
+		tempValueRegistre1 += (unsigned long long int) (pow(2, i) * register1[i]);
+	}
+
+	if(register1[31] == 1) tempValueRegistre1 *= -1;
+
+	if (tempValueRegistre1 <= 0)
+	{
+		for(i=0; offset>0; i++) {
+        tempValueoffset[i] = offset % 2;  
+        offset = offset / 2;  
+    	}
+		addTwoBinaryRegister(tableRegister[29].registre,tempValueoffset,tableRegister[29].registre);
+	}
+	
+}	
+
+void beqTwoBinaryRegister(int *register1, int *register2, int offset,  Register *tableRegister)
+{
+	int i;
+	int k;
+	int tempValueRegistre1 = 0;
+	int tempValueRegistre2 = 0;
+	int tempValueoffset[32] = {0};
+
+	for(k=31;k>=0;k--)
+	{
+		printf("%d",register1[k]);
+	}
+	printf("\n");
+
+	for(k=31;k>=0;k--)
+	{
+		printf("%d",register2[k]);
+	}
+	printf("\n");
+	
+	for(i=30;i>=0;i--)
+	{
+		tempValueRegistre1 += (unsigned long long int) (pow(2, i) * register1[i]);
+		tempValueRegistre2 += (unsigned long long int) (pow(2, i) * register2[i]);
+	}
+
+	if(register1[31] == 1) tempValueRegistre1 *= -1;
+	if(register2[31] == 1) tempValueRegistre2 *= -1;
+
+	if (tempValueRegistre1 == tempValueRegistre2)
+	{
+		for(i=0; offset>0; i++) {
+        tempValueoffset[i] = offset % 2;  
+        offset = offset / 2;  
+    	}
+		addTwoBinaryRegister(tableRegister[29].registre,tempValueoffset,tableRegister[29].registre);
+	}
+	
+}	
+
+void divTwoBinaryRegister(int *register1, int *register2,Register *tableRegister)
+{
+	int i;
+	int k;
+	int tempValueRegistre1 = 0;
+	int tempValueRegistre2 = 0;
+	int quotient;
+	int remainder;
+	float resultValue;
+
+	for(k=31;k>=0;k--)
+	{
+		printf("%d",register1[k]);
+	}
+	printf("\n");
+
+	for(k=31;k>=0;k--)
+	{
+		printf("%d",register2[k]);
+	}
+	printf("\n");
+	
+	for(i=30;i>=0;i--)
+	{
+		tempValueRegistre1 += (unsigned long long int) (pow(2, i) * register1[i]);
+		tempValueRegistre2 += (unsigned long long int) (pow(2, i) * register2[i]);
+	}
+
+	if(register1[31] == 1) tempValueRegistre1 *= -1;
+	if(register2[31] == 1) tempValueRegistre2 *= -1;
+
+	resultValue = tempValueRegistre1 / tempValueRegistre2;
+	quotient = (int) resultValue;
+	remainder = tempValueRegistre1 % tempValueRegistre2;
+	
+	for(i=0; quotient>0 && i<32; i++) {
+        tableRegister[26].registre[i] = quotient % 2;  
+        quotient = quotient / 2;  
+    }
+
+	for(i=0; remainder>0; i++) {
+     	tableRegister[27].registre[i] = remainder % 2;  
+    	remainder = remainder / 2;  
+    }
 }
