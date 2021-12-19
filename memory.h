@@ -45,7 +45,7 @@ void readInstructionInMemory(int Sp,int *binaireInstruction,memory *memory);
 
 int decodeInstruction(int *binaireInstruction);
 
-int executeTheGoodOperation(int Operation, int *binaireInstruction, Register *tableRegister);
+int executeTheGoodOperation(int Operation, int *binaireInstruction, Register *tableRegister,  memory *m);
 
 int returnArgument(int *binaireInstruction, int start, int end);
 
@@ -73,6 +73,22 @@ void NOP_Operation(int *binaireInstruction,Register *tableRegister);
 
 void MULT_Operation(int *binaireInstruction,Register *tableRegister);
 
+void MFHI_Operation(int *binaireInstruction,Register *tableRegister);
+
+void MFLO_Operation(int *binaireInstruction,Register *tableRegister);
+
+void SW_Operation(int *binaireInstruction,Register *tableRegister, memory *m);
+
+void LW_Operation(int *binaireInstruction,Register *tableRegister, memory *m);
+
+void LUI_Operation(int *binaireInstruction,Register *tableRegister);
+
+void JAL_Operation(int *binaireInstruction,Register *tableRegister);
+
+void JR_Operation(int *binaireInstruction,Register *tableRegister);
+
+void J_Operation(int *binaireInstruction,Register *tableRegister);
+
 void andTwoBinaryRegister(int *register1, int *register2, int *destinationRegister);
 
 void orTwoBinaryRegister(int *register1, int *register2, int *destinationRegister);
@@ -88,5 +104,21 @@ void srlTwoBinaryRegister(int *register1, int deplacement, int *destinationRegis
 void rotrTwoBinaryRegister(int *register1, int deplacement, int *destinationRegister);
 
 void multTwoBinaryRegister(int *register1, int multiplication,Register *tableRegister);
+
+void mfhiTwoBinaryRegister(int *destinationRegister, Register *tableRegister);
+
+void mfloTwoBinaryRegister(int *destinationRegister, Register *tableRegister);
+
+void swTwoBinaryRegister(int *register1, int register2, int *destinationRegister,  memory *m);
+
+void ldTwoBinaryRegister(int *register1, int register2, int *destinationRegister,  memory *m);
+
+void luiTwoBinaryRegister(int register1, int *destinationRegister);
+
+void jalTwoBinaryRegister(int register1,Register *tableRegister);
+
+void jrTwoBinaryRegister(int *register1,Register *tableRegister);
+
+void jTwoBinaryRegister(int register1,Register *tableRegister);
 
 #endif
