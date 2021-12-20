@@ -6,6 +6,7 @@ typedef struct element element;
 struct element {
 	int valeur[8];/* valeur de l’élément */
 	int adress;
+	int type; //Text or data (instruction or data)
 	element *suivant;/* adresse du successeur */
 };
 typedef element* memory;
@@ -27,17 +28,15 @@ struct Register {
 
 void readMemory(memory *memory);
 
-void insertInMemory(int *value8bits, int adresse, memory *memory);
+void insertInMemory(int *value8bits, int adresse, int type, memory *m);
 
 void getValueFromMemory(int *value8bits, int adresse, memory *memory);
 
-void writeFourOctetsInMemory(int *value32bits, int startAddress, memory *memory);
+void writeFourOctetsInMemory(int *value32bits, int startAddress, int type, memory *memory);
 
 void readFourOctetsInMemory(int *value32bits, int startAddress, memory *memory);
 
-int addTwoBinaryRegister(int *register1, int *register2, int *destinationRegister);
-
-int subTwoBinaryRegister(int *register1, int *register2, int *destinationRegister);
+void convertInToBinnary(int value, int *destinationRegister);
 
 void readAndDecodeInstruction(int Sp,int *binaireInstruction, Register *tableRegister, memory *m);
 
@@ -98,6 +97,10 @@ void BLEZ_Operation(int *binaireInstruction,Register *tableRegister);
 void BEQ_Operation(int *binaireInstruction,Register *tableRegister);
 
 void DIV_Operation(int *binaireInstruction,Register *tableRegister);
+
+int addTwoBinaryRegister(int *register1, int *register2, int *destinationRegister);
+
+int subTwoBinaryRegister(int *register1, int *register2, int *destinationRegister);
 
 void andTwoBinaryRegister(int *register1, int *register2, int *destinationRegister);
 
