@@ -17,7 +17,7 @@ int main(int argc, char * argv[])
 								   
 	for(i=0; value>0; i++) {
         tableRegister[1].registre[i] = value % 2;  
-        value = value / 2;  
+        value = value / 2;
     }
 	value = 4147483649;
 	for(i=0; value>0; i++) {
