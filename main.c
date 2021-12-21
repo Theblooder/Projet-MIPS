@@ -10,7 +10,7 @@ int main(int argc, char * argv[])
 {
 
 	memory RAM = NULL;
-	Register tableRegister[32] = {0} ;
+	Register tableRegister[35] = {0} ;
 	
 	unsigned long long int value = 4147483649;                          /* 2147483647 max value for 32 bits and -2147483648 min value for 32 bits */
 	int i;						   
@@ -172,7 +172,7 @@ int main(int argc, char * argv[])
 	// 	{
 	// 		PC += (unsigned long long int) (pow(2, i) * tableRegister[32].registre[i]);
 	// 	}
-	// 	readAndDecodeInstruction(PC,binaireInstruction2, tableRegister, &RAM);
+	// 	readAndDecodeInstruction(PC, tableRegister, &RAM);
 	// 	printf("\n");
 	// }
 

@@ -6,7 +6,7 @@ typedef struct element element;
 struct element {
 	int valeur[8];/* valeur de l’élément */
 	int adress;
-	int type; //Text or data (instruction or data)
+	int type; //Text or data (instruction or data) 0:data   1:instruction
 	element *suivant;/* adresse du successeur */
 };
 typedef element* memory;

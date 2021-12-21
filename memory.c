@@ -176,6 +176,7 @@ int decodeInstruction(int *binaireInstruction)
 	{
 		if(binaireInstruction[21] == 1) Operation = 1000;
 	}
+
 	else if(Operation == 0)
 	{
 		for(i=31; i>=0 && null == 1; i--)
@@ -220,7 +221,7 @@ int executeTheGoodOperation(int Operation, int *binaireInstruction, Register *ta
 	// else if(Operation == -12)	SYSCALL_Operation(binaireInstruction, tableRegister); 	//SYSCALL
 	else if(Operation == -38)		XOR_Operation(binaireInstruction, tableRegister); 		//XOR
     else {	
-        printf("Opération non reconnu dans le décodage par la lecture fichier\n");
+        printf("Opération non reconnu dans le décodage pas la lecture fichier\n");
         return 1;
     }
 }

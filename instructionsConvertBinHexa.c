@@ -165,15 +165,6 @@ int createBinaryInstruction(char *operation, int *tabValue, int *binaireInstruct
         return 1;
     }
 
-    int temp;
-    int k;
-
-    for(k=0; k<16; k++) {
-        temp = binaireInstruction[k];
-        binaireInstruction[k] = binaireInstruction[31-k];
-        binaireInstruction[31-k] = temp;
-    }
-
     return 0;
 }
 
