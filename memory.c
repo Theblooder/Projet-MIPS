@@ -144,9 +144,9 @@ void readAndDecodeInstruction(int Sp, Register *tableRegister, memory *m)
 	// printf("\n");
 
 }
-void readInstructionInMemory(int Sp,int *binaireInstruction, memory *m)
+void readInstructionInMemory(int Sp, int *binaireInstruction, memory *m)
 {
-	readFourOctetsInMemory(binaireInstruction,Sp,m);
+	readFourOctetsInMemory(binaireInstruction, Sp, m);
 }
 
 int decodeInstruction(int *binaireInstruction)
@@ -155,7 +155,7 @@ int decodeInstruction(int *binaireInstruction)
 	int i;
 	int null = 1;
 
-	for(i=5;i>=0;i--)
+	for(i=5; i>=0; i--)
 	{
 		Operation = Operation + ((int) pow(2, i) * binaireInstruction[31-i]);
 	}
@@ -178,7 +178,7 @@ int decodeInstruction(int *binaireInstruction)
 	}
 	else if(Operation == 0)
 	{
-		for(i=31;i>=0 && null == 1;i--)
+		for(i=31; i>=0 && null == 1; i--)
 		{
 			if(binaireInstruction[i]!=0)
 			{
@@ -230,9 +230,9 @@ int returnArgument(int *binaireInstruction, int start, int end)
 	int i;
 	int j = 0;
 	int argument = 0;
-	for(i=start;i<end;i++)
+	for(i=start; i<end; i++)
 	{
-		argument += ((int) pow(2, j) * binaireInstruction[i]); 
+		argument += (int) (pow(2, j) * binaireInstruction[i]); 
 		j++;
 	}
 	return argument;
