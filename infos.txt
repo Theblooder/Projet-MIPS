@@ -18,6 +18,31 @@ Pour la mémmoire :
     - et une fonction qui lit les donnée dans la mémoire
 
 
+<<<<<<< HEAD
+=======
+memory RAM = NULL;
+	Register tableRegister[32] = {0} ;
+	
+	unsigned long long int value = 4147483649;                          /* 2147483647 max value for 32 bits and -2147483648 min value for 32 bits */
+	int i;						   
+								   
+	for(i=0; value>0; i++) {
+        tableRegister[1].registre[i] = value % 2;  
+        value = value / 2;  
+    }
+	value = 4147483649;
+	for(i=0; value>0; i++) {
+        tableRegister[2].registre[i] = value % 2;  
+        value = value / 2;  
+    }
+
+	value = 0;
+	for(i=0; value>0; i++) {
+        tableRegister[4].registre[i] = value % 2;  
+        value = value / 2;  
+    }
+
+>>>>>>> 0fdeed4 (maj)
 writeFourOctetsInMemory(binaire3, 0, &RAM);
 	readAndDecodeInstruction(0, tableRegister, &RAM);
 
