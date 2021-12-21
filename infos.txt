@@ -16,3 +16,4 @@ Pour la mémmoire :
     - il faut faire une fonction qui pourras écrire dans la mémoire en lui donnant les arguments (adresse et valeur) si on écrit dans la mémoire alors on crée un nouveau morceau dans notre structure de liste
 
     - et une fonction qui lit les donnée dans la mémoire
+

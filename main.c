@@ -10,22 +10,22 @@ int main(int argc, char * argv[])
 {
 
 	memory RAM = NULL;
-	Register tableRegister[35] = {0} ;
+	Register tableRegister[32] = {0} ;
 	
-	unsigned long long int value = 30;
+	unsigned long long int value = 4147483649;                          /* 2147483647 max value for 32 bits and -2147483648 min value for 32 bits */
 	int i;						   
 								   
 	for(i=0; value>0; i++) {
         tableRegister[1].registre[i] = value % 2;  
         value = value / 2;  
     }
-	value = 60;
+	value = 4147483649;
 	for(i=0; value>0; i++) {
         tableRegister[2].registre[i] = value % 2;  
         value = value / 2;  
     }
 
-	value = 16;
+	value = 0;
 	for(i=0; value>0; i++) {
         tableRegister[4].registre[i] = value % 2;  
         value = value / 2;  
@@ -33,8 +33,8 @@ int main(int argc, char * argv[])
 	
 	int binaireInstruction2[32] = {0};
 
-	//int binaire3[32] = {0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0}; 	//	ADD  R01 + R02 --> R04
-	int binaire3[32] = {0,0,1,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,1,0,0,0};		//	ADDI 17412 + R02 --> R04
+	int binaire3[32] = {0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0}; 	//	ADD  R01 + R02 --> R04
+	//int binaire3[32] = {0,0,1,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,1,0,0,0};		//	ADDI 17412 + R02 --> R04
 	//int binaire3[32] = {0,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0}; 	//	SUB  R01 - R02 --> R04
 	//int binaire3[32] = {0,0,1,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0}; 	//	AND  R01 & R02 --> R04
 	//int binaire3[32] = {1,0,1,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0};   	//	OR   R01 | R02 --> R04
@@ -59,7 +59,7 @@ int main(int argc, char * argv[])
 	//int binaire3[32] = {0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0};		//	DIV R2/R4 --> R26/27	
 
 	writeFourOctetsInMemory(binaire3, 0, 0, &RAM);
-    readAndDecodeInstruction(0,binaireInstruction2, tableRegister, &RAM);
+    readAndDecodeInstruction(0, tableRegister, &RAM);
 
 
 	// if(argc <= 2) {

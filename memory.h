@@ -38,9 +38,9 @@ void readFourOctetsInMemory(int *value32bits, int startAddress, memory *memory);
 
 void convertInToBinnary(int value, int *destinationRegister);
 
-void readAndDecodeInstruction(int Sp,int *binaireInstruction, Register *tableRegister, memory *m);
+void readAndDecodeInstruction(int Sp, Register *tableRegister, memory *m);
 
-void readInstructionInMemory(int Sp,int *binaireInstruction,memory *memory);
+void readInstructionInMemory(int Sp, int *binaireInstruction, memory *memory);
 
 int decodeInstruction(int *binaireInstruction);
 

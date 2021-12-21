@@ -114,8 +114,9 @@ void convertInToBinnary(int value, int *destinationRegister)
     }
 }
 
-void readAndDecodeInstruction(int Sp,int *binaireInstruction, Register *tableRegister, memory *m)
+void readAndDecodeInstruction(int Sp, Register *tableRegister, memory *m)
 {
+	int binaireInstruction[32] = {0};
 	readInstructionInMemory(Sp, binaireInstruction, m);
 
 	// int temp;
@@ -219,7 +220,7 @@ int executeTheGoodOperation(int Operation, int *binaireInstruction, Register *ta
 	// else if(Operation == -12)	SYSCALL_Operation(binaireInstruction, tableRegister); 	//SYSCALL
 	else if(Operation == -38)		XOR_Operation(binaireInstruction, tableRegister); 		//XOR
     else {	
-        printf("Opération non reconnu\n");
+        printf("Opération non reconnu dans le décodage par la lecture fichier\n");
         return 1;
     }
 }
@@ -239,18 +240,18 @@ int returnArgument(int *binaireInstruction, int start, int end)
 
 void ADD_Operation(int *binaireInstruction, Register *tableRegister)
 {
-	int registre1 = returnArgument(binaireInstruction,11,16);
-	int registre2 = returnArgument(binaireInstruction,16,21);
-	int registre3 = returnArgument(binaireInstruction,21,26);
+	int rd = returnArgument(binaireInstruction, 11, 16);
+	int rt = returnArgument(binaireInstruction, 16, 21);
+	int rs = returnArgument(binaireInstruction, 21, 26);
 	
-	addTwoBinaryRegister(tableRegister[registre3].registre,tableRegister[registre2].registre,tableRegister[registre1].registre);
+	addTwoBinaryRegister(tableRegister[rs].registre, tableRegister[rt].registre, tableRegister[rd].registre);
 	
 	
-	printf("R%d + R%d --> R%d\n",registre3,registre2,registre1);
+	printf("R%d + R%d --> R%d\n",rs,rt,rd);
 	int i;
 	for(i=31;i>=0;i--)
 	{
-		printf("%d",tableRegister[registre1].registre[i]);
+		printf("%d",tableRegister[rd].registre[i]);
 	}
 	printf("\n");
 }
@@ -706,7 +707,14 @@ int addTwoBinaryRegister(int *register1, int *register2, int *destinationRegiste
 			carry = 1;
 		}
 	}
-	if(carry == 1)	overflowed = 1;
+	/* To check if overflow */
+	if(register1[31] != register2[31]) {
+		overflowed = 0;
+	}
+	else if(register1[31] != tempRegister[31]) {
+		overflowed = 1;
+	}
+	else {overflowed = 0;}
 	
 	if(overflowed == 0)
 	{
@@ -715,6 +723,9 @@ int addTwoBinaryRegister(int *register1, int *register2, int *destinationRegiste
 			destinationRegister[i] = tempRegister[i];
 		}
 	
+	}
+	else {
+		printf("overflowed\n");
 	}
 	return overflowed;
 }
