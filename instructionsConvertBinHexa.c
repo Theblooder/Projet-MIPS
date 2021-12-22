@@ -253,6 +253,7 @@ int binaryADD(int *tabValue, int *binaireInstruction)
 int binaryADDI(int *tabValue, int *binaireInstruction)
 { 
     putToValue(binaireInstruction,0,tabValue[2]);
+    putToZero(binaireInstruction,16,31);
     putToValue(binaireInstruction,16,tabValue[0]);
     putToValue(binaireInstruction,21,tabValue[1]);
     putToValue(binaireInstruction,26,8);
@@ -271,6 +272,7 @@ int binaryAND(int *tabValue, int *binaireInstruction)
 int binaryBEQ(int *tabValue, int *binaireInstruction)
 { 
     putToValue(binaireInstruction,0,tabValue[2]);
+    putToZero(binaireInstruction,16,31);
     putToValue(binaireInstruction,16,tabValue[1]);
     putToValue(binaireInstruction,21,tabValue[0]);
     putToValue(binaireInstruction,26,4);
@@ -279,6 +281,7 @@ int binaryBEQ(int *tabValue, int *binaireInstruction)
 int binaryBGTZ(int *tabValue, int *binaireInstruction)
 { 
     putToValue(binaireInstruction,0,tabValue[1]);
+    putToZero(binaireInstruction,16,31);
     putToValue(binaireInstruction,16,0);
     putToValue(binaireInstruction,21,tabValue[0]);
     putToValue(binaireInstruction,26,7);
@@ -287,6 +290,7 @@ int binaryBGTZ(int *tabValue, int *binaireInstruction)
 int binaryBLEZ(int *tabValue, int *binaireInstruction)
 { 
     putToValue(binaireInstruction,0,tabValue[1]);
+    putToZero(binaireInstruction,16,31);
     putToValue(binaireInstruction,16,0);
     putToValue(binaireInstruction,21,tabValue[0]);
     putToValue(binaireInstruction,26,6);
@@ -295,6 +299,7 @@ int binaryBLEZ(int *tabValue, int *binaireInstruction)
 int binaryBNE(int *tabValue, int *binaireInstruction)
 { 
     putToValue(binaireInstruction,0,tabValue[2]);
+    putToZero(binaireInstruction,16,31);
     putToValue(binaireInstruction,16,tabValue[1]);
     putToValue(binaireInstruction,21,tabValue[0]);
     putToValue(binaireInstruction,26,5);
@@ -312,12 +317,14 @@ int binaryDIV(int *tabValue, int *binaireInstruction)
 int binaryJ(int *tabValue, int *binaireInstruction)
 { 
     putToValue(binaireInstruction,0,tabValue[0]>>2);
+    putToZero(binaireInstruction,26,31);
     putToValue(binaireInstruction,26,2);
 }
 
 int binaryJAL(int *tabValue, int *binaireInstruction)
 { 
     putToValue(binaireInstruction,0,tabValue[0]>>2);
+    putToZero(binaireInstruction,26,31);
     putToValue(binaireInstruction,26,3);
 }
 
@@ -333,6 +340,7 @@ int binaryJR(int *tabValue, int *binaireInstruction)
 int binaryLUI(int *tabValue, int *binaireInstruction)
 { 
     putToValue(binaireInstruction,0,tabValue[1]);
+    putToZero(binaireInstruction,16,31);
     putToValue(binaireInstruction,16,tabValue[0]);
     putToValue(binaireInstruction,21,0);
     putToValue(binaireInstruction,26,15);
@@ -341,6 +349,7 @@ int binaryLUI(int *tabValue, int *binaireInstruction)
 int binaryLW(int *tabValue, int *binaireInstruction)
 { 
     putToValue(binaireInstruction,0,tabValue[1]);
+    putToZero(binaireInstruction,16,31);
     putToValue(binaireInstruction,16,tabValue[0]);
     putToValue(binaireInstruction,21,tabValue[2]);
     putToValue(binaireInstruction,26,35);
@@ -443,6 +452,7 @@ int binarySUB(int *tabValue, int *binaireInstruction)
 int binarySW(int *tabValue, int *binaireInstruction)
 { 
     putToValue(binaireInstruction,0,tabValue[1]);
+    putToZero(binaireInstruction,16,31);
     putToValue(binaireInstruction,16,tabValue[0]);
     putToValue(binaireInstruction,21,tabValue[2]);
     putToValue(binaireInstruction,26,43);

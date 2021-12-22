@@ -114,10 +114,10 @@ void convertInToBinnary(int value, int *destinationRegister)
     }
 }
 
-void readAndDecodeInstruction(int Sp, Register *tableRegister, memory *m)
+void readAndDecodeInstruction(int address, Register *tableRegister, memory *m)
 {
 	int binaireInstruction[32] = {0};
-	readInstructionInMemory(Sp, binaireInstruction, m);
+	readInstructionInMemory(address, binaireInstruction, m);
 
 	// int temp;
     // int k;
@@ -144,9 +144,9 @@ void readAndDecodeInstruction(int Sp, Register *tableRegister, memory *m)
 	// printf("\n");
 
 }
-void readInstructionInMemory(int Sp, int *binaireInstruction, memory *m)
+void readInstructionInMemory(int address, int *binaireInstruction, memory *m)
 {
-	readFourOctetsInMemory(binaireInstruction, Sp, m);
+	readFourOctetsInMemory(binaireInstruction, address, m);
 }
 
 int decodeInstruction(int *binaireInstruction)
@@ -157,7 +157,7 @@ int decodeInstruction(int *binaireInstruction)
 
 	for(i=5; i>=0; i--)
 	{
-		Operation = Operation + ((int) pow(2, i) * binaireInstruction[31-i]);
+		Operation = Operation + ((int) pow(2, 5-i) * binaireInstruction[31-i]);
 	}
 
 	if (Operation != 0) null = 0;
@@ -188,7 +188,7 @@ int decodeInstruction(int *binaireInstruction)
 			}
 		}
 	}
-	printf("%d\n",Operation);
+	printf("opération = %d\n",Operation);
 	return Operation;
 }
 
