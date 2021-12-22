@@ -322,7 +322,7 @@ int binaryJ(int *tabValue, int *binaireInstruction)
 }
 
 int binaryJAL(int *tabValue, int *binaireInstruction)
-{ 
+{
     putToValue(binaireInstruction,0,tabValue[0]>>2);
     putToZero(binaireInstruction,26,31);
     putToValue(binaireInstruction,26,3);

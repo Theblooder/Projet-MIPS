@@ -248,31 +248,38 @@ void ADD_Operation(int *binaireInstruction, Register *tableRegister)
 	addTwoBinaryRegister(tableRegister[rs].registre, tableRegister[rt].registre, tableRegister[rd].registre);
 	
 	
-	printf("R%d + R%d --> R%d\n",rs,rt,rd);
+	printf("R%d + R%d --> R%d\n", rs, rt, rd);
 	int i;
-	for(i=31;i>=0;i--)
+	for(i=31; i>=0; i--)
 	{
-		printf("%d",tableRegister[rd].registre[i]);
+		printf("%d", tableRegister[rd].registre[i]);
 	}
 	printf("\n");
 }
 
-void ADDI_Operation(int *binaireInstruction,Register *tableRegister)
+void ADDI_Operation(int *binaireInstruction, Register *tableRegister)
 {
-	int registre1 = returnArgument(binaireInstruction,0,16);
-	int registre2 = returnArgument(binaireInstruction,16,21);
-	int registre3 = returnArgument(binaireInstruction,21,26);
+	int rt = returnArgument(binaireInstruction, 16, 21);
+	int rs = returnArgument(binaireInstruction, 21, 26);
 
 	int i;
-	int binaryRegistre1[32]={0};
-	convertInToBinnary(registre1,binaryRegistre1);
+	int immediateValue[32] = {0};
 
-	addTwoBinaryRegister(tableRegister[registre3].registre,binaryRegistre1,tableRegister[registre2].registre);
+	for(i=0; i<16; i++) {
+		immediateValue[i] = binaireInstruction[i];
+	}
+	if(binaireInstruction[15] == 1) {
+		for(i=16; i<32; i++) {
+			immediateValue[i] = 1;
+		}
+	}
 
-	printf(" %d + R%d --> R%d\n",registre1,registre3,registre2);
-	for(i=31;i>=0;i--)
+	addTwoBinaryRegister(tableRegister[rs].registre, immediateValue, tableRegister[rt].registre);
+
+	printf(" %d + R%d --> R%d\n", returnArgument(immediateValue, 0, 32), rs, rt);
+	for(i=31; i>=0; i--)
 	{
-		printf("%d",tableRegister[registre2].registre[i]);
+		printf("%d", tableRegister[rt].registre[i]);
 	}
 	printf("\n");
 }
