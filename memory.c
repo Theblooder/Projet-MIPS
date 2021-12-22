@@ -284,28 +284,28 @@ void ADDI_Operation(int *binaireInstruction, Register *tableRegister)
 	printf("\n");
 }
 
-void AND_Operation(int *binaireInstruction,Register *tableRegister)
+void AND_Operation(int *binaireInstruction, Register *tableRegister)
 {
-	int registre1 = returnArgument(binaireInstruction,11,16);
-	int registre2 = returnArgument(binaireInstruction,16,21);
-	int registre3 = returnArgument(binaireInstruction,21,26);
+	int rd = returnArgument(binaireInstruction, 11, 16);
+	int rt = returnArgument(binaireInstruction, 16, 21);
+	int rs = returnArgument(binaireInstruction, 21, 26);
 
-	andTwoBinaryRegister(tableRegister[registre3].registre,tableRegister[registre2].registre,tableRegister[registre1].registre);
+	andTwoBinaryRegister(tableRegister[rs].registre, tableRegister[rt].registre, tableRegister[rd].registre);
 
 	int i;
-	printf("R%d AND R%d --> R%d\n",registre1,registre3,registre2);
-	for(i=31;i>=0;i--)
+	printf("R%d AND R%d --> R%d\n", rd, rs, rt);
+	for(i=31; i>=0; i--)
 	{
-		printf("%d",tableRegister[registre1].registre[i]);
+		printf("%d", tableRegister[rd].registre[i]);
 	}
 	printf("\n");
 }
 
-void BEQ_Operation(int *binaireInstruction,Register *tableRegister)
+void BEQ_Operation(int *binaireInstruction, Register *tableRegister)
 {
-	int registre1 = returnArgument(binaireInstruction,0,16);
-	int registre2 = returnArgument(binaireInstruction,16,21);
-	int registre3 = returnArgument(binaireInstruction,21,26);
+	int registre1 = returnArgument(binaireInstruction, 0, 16);
+	int registre2 = returnArgument(binaireInstruction, 16, 21);
+	int registre3 = returnArgument(binaireInstruction, 21, 26);
 
 	beqTwoBinaryRegister(tableRegister[registre2].registre,tableRegister[registre3].registre,registre1, tableRegister);
 
@@ -535,19 +535,19 @@ void NOP_Operation(int *binaireInstruction,Register *tableRegister)
 	printf("NOP\n");
 }
 
-void OR_Operation(int *binaireInstruction,Register *tableRegister)
+void OR_Operation(int *binaireInstruction, Register *tableRegister)
 {
-	int registre1 = returnArgument(binaireInstruction,11,16);
-	int registre2 = returnArgument(binaireInstruction,16,21);
-	int registre3 = returnArgument(binaireInstruction,21,26);
+	int rd = returnArgument(binaireInstruction, 11, 16);
+	int rt = returnArgument(binaireInstruction, 16, 21);
+	int rs = returnArgument(binaireInstruction, 21, 26);
 
-	orTwoBinaryRegister(tableRegister[registre3].registre,tableRegister[registre2].registre,tableRegister[registre1].registre);
+	orTwoBinaryRegister(tableRegister[rs].registre, tableRegister[rt].registre, tableRegister[rd].registre);
 
 	int i;
-	printf("R%d OR R%d --> R%d\n",registre1,registre3,registre2);
-	for(i=31;i>=0;i--)
+	printf("R%d OR R%d --> R%d\n", rd, rs, rt);
+	for(i=31; i>=0; i--)
 	{
-		printf("%d",tableRegister[registre1].registre[i]);
+		printf("%d", tableRegister[rd].registre[i]);
 	}
 	printf("\n");
 }
@@ -800,18 +800,18 @@ void andTwoBinaryRegister(int *register1, int *register2, int *destinationRegist
 	int i = 0;
 
 	int k;
-	for(k=31;k>=0;k--)
+	for(k=31; k>=0; k--)
 	{
-		printf("%d",register1[k]);
+		printf("%d", register1[k]);
 	}
 	printf("\n");
-	for(k=31;k>=0;k--)
+	for(k=31; k>=0; k--)
 	{
-		printf("%d",register2[k]);
+		printf("%d", register2[k]);
 	}
 	printf("\n");
 
-	for(i=31;i>=0;i--)
+	for(i=31; i>=0; i--)
 	{
 		destinationRegister[i] = register1[i] & register2[i];
 	}
@@ -822,18 +822,18 @@ void orTwoBinaryRegister(int *register1, int *register2, int *destinationRegiste
 	int i = 0;
 
 	int k;
-	for(k=31;k>=0;k--)
+	for(k=31; k>=0; k--)
 	{
-		printf("%d",register1[k]);
+		printf("%d", register1[k]);
 	}
 	printf("\n");
-	for(k=31;k>=0;k--)
+	for(k=31; k>=0; k--)
 	{
-		printf("%d",register2[k]);
+		printf("%d", register2[k]);
 	}
 	printf("\n");
 
-	for(i=31;i>=0;i--)
+	for(i=31; i>=0; i--)
 	{
 		destinationRegister[i] = register1[i] | register2[i];
 	}
