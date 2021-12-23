@@ -1,3 +1,6 @@
-ADDI $10 $0 -5678
-ADDI $2 $0 11
-OR $1 $2 $10
+ADDI $10 $0 11
+ADDI $2 $0 1
+BGTZ $2 2
+ADDI $2 $0 13
+ADDI $2 $0 14
+ADDI $2 $0 15

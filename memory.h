@@ -48,6 +48,8 @@ int executeTheGoodOperation(int Operation, int *binaireInstruction, Register *ta
 
 int returnArgument(int *binaireInstruction, int start, int end);
 
+void printRegister(int *registre);
+
 void ADD_Operation(int *binaireInstruction, Register *tableRegister);
 
 void ADDI_Operation(int *binaireInstruction,Register *tableRegistesr);
@@ -134,14 +136,14 @@ void jrTwoBinaryRegister(int *register1,Register *tableRegister);
 
 void jTwoBinaryRegister(int register1,Register *tableRegister);
 
-void bneTwoBinaryRegister(int *register1, int *register2, int offset,  Register *tableRegister);
+void bneTwoBinaryRegister(int *register1, int *register2, int offset, Register *tableRegister);
 
-void blezTwoBinaryRegister(int *register1, int offset,  Register *tableRegister);
+void blezTwoBinaryRegister(int *register1, int offset, Register *tableRegister);
 
-void bgtzTwoBinaryRegister(int *register1, int offset,  Register *tableRegister);
+void bgtzOneBinaryRegister(int *register1, int *offset, Register *tableRegister);
 
-void beqTwoBinaryRegister(int *register1, int *register2, int offset,  Register *tableRegister);
+void beqTwoBinaryRegister(int *register1, int *register2, int *offset, Register *tableRegister);
 
-void divTwoBinaryRegister(int *register1, int *register2,Register *tableRegister);
+void divTwoBinaryRegister(int *register1, int *register2, Register *tableRegister);
 
 #endif

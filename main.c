@@ -96,6 +96,7 @@ int main(int argc, char * argv[])
 
 	int PC = 0;
 	int addressInstruction = 0;
+	int numberOfInsructionWritten = 0;
 	int cmptChar = 0;
 	int isOneSpaceChar = 0;
 	int insNotBegin = 1;
@@ -130,7 +131,7 @@ int main(int argc, char * argv[])
 					// printf("\n");
 
 					writeFourOctetsInMemory(binaireInstruction, addressInstruction, 1, &RAM);
-					//printf("dd\n");
+					numberOfInsructionWritten++;
 					addressInstruction += 4;
 
 					displayHexadecimal(hexadecimalInstruction);
@@ -164,16 +165,27 @@ int main(int argc, char * argv[])
 
 	}
 	
-	while(PC < 12)
+	int i;
+	int tempPC = 0;
+	int moreInstruction = 1;
+
+	while(moreInstruction)
 	{
-		// int i;
-		// for(i=31;i>=0;i--)
-		// {
-		// 	PC += (unsigned long long int) (pow(2, i) * tableRegister[32].registre[i]);
-		// }
-		readAndDecodeInstruction(PC, tableRegister, &RAM);
-		printf("\n");
-		PC += 4;
+		i = 0; tempPC = 0;
+
+		for(i=31;i>=0;i--)
+		{
+			tempPC += (unsigned long long int) (pow(2, i) * tableRegister[32].registre[i]);
+		}
+		PC = tempPC;
+
+		if(PC < 4*numberOfInsructionWritten) {
+			readAndDecodeInstruction(PC, tableRegister, &RAM);
+			printf("\n");
+		}
+		else {
+			moreInstruction = 0;
+		}
 	}
 
 
