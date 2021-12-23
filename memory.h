@@ -44,7 +44,7 @@ void readInstructionInMemory(int address, int *binaireInstruction, memory *memor
 
 int decodeInstruction(int *binaireInstruction);
 
-int executeTheGoodOperation(int Operation, int *binaireInstruction, Register *tableRegister,  memory *m);
+int executeTheGoodOperation(int Operation, int *binaireInstruction, Register *tableRegister, memory *m);
 
 int returnArgument(int *binaireInstruction, int start, int end);
 
@@ -52,51 +52,51 @@ void printRegister(int *registre);
 
 void ADD_Operation(int *binaireInstruction, Register *tableRegister);
 
-void ADDI_Operation(int *binaireInstruction,Register *tableRegistesr);
+void ADDI_Operation(int *binaireInstruction, Register *tableRegistesr);
 
-void SUB_Operation(int *binaireInstruction,Register *tableRegister);
+void SUB_Operation(int *binaireInstruction, Register *tableRegister);
 
-void AND_Operation(int *binaireInstruction,Register *tableRegister);
+void AND_Operation(int *binaireInstruction, Register *tableRegister);
 
-void OR_Operation(int *binaireInstruction,Register *tableRegister);
+void OR_Operation(int *binaireInstruction, Register *tableRegister);
 
-void SLL_Operation(int *binaireInstruction,Register *tableRegister);
+void SLL_Operation(int *binaireInstruction, Register *tableRegister);
 
-void SLT_Operation(int *binaireInstruction,Register *tableRegister);
+void SLT_Operation(int *binaireInstruction, Register *tableRegister);
 
-void XOR_Operation(int *binaireInstruction,Register *tableRegister); 
+void XOR_Operation(int *binaireInstruction, Register *tableRegister); 
 
-void SRL_Operation(int *binaireInstruction,Register *tableRegister);
+void SRL_Operation(int *binaireInstruction, Register *tableRegister);
 
 void ROTR_Operation(int *binaireInstruction,Register *tableRegister);
 
 void NOP_Operation(int *binaireInstruction,Register *tableRegister);
 
-void MULT_Operation(int *binaireInstruction,Register *tableRegister);
+void MULT_Operation(int *binaireInstruction, Register *tableRegister);
 
-void MFHI_Operation(int *binaireInstruction,Register *tableRegister);
+void MFHI_Operation(int *binaireInstruction, Register *tableRegister);
 
-void MFLO_Operation(int *binaireInstruction,Register *tableRegister);
+void MFLO_Operation(int *binaireInstruction, Register *tableRegister);
 
-void SW_Operation(int *binaireInstruction,Register *tableRegister, memory *m);
+void SW_Operation(int *binaireInstruction, Register *tableRegister, memory *m);
 
-void LW_Operation(int *binaireInstruction,Register *tableRegister, memory *m);
+void LW_Operation(int *binaireInstruction, Register *tableRegister, memory *m);
 
-void LUI_Operation(int *binaireInstruction,Register *tableRegister);
+void LUI_Operation(int *binaireInstruction, Register *tableRegister);
 
-void JAL_Operation(int *binaireInstruction,Register *tableRegister);
+void JAL_Operation(int *binaireInstruction, Register *tableRegister);
 
-void JR_Operation(int *binaireInstruction,Register *tableRegister);
+void JR_Operation(int *binaireInstruction, Register *tableRegister);
 
-void J_Operation(int *binaireInstruction,Register *tableRegister);
+void J_Operation(int *binaireInstruction, Register *tableRegister);
 
-void BNE_Operation(int *binaireInstruction,Register *tableRegister);
+void BNE_Operation(int *binaireInstruction, Register *tableRegister);
 
-void BGTZ_Operation(int *binaireInstruction,Register *tableRegister);
+void BGTZ_Operation(int *binaireInstruction, Register *tableRegister);
 
-void BLEZ_Operation(int *binaireInstruction,Register *tableRegister);
+void BLEZ_Operation(int *binaireInstruction, Register *tableRegister);
 
-void BEQ_Operation(int *binaireInstruction,Register *tableRegister);
+void BEQ_Operation(int *binaireInstruction, Register *tableRegister);
 
 void DIV_Operation(int *binaireInstruction,Register *tableRegister);
 
@@ -118,25 +118,25 @@ void srlTwoBinaryRegister(int *register1, int deplacement, int *destinationRegis
 
 void rotrTwoBinaryRegister(int *register1, int deplacement, int *destinationRegister);
 
-void multTwoBinaryRegister(int *register1, int multiplication,Register *tableRegister);
+void multTwoBinaryRegister(int *register1, int multiplication, Register *tableRegister);
 
 void mfhiTwoBinaryRegister(int *destinationRegister, Register *tableRegister);
 
 void mfloTwoBinaryRegister(int *destinationRegister, Register *tableRegister);
 
-void swTwoBinaryRegister(int *register1, int register2, int *destinationRegister,  memory *m);
+void swTwoBinaryRegister(int *register1, int register2, int *destinationRegister, memory *m);
 
-void ldTwoBinaryRegister(int *register1, int register2, int *destinationRegister,  memory *m);
+void ldTwoBinaryRegister(int *register1, int register2, int *destinationRegister, memory *m);
 
 void luiTwoBinaryRegister(int register1, int *destinationRegister);
 
-void jalTwoBinaryRegister(int register1,Register *tableRegister);
+void jalTwoBinaryRegister(int register1, Register *tableRegister);
 
-void jrTwoBinaryRegister(int *register1,Register *tableRegister);
+void jrTwoBinaryRegister(int *register1, Register *tableRegister);
 
-void jTwoBinaryRegister(int register1,Register *tableRegister);
+void jTwoBinaryRegister(int register1, Register *tableRegister);
 
-void bneTwoBinaryRegister(int *register1, int *register2, int offset, Register *tableRegister);
+void bneTwoBinaryRegister(int *register1, int *register2, int *offset, Register *tableRegister);
 
 void blezOneBinaryRegister(int *register1, int *offset, Register *tableRegister);
 

@@ -107,10 +107,30 @@ void readFourOctetsInMemory(int *value32bits, int startAddress, memory *m)
 
 void convertInToBinnary(int value, int *destinationRegister)
 {
+	int isSigned = 0;
+
+    if(value < 0) {
+        isSigned = 1;
+        value *= -1;
+    }
+
 	int i;
 	for(i=0; value>0; i++) {
         destinationRegister[i] = value % 2;  
         value = value / 2;  
+    }
+
+	if(isSigned) {
+        for(i=0; i<32; i++) {
+            destinationRegister[i] ^= 1;
+        }
+        /* complement to 2 */
+        i = 0;
+        while(destinationRegister[i] != 0) {
+            destinationRegister[i] = 0;
+            i++;
+        }
+        destinationRegister[i] = 1;
     }
 }
 
@@ -361,45 +381,40 @@ void BLEZ_Operation(int *binaireInstruction, Register *tableRegister)
 	printRegister(tableRegister[32].registre);
 }
 
-void BNE_Operation(int *binaireInstruction,Register *tableRegister)
+void BNE_Operation(int *binaireInstruction, Register *tableRegister)
 {
-	int registre1 = returnArgument(binaireInstruction,0,16);
-	int registre2 = returnArgument(binaireInstruction,16,21);
-	int registre3 = returnArgument(binaireInstruction,21,26);
-
-	bneTwoBinaryRegister(tableRegister[registre2].registre,tableRegister[registre3].registre,registre1, tableRegister);
+	int rt = returnArgument(binaireInstruction,16,21);
+	int rs = returnArgument(binaireInstruction,21,26);
 
 	int i;
+	int sl_offset = 2;
+	int offset[32] = {0};
 
-	printf("BNE R%d != R%d ? --> PC  + %d\n",registre2,registre3,registre1);
-	for(i=31;i>=0;i--)
-	{
-		printf("%d",tableRegister[32].registre[i]);
+	for(i=0; i<16; i++) {
+		offset[sl_offset++] = binaireInstruction[i];
 	}
-	printf("\n");
+	if(binaireInstruction[15] == 1) {
+		for(i=18; i<32; i++) {
+			offset[i] = 1;
+		}
+	}
+
+	bneTwoBinaryRegister(tableRegister[rt].registre, tableRegister[rs].registre, offset, tableRegister);
+
+	printf("BNE R%d != R%d ? --> PC  + %d\n", rt, rs, returnArgument(offset, 0, 32));
+	
+	printRegister(tableRegister[32].registre);
 }
 
-void DIV_Operation(int *binaireInstruction,Register *tableRegister)
+void DIV_Operation(int *binaireInstruction, Register *tableRegister)
 {
-	int registre1 = returnArgument(binaireInstruction,16,21);
-	int registre2 = returnArgument(binaireInstruction,21,26);
+	int rt = returnArgument(binaireInstruction, 16, 21);
+	int rs = returnArgument(binaireInstruction, 21, 26);
 
-	divTwoBinaryRegister(tableRegister[registre2].registre,tableRegister[registre1].registre, tableRegister);
+	divTwoBinaryRegister(tableRegister[rs].registre, tableRegister[rt].registre, tableRegister);
 
-	int i;
-
-	printf("DIV R%d / R%d --> R33/34\n",registre2,registre1);
-	for(i=31;i>=0;i--)
-	{
-		printf("%d",tableRegister[33].registre[i]);
-	}
-	printf("\n");
-
-	for(i=31;i>=0;i--)
-	{
-		printf("%d",tableRegister[34].registre[i]);
-	}
-	printf("\n");
+	printRegister(tableRegister[33].registre);
+	printRegister(tableRegister[34].registre);
 }
 
 void J_Operation(int *binaireInstruction,Register *tableRegister)
@@ -1116,39 +1131,23 @@ void jTwoBinaryRegister(int register1,Register *tableRegister)
 	sllTwoBinaryRegister(newPcAdress,2,tableRegister[32].registre);
 }
 
-void bneTwoBinaryRegister(int *register1, int *register2, int offset,  Register *tableRegister)
+void bneTwoBinaryRegister(int *register1, int *register2, int *offset,  Register *tableRegister)
 {
 	int i;
-	int k;
-	int tempValueRegistre1 = 0;
-	int tempValueRegistre2 = 0;
-	int tempValueoffset[32] = {0};
+	int isEqual = 1;
 
-	for(k=31;k>=0;k--)
-	{
-		printf("%d",register1[k]);
-	}
-	printf("\n");
-
-	for(k=31;k>=0;k--)
-	{
-		printf("%d",register2[k]);
-	}
-	printf("\n");
+	printRegister(register1);
+	printRegister(register2);
 	
-	for(i=30;i>=0;i--)
-	{
-		tempValueRegistre1 += (unsigned long long int) (pow(2, i) * register1[i]);
-		tempValueRegistre2 += (unsigned long long int) (pow(2, i) * register2[i]);
+	for(i=31; i>=0; i--) {
+		if(register1[i] != register2[i]) {
+			isEqual = 0;
+		}
 	}
 
-	if(register1[31] == 1) tempValueRegistre1 *= -1;
-	if(register2[31] == 1) tempValueRegistre2 *= -1;
-
-	if (tempValueRegistre1 != tempValueRegistre2)
+	if(!isEqual)
 	{
-		convertInToBinnary(offset,tempValueoffset);
-		addTwoBinaryRegister(tableRegister[32].registre,tempValueoffset,tableRegister[32].registre);
+		addTwoBinaryRegister(tableRegister[32].registre, offset, tableRegister[32].registre);
 	}
 	
 }	
@@ -1201,30 +1200,19 @@ void beqTwoBinaryRegister(int *register1, int *register2, int *offset, Register 
 	{
 		addTwoBinaryRegister(tableRegister[32].registre, offset, tableRegister[32].registre);
 	}
-	
 }	
 
-void divTwoBinaryRegister(int *register1, int *register2,Register *tableRegister)
+void divTwoBinaryRegister(int *register1, int *register2, Register *tableRegister)
 {
 	int i;
-	int k;
 	int tempValueRegistre1 = 0;
 	int tempValueRegistre2 = 0;
 	int quotient;
 	int remainder;
 	float resultValue;
 
-	for(k=31;k>=0;k--)
-	{
-		printf("%d",register1[k]);
-	}
-	printf("\n");
-
-	for(k=31;k>=0;k--)
-	{
-		printf("%d",register2[k]);
-	}
-	printf("\n");
+	printRegister(register1);
+	printRegister(register2);
 	
 	for(i=30;i>=0;i--)
 	{

@@ -1,6 +1,8 @@
-ADDI $10 $0 11
-ADDI $2 $0 1
-BLEZ $2 2
+ADDI $10 $0 2
+ADDI $2 $0 -3
+BNE $2 $10 2
 ADDI $2 $0 13
 ADDI $2 $0 14
 ADDI $2 $0 15
+
+
