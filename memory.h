@@ -138,7 +138,7 @@ void jTwoBinaryRegister(int register1,Register *tableRegister);
 
 void bneTwoBinaryRegister(int *register1, int *register2, int offset, Register *tableRegister);
 
-void blezTwoBinaryRegister(int *register1, int offset, Register *tableRegister);
+void blezOneBinaryRegister(int *register1, int *offset, Register *tableRegister);
 
 void bgtzOneBinaryRegister(int *register1, int *offset, Register *tableRegister);
 

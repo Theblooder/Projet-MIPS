@@ -332,27 +332,33 @@ void BGTZ_Operation(int *binaireInstruction, Register *tableRegister)
 
 	bgtzOneBinaryRegister(tableRegister[rs].registre, offset, tableRegister);
 
-
 	printf("BGTZ R%d > 0 ? --> PC + %d\n", rs, returnArgument(offset, 0, 32));
 	
 	printRegister(tableRegister[32].registre);
 }
 
-void BLEZ_Operation(int *binaireInstruction,Register *tableRegister)
+void BLEZ_Operation(int *binaireInstruction, Register *tableRegister)
 {
-	int registre1 = returnArgument(binaireInstruction,0,16);
-	int registre2 = returnArgument(binaireInstruction,21,26);
-
-	blezTwoBinaryRegister(tableRegister[registre2].registre,registre1, tableRegister);
+	int rs = returnArgument(binaireInstruction, 21, 26);
 
 	int i;
+	int sl_offset = 2;
+	int offset[32] = {0};
 
-	printf("BLEZ R%d <= 0 ? --> PC  + %d\n",registre2,registre1);
-	for(i=31;i>=0;i--)
-	{
-		printf("%d",tableRegister[32].registre[i]);
+	for(i=0; i<16; i++) {
+		offset[sl_offset++] = binaireInstruction[i];
 	}
-	printf("\n");
+	if(binaireInstruction[15] == 1) {
+		for(i=18; i<32; i++) {
+			offset[i] = 1;
+		}
+	}
+
+	blezOneBinaryRegister(tableRegister[rs].registre, offset, tableRegister);
+
+	printf("BLEZ R%d <= 0 ? --> PC  + %d\n", rs, returnArgument(offset, 0, 32));
+	
+	printRegister(tableRegister[32].registre);
 }
 
 void BNE_Operation(int *binaireInstruction,Register *tableRegister)
@@ -1147,9 +1153,8 @@ void bneTwoBinaryRegister(int *register1, int *register2, int offset,  Register 
 	
 }	
 
-void bgtzOneBinaryRegister(int *register1, int *offset,  Register *tableRegister)
+void bgtzOneBinaryRegister(int *register1, int *offset, Register *tableRegister)
 {
-	int i;
 	int isGreaterThan0 = 1;
 
 	printRegister(register1);
@@ -1161,38 +1166,24 @@ void bgtzOneBinaryRegister(int *register1, int *offset,  Register *tableRegister
 	if(isGreaterThan0) {
 		addTwoBinaryRegister(tableRegister[32].registre, offset, tableRegister[32].registre);
 	}
-	
 }	
 
-void blezTwoBinaryRegister(int *register1, int offset,  Register *tableRegister)
+void blezOneBinaryRegister(int *register1, int *offset, Register *tableRegister)
 {
-	int i;
-	int k;
-	int tempValueRegistre1 = 0;
-	int tempValueoffset[32] = {0};
+	int isLessOrEqualThan0 = 0;
 
-	for(k=31;k>=0;k--)
-	{
-		printf("%d",register1[k]);
-	}
-	printf("\n");
+	printRegister(register1);
 	
-	for(i=30;i>=0;i--)
-	{
-		tempValueRegistre1 += (unsigned long long int) (pow(2, i) * register1[i]);
+	if(register1[31] == 1 || returnArgument(register1, 0, 32) == 0) {
+		isLessOrEqualThan0 = 1;
 	}
 
-	if(register1[31] == 1) tempValueRegistre1 *= -1;
-
-	if (tempValueRegistre1 <= 0)
-	{
-		convertInToBinnary(offset,tempValueoffset);
-		addTwoBinaryRegister(tableRegister[32].registre,tempValueoffset,tableRegister[32].registre);
+	if(isLessOrEqualThan0) {
+		addTwoBinaryRegister(tableRegister[32].registre, offset, tableRegister[32].registre);
 	}
-	
 }	
 
-void beqTwoBinaryRegister(int *register1, int *register2, int *offset,  Register *tableRegister)
+void beqTwoBinaryRegister(int *register1, int *register2, int *offset, Register *tableRegister)
 {
 	int i;
 	int isEqual = 1;
