@@ -1,8 +1,4 @@
 ADDI $10 $0 2
 ADDI $2 $0 -3
-BNE $2 $10 2
-ADDI $2 $0 13
-ADDI $2 $0 14
-ADDI $2 $0 15
-
+LUI $3 -23
 

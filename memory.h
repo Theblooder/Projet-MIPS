@@ -128,13 +128,13 @@ void swTwoBinaryRegister(int *register1, int register2, int *destinationRegister
 
 void ldTwoBinaryRegister(int *register1, int register2, int *destinationRegister, memory *m);
 
-void luiTwoBinaryRegister(int register1, int *destinationRegister);
+void luiTwoBinaryRegister(int *register1, int *destinationRegister);
 
-void jalTwoBinaryRegister(int register1, Register *tableRegister);
+void jalTwoBinaryRegister(int *index_jump, Register *tableRegister);
 
 void jrTwoBinaryRegister(int *register1, Register *tableRegister);
 
-void jTwoBinaryRegister(int register1, Register *tableRegister);
+void jTwoBinaryRegister(int *index_jump, Register *tableRegister);
 
 void bneTwoBinaryRegister(int *register1, int *register2, int *offset, Register *tableRegister);
 
