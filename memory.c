@@ -1045,7 +1045,7 @@ void mfhiTwoBinaryRegister(int *destinationRegister, Register *tableRegister)
 	}
 }
 
-void swTwoBinaryRegister(int *register1, int register2, int *destinationRegister,  memory *m)
+void swTwoBinaryRegister(int *register1, int register2, int *destinationRegister, memory *m)
 {
 	int i;
 	int valueSp = 0;
@@ -1060,7 +1060,7 @@ void swTwoBinaryRegister(int *register1, int register2, int *destinationRegister
 	writeFourOctetsInMemory(destinationRegister, valueSp, 0, m);
 }	
 
-void ldTwoBinaryRegister(int *register1, int register2, int *destinationRegister,  memory *m)
+void ldTwoBinaryRegister(int *register1, int register2, int *destinationRegister, memory *m)
 {
 	int i;
 	int valueSp = 0;

@@ -17,18 +17,10 @@
 
 #include <stdlib.h>
 
-int instructionValue(const char *instruction, int *tabValues, char *operation);
-
-int isStringFullOfSpaces(const char *string);
-
-int isBeginWithCommentCharBeforeAnyCharOtherThanSpace(char *string);
 
 int convertBinaireIntoHex(int *binaireInstruction, int *hexadecimalInstruction);
 
-
-int testTexte(char *operation, char *Texte);
-
-int createBinaryInstruction(char *operation, int *tabValue, int *binaireInstruction);
+int createBinaryInstruction(int operation, int *tabValue, int *binaireInstruction);
 
 int putToZero(int *binaireInstruction, int start, int end);
 
