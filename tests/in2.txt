@@ -1,9 +1,7 @@
 ADDI $2, $0, 6
 ADDI $3, $0, 6
 JAL 20
-ADDI $3, $0, 6
 ADDI $3, $0, 7
 ADDI $3, $0, 8
 ADDI $3, $0, 9
 ADDI $3, $0, 10
-JR $31

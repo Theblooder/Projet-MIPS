@@ -104,13 +104,13 @@ int main(int argc, char * argv[])
 				number = getRegisterOffset(cleanInstruction, &currentPosition, 1);
 			}
 			else {
-				printf("ERROR : register value (n°%d) is missing\n", k+1);
+				printf("ERROR row %d: register value (n°%d) is missing\n", numberOfRow, k+1);
 				isError = 1;
 				break;
 			}
 
 			if(number == -1) {
-				printf("ERROR : wrong register value (n°%d)\n", k+1);
+				printf("ERROR row %d: wrong register value (n°%d)\n", numberOfRow, k+1);
 				isError = 1;
 				break;
 			}
@@ -123,13 +123,13 @@ int main(int argc, char * argv[])
 				number = getRegisterOffset(cleanInstruction, &currentPosition, 0);
 			}
 			else {
-				printf("ERROR : offset value (n°%d) is missing\n", k+1);
+				printf("ERROR row %d: offset value (n°%d) is missing\n", numberOfRow, k+1);
 				isError = 1;
 				break;
 			}
 
 			if(number == -1) {
-				printf("ERROR : wrong offset value (n°%d)\n", k+1);
+				printf("ERROR row %d: wrong offset value (n°%d)\n", numberOfRow, k+1);
 				isError = 1;
 				break;
 			}
@@ -142,24 +142,26 @@ int main(int argc, char * argv[])
 		// printf("%d\n", values[1]);
 		// printf("%d\n", values[2]);
 
-		int binaireInstruction[32] = {0};
-		int hexadecimalInstruction[8] = {0};
+		if(!isError) {
+			int binaireInstruction[32] = {0};
+			int hexadecimalInstruction[8] = {0};
 
-		createBinaryInstruction(operation, values, binaireInstruction);
-		convertBinaireIntoHex(binaireInstruction, hexadecimalInstruction);
+			createBinaryInstruction(operation, values, binaireInstruction);
+			convertBinaireIntoHex(binaireInstruction, hexadecimalInstruction);
 
-		writeFourOctetsInMemory(binaireInstruction, addressInstruction, 1, &RAM);
-		numberOfInsructionWritten++;
-		addressInstruction += 4;
+			writeFourOctetsInMemory(binaireInstruction, addressInstruction, 1, &RAM);
+			numberOfInsructionWritten++;
+			addressInstruction += 4;
 
-		displayHexadecimal(hexadecimalInstruction);
-		printf(" : {%s}\n", cleanInstruction);
+			displayHexadecimal(hexadecimalInstruction);
+			printf(" : {%s}\n", cleanInstruction);
 
-		/* writing exa in output file */
-		for(int i=0; i<8; i++) {
-			fprintf(outputFile, "%x", hexadecimalInstruction[i]);
+			/* writing exa in output file */
+			for(int i=0; i<8; i++) {
+				fprintf(outputFile, "%x", hexadecimalInstruction[i]);
+			}
+			fputc('\n', outputFile);
 		}
-		fputc('\n', outputFile);
 
 		
 		
