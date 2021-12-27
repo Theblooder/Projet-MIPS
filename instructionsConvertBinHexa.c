@@ -70,7 +70,7 @@ int putToValue(int *binaireInstruction, int start, int value)
             binaireInstruction[i] ^= 1;
         }
         /* complement to 2 */
-        i = 0;
+        i = start;
         while(binaireInstruction[i] != 0) {
             binaireInstruction[i] = 0;
             i++;
@@ -271,6 +271,7 @@ int binaryROTR(int *tabValue, int *binaireInstruction)
 { 
     putToValue(binaireInstruction,0,2);
     putToValue(binaireInstruction,6,tabValue[2]);
+    putToZero(binaireInstruction,11,31);
     putToValue(binaireInstruction,11,tabValue[0]);
     putToValue(binaireInstruction,16,tabValue[1]);
     putToValue(binaireInstruction,21,1);
@@ -282,6 +283,7 @@ int binarySLL(int *tabValue, int *binaireInstruction)
 { 
     putToValue(binaireInstruction,0,0);
     putToValue(binaireInstruction,6,tabValue[2]);
+    putToZero(binaireInstruction,11,31);
     putToValue(binaireInstruction,11,tabValue[0]);
     putToValue(binaireInstruction,16,tabValue[1]);
     putToValue(binaireInstruction,21,0);
@@ -302,6 +304,7 @@ int binarySRL(int *tabValue, int *binaireInstruction)
 { 
     putToValue(binaireInstruction,0,2);
     putToValue(binaireInstruction,6,tabValue[2]);
+    putToZero(binaireInstruction,11,31);
     putToValue(binaireInstruction,11,tabValue[0]);
     putToValue(binaireInstruction,16,tabValue[1]);
     putToValue(binaireInstruction,21,0);

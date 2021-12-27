@@ -68,9 +68,9 @@ void XOR_Operation(int *binaireInstruction, Register *tableRegister);
 
 void SRL_Operation(int *binaireInstruction, Register *tableRegister);
 
-void ROTR_Operation(int *binaireInstruction,Register *tableRegister);
+void ROTR_Operation(int *binaireInstruction, Register *tableRegister);
 
-void NOP_Operation(int *binaireInstruction,Register *tableRegister);
+void NOP_Operation(int *binaireInstruction, Register *tableRegister);
 
 void MULT_Operation(int *binaireInstruction, Register *tableRegister);
 
@@ -98,7 +98,7 @@ void BLEZ_Operation(int *binaireInstruction, Register *tableRegister);
 
 void BEQ_Operation(int *binaireInstruction, Register *tableRegister);
 
-void DIV_Operation(int *binaireInstruction,Register *tableRegister);
+void DIV_Operation(int *binaireInstruction, Register *tableRegister);
 
 int addTwoBinaryRegister(int *register1, int *register2, int *destinationRegister);
 

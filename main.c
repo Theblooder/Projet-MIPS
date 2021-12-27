@@ -101,7 +101,7 @@ int main(int argc, char * argv[])
 
 		for(int k=0; k<nbrRegOff[0]; k++) {
 			if(currentPosition < lengthInstruction) {
-				number = getRegisterOffset(cleanInstruction, &currentPosition, 1);
+				number = getRegisterOffset(cleanInstruction, &currentPosition, 1, &isError);
 			}
 			else {
 				printf("ERROR row %d: register value (n°%d) is missing\n", numberOfRow, k+1);
@@ -109,9 +109,8 @@ int main(int argc, char * argv[])
 				break;
 			}
 
-			if(number == -1) {
+			if(isError) {
 				printf("ERROR row %d: wrong register value (n°%d)\n", numberOfRow, k+1);
-				isError = 1;
 				break;
 			}
 			else {
@@ -120,7 +119,7 @@ int main(int argc, char * argv[])
 		}
 		for(int k=0; k<nbrRegOff[1]; k++) {
 			if(currentPosition < lengthInstruction) {
-				number = getRegisterOffset(cleanInstruction, &currentPosition, 0);
+				number = getRegisterOffset(cleanInstruction, &currentPosition, 0, &isError);
 			}
 			else {
 				printf("ERROR row %d: offset value (n°%d) is missing\n", numberOfRow, k+1);
@@ -128,9 +127,8 @@ int main(int argc, char * argv[])
 				break;
 			}
 
-			if(number == -1) {
+			if(isError) {
 				printf("ERROR row %d: wrong offset value (n°%d)\n", numberOfRow, k+1);
-				isError = 1;
 				break;
 			}
 			else {
@@ -138,9 +136,9 @@ int main(int argc, char * argv[])
 			}
 		}
 
-		// printf("%d\n", values[0]);
-		// printf("%d\n", values[1]);
-		// printf("%d\n", values[2]);
+		printf("%d\n", values[0]);
+		printf("%d\n", values[1]);
+		printf("%d\n", values[2]);
 
 		if(!isError) {
 			int binaireInstruction[32] = {0};

@@ -101,7 +101,7 @@ int getOperation(const char *instruction, int *numberRegisterOffset, int *INTope
     return i;
 }
 
-int getRegisterOffset(char *instruction, int *currentPosition, int regValue)
+int getRegisterOffset(char *instruction, int *currentPosition, int regValue, int *isError)
 {
     int j;
     int number = 0;
@@ -112,6 +112,7 @@ int getRegisterOffset(char *instruction, int *currentPosition, int regValue)
             j = *currentPosition + 2;
         }
         else {
+            *isError = 1;
             return -1;
         }
     }
@@ -129,8 +130,10 @@ int getRegisterOffset(char *instruction, int *currentPosition, int regValue)
         number *= 10;
         number += instruction[j] - 48;
     }
-    if(instruction[j] != ',' && instruction[j] != '\0')
+    if(instruction[j] != ',' && instruction[j] != '\0') {
+        *isError = 1;
         return -1;
+    }
     else {
         *currentPosition = j;
     }
