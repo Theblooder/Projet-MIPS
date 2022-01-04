@@ -2,3 +2,5 @@ objects/
 emul-mips
 .vscode
 ForTesting/
+tests/
+hexified/

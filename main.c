@@ -13,39 +13,87 @@ int main(int argc, char * argv[])
 	Register tableRegister[35] = {0} ;
 	
 
-
-	// if(argc <= 2) {
-	// 	printf("Erreur : veuillez rentrer un fichier d'entrée et de sortie\n");
-	// 	exit(0);
-	// }
-
-	FILE *inputFile;	
-	// char inputFilename[32];
-	// char *PathTests = "tests/";	
-	// strcpy(inputFilename, PathTests);
-	// strcat(inputFilename, argv[1]);
-
-	char *inputFilename = "tests/in2.txt";
-
-	inputFile = fopen(inputFilename, "r");
-	if(inputFile == NULL) {
-		perror("Probleme ouverture du fichier test");
-		exit(0);
-	}
-
+	FILE *inputFile;
 	FILE *outputFile;
-	// char outputFilename[32];
-	// char *PathHexified = "hexified/";
-	// strcpy(outputFilename, PathHexified);
-	// strcat(outputFilename, argv[2]);
+	char inputFilename[32];
+	char outputFilename[32];
 
-	char *outputFilename = "hexified/out2.txt";
-
-	outputFile = fopen(outputFilename, "w");
-	if(outputFile == NULL) {
-		perror("Probleme ouverture du fichier hexified");
+	if(argc == 1) {
+		printf("Erreur : veuillez rentrer un fichier d'entrée\n");
 		exit(0);
 	}
+	else if(argc == 2) {
+		char *PathTests = "tests/";	
+		strcpy(inputFilename, PathTests);
+		strcat(inputFilename, argv[1]);
+
+		inputFile = fopen(inputFilename, "r");
+		if(inputFile == NULL) {
+			perror("Probleme ouverture du fichier test");
+			exit(0);
+		}
+
+		strcpy(outputFilename, "hexified/");
+		strcat(outputFilename, argv[1]);
+
+		outputFile = fopen(outputFilename, "w");
+		if(outputFile == NULL) {
+			perror("Probleme ouverture du fichier hexified");
+			exit(0);
+		}
+	}
+	else {	
+		char *PathTests = "tests/";	
+		strcpy(inputFilename, PathTests);
+		strcat(inputFilename, argv[1]);
+
+		inputFile = fopen(inputFilename, "r");
+		if(inputFile == NULL) {
+			perror("Probleme ouverture du fichier test");
+			exit(0);
+		}
+		if(argv[2][0] != '-') {
+			char *PathHexified = "hexified/";
+			strcpy(outputFilename, PathHexified);
+			strcat(outputFilename, argv[2]);
+
+			outputFile = fopen(outputFilename, "w");
+			if(outputFile == NULL) {
+				perror("Probleme ouverture du fichier hexified");
+				exit(0);
+			}
+		}
+		else {
+			strcpy(outputFilename, "hexified/");
+			strcat(outputFilename, argv[1]);
+
+			outputFile = fopen(outputFilename, "w");
+			if(outputFile == NULL) {
+				perror("Probleme ouverture du fichier hexified");
+				exit(0);
+			}
+		}
+	}
+
+	int isStepMode = 0;
+	for(int j=1; j<argc; j++) {
+		if(argv[j][0] == '-') {
+			if(1==1) {
+				isStepMode = 1;
+			}
+		}
+	}
+
+	printf("                  ***** MIPS EMULATOR *****\n");
+	printf("\n");
+	printf("GILGER Rémi et LAGRANGE Damien\n");
+	printf("\n");
+	printf("Assembling file : %s\n", inputFilename);
+	printf("Output will be written in : %s\n", outputFilename);
+	printf("\n");
+	printf("\n");
+	printf("*** Text segment loaded - Ready to execute ***\n");
+	printf("\n");
 
 
 	char charInstruction;
@@ -161,9 +209,9 @@ int main(int argc, char * argv[])
 			}
 		}
 
-		printf("%d\n", values[0]);
-		printf("%d\n", values[1]);
-		printf("%d\n", values[2]);
+		// printf("%d\n", values[0]);
+		// printf("%d\n", values[1]);
+		// printf("%d\n", values[2]);
 
 		if(!isError) {
 			int binaireInstruction[32] = {0};
@@ -176,19 +224,24 @@ int main(int argc, char * argv[])
 			numberOfInsructionWritten++;
 			addressInstruction += 4;
 
+			int i;
+
+			for(i=0; i<8-log10(addressInstruction-3); i++) {
+				printf("0");
+			}
+			printf("%d", addressInstruction-4);
 			displayHexadecimal(hexadecimalInstruction);
 			printf(" : {%s}\n", cleanInstruction);
 
 			/* writing exa in output file */
-			for(int i=0; i<8; i++) {
+			for(i=0; i<8; i++) {
 				fprintf(outputFile, "%x", hexadecimalInstruction[i]);
 			}
 			fputc('\n', outputFile);
 		}
-
-		
-		
 	}
+
+	while(getchar() != '\n');
 
 	int i;
 	int tempPC = 0;
@@ -205,8 +258,13 @@ int main(int argc, char * argv[])
 		PC = tempPC;
 
 		if(PC < 4*numberOfInsructionWritten) {
+			if(isStepMode) {
+				while(getchar() != '\n');
+
+				printf("Execution of :\n");
+			}
 			readAndDecodeInstruction(PC, tableRegister, &RAM);
-			printf("\n");
+			// printf("\n");
 		}
 		else {
 			moreInstruction = 0;

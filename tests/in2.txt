@@ -2,3 +2,7 @@ ADDI $3, $0, 10
 ADDI $4, $0, 2000
 SW $3, ($4)
 LW $6, 2000($0)
+NOP
+NOP
+NOP
+NOP
