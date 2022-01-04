@@ -118,7 +118,7 @@ void srlTwoBinaryRegister(int *register1, int deplacement, int *destinationRegis
 
 void rotrTwoBinaryRegister(int *register1, int deplacement, int *destinationRegister);
 
-void multTwoBinaryRegister(int *register1, int multiplication, Register *tableRegister);
+void multTwoBinaryRegister(int *register1, int *multiplication, Register *tableRegister);
 
 void mfhiTwoBinaryRegister(int *destinationRegister, Register *tableRegister);
 
