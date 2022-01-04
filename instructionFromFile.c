@@ -130,7 +130,7 @@ int getRegisterOffset(char *instruction, int *currentPosition, int regValue, int
         number *= 10;
         number += instruction[j] - 48;
     }
-    if(instruction[j] != ',' && instruction[j] != '\0') {
+    if(instruction[j] != ',' && instruction[j] != '\0' && instruction[j] != '(' && instruction[j] != ')') {
         *isError = 1;
         return -1;
     }

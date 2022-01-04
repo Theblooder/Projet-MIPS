@@ -124,9 +124,9 @@ void mfhiTwoBinaryRegister(int *destinationRegister, Register *tableRegister);
 
 void mfloTwoBinaryRegister(int *destinationRegister, Register *tableRegister);
 
-void swTwoBinaryRegister(int *register1, int register2, int *destinationRegister, memory *m);
+void swTwoBinaryRegister(int *register1, int *register2, int *destinationRegister, memory *m);
 
-void ldTwoBinaryRegister(int *register1, int register2, int *destinationRegister, memory *m);
+void ldTwoBinaryRegister(int *register1, int *register2, int *destinationRegister, memory *m);
 
 void luiTwoBinaryRegister(int *register1, int *destinationRegister);
 

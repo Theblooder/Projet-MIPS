@@ -51,8 +51,13 @@ void insertInMemory(int *value8bits, int adresse, int type, memory *m)
 
 	while(actuel != NULL) {
 		if(actuel->adress == adresse) {
-            for(i=0; i<8; i++) {
-				actuel->valeur[i] = value8bits[i];
+			if(actuel->type == type) {
+				for(i=0; i<8; i++) {
+					actuel->valeur[i] = value8bits[i];
+				}
+			}
+			else {
+				printf("Tu ne peut pas écire des datas sur une instruction\n");
 			}
 			return;
 		}
@@ -66,6 +71,7 @@ void insertInMemory(int *value8bits, int adresse, int type, memory *m)
 		e->valeur[i] = value8bits[i];
 	}
 	e->adress = adresse;
+	e->type = type;
 
 	if(precedent == NULL) {
 		*m = e;
@@ -487,22 +493,28 @@ void LUI_Operation(int *binaireInstruction, Register *tableRegister)
 	printRegister(tableRegister[rt].registre);
 }
 
-void LW_Operation(int *binaireInstruction,Register *tableRegister, memory *m)
+void LW_Operation(int *binaireInstruction, Register *tableRegister, memory *m)
 {	
-	int registre1 = returnArgument(binaireInstruction,0,16);
-	int registre2 = returnArgument(binaireInstruction,16,21);
-	int registre3 = returnArgument(binaireInstruction,21,26);
-
-	ldTwoBinaryRegister(tableRegister[registre2].registre,registre1,tableRegister[registre3].registre, m);
+	int rt = returnArgument(binaireInstruction, 16, 21);
+	int base = returnArgument(binaireInstruction, 21, 26);
 
 	int i;
+	int immediateValue[32] = {0};
 
-	printf("LW R%d <-- %d(R%d)\n",registre3,registre1,registre2);
-	for(i=31;i>=0;i--)
-	{
-		printf("%d",tableRegister[registre3].registre[i]);
+	for(i=0; i<16; i++) {
+		immediateValue[i] = binaireInstruction[i];
 	}
-	printf("\n");
+	if(binaireInstruction[15] == 1) {
+		for(i=16; i<32; i++) {
+			immediateValue[i] = 1;
+		}
+	}
+
+	ldTwoBinaryRegister(tableRegister[base].registre, immediateValue, tableRegister[rt].registre, m);
+
+	printf("LW R%d <-- %d(R%d)\n", rt, returnArgument(immediateValue, 0, 32), base);
+
+	printRegister(tableRegister[rt].registre);
 }
 
 void MFHI_Operation(int *binaireInstruction, Register *tableRegister)
@@ -635,15 +647,26 @@ void SUB_Operation(int *binaireInstruction, Register *tableRegister)
 
 void SW_Operation(int *binaireInstruction,Register *tableRegister,  memory *m)
 {
-	int registre1 = returnArgument(binaireInstruction,0,16);
-	int registre2 = returnArgument(binaireInstruction,16,21);
-	int registre3 = returnArgument(binaireInstruction,21,26);
-
-	swTwoBinaryRegister(tableRegister[registre3].registre,registre1,tableRegister[registre2].registre, m);
+	int rt = returnArgument(binaireInstruction, 16, 21);
+	int base = returnArgument(binaireInstruction, 21, 26);
 
 	int i;
+	int immediateValue[32] = {0};
 
-	printf("SW R%d --> %d(R%d)\n",registre2,registre1,registre3);
+	for(i=0; i<16; i++) {
+		immediateValue[i] = binaireInstruction[i];
+	}
+	if(binaireInstruction[15] == 1) {
+		for(i=16; i<32; i++) {
+			immediateValue[i] = 1;
+		}
+	}
+
+	swTwoBinaryRegister(tableRegister[base].registre, immediateValue, tableRegister[rt].registre, m);
+
+	printf("SW R%d --> %d(R%d)\n", rt, returnArgument(immediateValue, 0, 32), base);
+
+	printRegister(tableRegister[rt].registre);
 }
 
 // void SYSCALL_Operation(int *binaireInstruction,Register *tableRegister)
@@ -973,36 +996,55 @@ void mfhiTwoBinaryRegister(int *destinationRegister, Register *tableRegister)
 	}
 }
 
-void swTwoBinaryRegister(int *register1, int register2, int *destinationRegister, memory *m)
+void swTwoBinaryRegister(int *register1, int *register2, int *destinationRegister, memory *m)
 {
+	int offset[32] = {0};
+
+	addTwoBinaryRegister(register1, register2, offset);
+
 	int i;
-	int valueSp = 0;
+	unsigned int jump = 0;
 
-	for(i=31;i>=0;i--)
-	{
-		valueSp += (unsigned long long int) (pow(2, i) * register1[i]);
+	printf("off");
+	printRegister(offset);
+
+	if(offset[31] == 1 || (offset[0] != 0 || offset[1] != 0)) {
+		printf("ERROR : Address pointé invalide\n");
+		return;
 	}
+	else {
+		for(i=31; i>=0; i--) {
+			jump += (pow(2, i) * offset[i]);
+		}
 
-	valueSp += register2;
+		printf("address :%d\n", jump);
 
-	writeFourOctetsInMemory(destinationRegister, valueSp, 0, m);
+		writeFourOctetsInMemory(destinationRegister, jump, 0, m);
+	}
 }	
 
-void ldTwoBinaryRegister(int *register1, int register2, int *destinationRegister, memory *m)
+void ldTwoBinaryRegister(int *register1, int *register2, int *destinationRegister, memory *m)
 {
+	int offset[32] = {0};
+
+	addTwoBinaryRegister(register1, register2, offset);
+
 	int i;
-	int valueSp = 0;
-	
-	for(i=31;i>=0;i--)
-	{
-		valueSp += (unsigned long long int) (pow(2, i) * register1[i]);
+	unsigned int jump = 0;
+
+	if(offset[31] == 1 || (offset[0] != 0 && offset[1] != 0)) {
+		printf("ERROR : Address pointé invalide\n");
+		return;
 	}
+	else {
+		for(i=31; i>=0; i--) {
+			jump += (pow(2, i) * offset[i]);
+		}
 
-	valueSp += register2;
-	printf("%d\n",valueSp);
+		printf("address :%d\n", jump);
 
-	readInstructionInMemory(valueSp, destinationRegister, m);
-	
+		readInstructionInMemory(jump, destinationRegister, m);
+	}	
 }	
 
 void luiTwoBinaryRegister(int *register1, int *destinationRegister)

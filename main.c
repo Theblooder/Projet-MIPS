@@ -1,4 +1,4 @@
- #include <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "instructionsConvertBinHexa.h"
@@ -99,40 +99,65 @@ int main(int argc, char * argv[])
 		int values[3] = {0};
 		int number;
 
-		for(int k=0; k<nbrRegOff[0]; k++) {
+		if(operation == 13 || operation == 24) {
 			if(currentPosition < lengthInstruction) {
 				number = getRegisterOffset(cleanInstruction, &currentPosition, 1, &isError);
 			}
-			else {
-				printf("ERROR row %d: register value (n°%d) is missing\n", numberOfRow, k+1);
-				isError = 1;
-				break;
+			if(!isError) {
+				values[0] = number;
 			}
-
-			if(isError) {
-				printf("ERROR row %d: wrong register value (n°%d)\n", numberOfRow, k+1);
-				break;
-			}
-			else {
-				values[k] = number;
-			}
-		}
-		for(int k=0; k<nbrRegOff[1]; k++) {
 			if(currentPosition < lengthInstruction) {
 				number = getRegisterOffset(cleanInstruction, &currentPosition, 0, &isError);
 			}
-			else {
-				printf("ERROR row %d: offset value (n°%d) is missing\n", numberOfRow, k+1);
-				isError = 1;
-				break;
+			if(!isError) {
+				values[1] = number;
 			}
-
+			if(currentPosition < lengthInstruction) {
+				number = getRegisterOffset(cleanInstruction, &currentPosition, 1, &isError);
+			}
+			if(!isError) {
+				values[2] = number;
+			}
 			if(isError) {
-				printf("ERROR row %d: wrong offset value (n°%d)\n", numberOfRow, k+1);
-				break;
+				printf("ERROR row %d: register or offset value is wrong or missing\n", numberOfRow);
 			}
-			else {
-				values[nbrRegOff[0]+k] = number;
+		}
+		else {
+			for(int k=0; k<nbrRegOff[0]; k++) {
+				if(currentPosition < lengthInstruction) {
+					number = getRegisterOffset(cleanInstruction, &currentPosition, 1, &isError);
+				}
+				else {
+					printf("ERROR row %d: register value (n°%d) is missing\n", numberOfRow, k+1);
+					isError = 1;
+					break;
+				}
+
+				if(isError) {
+					printf("ERROR row %d: wrong register value (n°%d)\n", numberOfRow, k+1);
+					break;
+				}
+				else {
+					values[k] = number;
+				}
+			}
+			for(int k=0; k<nbrRegOff[1]; k++) {
+				if(currentPosition < lengthInstruction) {
+					number = getRegisterOffset(cleanInstruction, &currentPosition, 0, &isError);
+				}
+				else {
+					printf("ERROR row %d: offset value (n°%d) is missing\n", numberOfRow, k+1);
+					isError = 1;
+					break;
+				}
+
+				if(isError) {
+					printf("ERROR row %d: wrong offset value (n°%d)\n", numberOfRow, k+1);
+					break;
+				}
+				else {
+					values[nbrRegOff[0]+k] = number;
+				}
 			}
 		}
 
