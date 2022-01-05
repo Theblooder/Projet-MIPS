@@ -348,7 +348,7 @@ int binaryXOR(int *tabValue, int *binaireInstruction)
     putToValue(binaireInstruction,26,0);
 }
 
-int convertBinaireIntoHex(int *binaireInstruction, int *hexadecimalInstruction)
+int convertBinaireIntoHexAndDisplay(int *binaireInstruction, int *hexadecimalInstruction)
 {
     int i, j, n = 0;
     for(i=0; i<8; i++)
@@ -359,6 +359,14 @@ int convertBinaireIntoHex(int *binaireInstruction, int *hexadecimalInstruction)
             n++;
         }
     }
+
+    //printf("Hexadecimal :");
+    for(i=8; i>=1; i--)  
+    {  
+        if(i%2 == 0) printf(" ");
+        printf("%x", hexadecimalInstruction[i-1]);  
+    }
+    //printf("\n");
     return 0;
 }
 

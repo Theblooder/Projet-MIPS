@@ -18,7 +18,7 @@
 #include <stdlib.h>
 
 
-int convertBinaireIntoHex(int *binaireInstruction, int *hexadecimalInstruction);
+int convertBinaireIntoHexAndDisplay(int *binaireInstruction, int *hexadecimalInstruction);
 
 int createBinaryInstruction(int operation, int *tabValue, int *binaireInstruction);
 

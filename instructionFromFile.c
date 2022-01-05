@@ -3,6 +3,103 @@
 #include <stdlib.h>
 #include "instructionFromFile.h"
 
+int _main_(char *instruction, char *cleanInstruction, int *values, int *operation, int numberOfRow)
+{
+    int lengthInstruction = 0;
+    int nbrRegOff[2];
+    int currentPosition;
+    int isError = 0;
+
+    lengthInstruction = cleanInstructionReturnLength(instruction, cleanInstruction);
+    // printf("ins:%s:\n", instruction);
+    // printf("clean ins:%s:\n", cleanInstruction);
+    // printf("%d\n", lengthInstruction);
+
+    
+    currentPosition = getOperation(cleanInstruction, nbrRegOff, operation);
+    if(*operation == 0) {
+        if(strlen(cleanInstruction) != 0) {
+            printf("ERROR : row %d : wrong argument\n", numberOfRow);
+        }
+        isError = 1;
+    }
+    // printf("operation :%d:\n", operation);
+    // printf("pos :%d\n", currentPosition);
+    // printf("reg :%d\n", nbrRegOff[0]);
+    // printf("off :%d\n", nbrRegOff[1]);
+
+    int number;
+
+    if(*operation == 13 || *operation == 24) {
+        if(currentPosition < lengthInstruction) {
+            number = getRegisterOffset(cleanInstruction, &currentPosition, 1, &isError);
+        }
+        if(!isError) {
+            values[0] = number;
+        }
+        if(currentPosition < lengthInstruction) {
+            number = getRegisterOffset(cleanInstruction, &currentPosition, 0, &isError);
+        }
+        if(!isError) {
+            values[1] = number;
+        }
+        if(currentPosition < lengthInstruction) {
+            number = getRegisterOffset(cleanInstruction, &currentPosition, 1, &isError);
+        }
+        if(!isError) {
+            values[2] = number;
+        }
+        if(isError) {
+            printf("ERROR row %d: register or offset value is wrong or missing\n", numberOfRow);
+        }
+    }
+    else {
+        for(int k=0; k<nbrRegOff[0]; k++) {
+            if(currentPosition < lengthInstruction) {
+                number = getRegisterOffset(cleanInstruction, &currentPosition, 1, &isError);
+            }
+            else {
+                printf("ERROR row %d: register value (n°%d) is missing\n", numberOfRow, k+1);
+                isError = 1;
+                break;
+            }
+
+            if(isError) {
+                printf("ERROR row %d: wrong register value (n°%d)\n", numberOfRow, k+1);
+                break;
+            }
+            else {
+                values[k] = number;
+            }
+        }
+        for(int k=0; k<nbrRegOff[1]; k++) {
+            if(currentPosition < lengthInstruction) {
+                number = getRegisterOffset(cleanInstruction, &currentPosition, 0, &isError);
+            }
+            else {
+                printf("ERROR row %d: offset value (n°%d) is missing\n", numberOfRow, k+1);
+                isError = 1;
+                break;
+            }
+
+            if(isError) {
+                printf("ERROR row %d: wrong offset value (n°%d)\n", numberOfRow, k+1);
+                break;
+            }
+            else {
+                values[nbrRegOff[0]+k] = number;
+            }
+        }
+    }
+
+    // printf("%d\n", values[0]);
+    // printf("%d\n", values[1]);
+    // printf("%d\n", values[2]);
+
+    return isError;
+}
+
+
 int cleanInstructionReturnLength(const char *instruction, char *clearInstruction)
 {
     int i = 0;  /*Index instruction*/
