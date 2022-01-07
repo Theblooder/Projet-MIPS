@@ -174,6 +174,7 @@ int main(int argc, char * argv[])
 	}
 
 	showRegister(tableRegister);
+	showMemory(&RAM);
 	
 	fclose(inputFile);
 	fclose(outputFile);

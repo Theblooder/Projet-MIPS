@@ -6,6 +6,8 @@ void presentationMipsEmulator(char *inputFilename,char *outputFilename);
 
 void showRegister (Register *tableRegister);
 
+void showMemory(memory *ram);
+
 
 
 #endif
