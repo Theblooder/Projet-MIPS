@@ -5,6 +5,7 @@
 #include "instructionFromFile.h"
 #include "memory.h"
 #include "executeInstruction.h"
+#include "printTerminal.h"
 #include <math.h>
 
 
@@ -84,17 +85,8 @@ int main(int argc, char * argv[])
 		}
 	}
 
-	printf("                  ***** MIPS EMULATOR *****\n");
-	printf("\n");
-	printf("GILGER Rémi et LAGRANGE Damien\n");
-	printf("\n");
-	printf("Assembling file : %s\n", inputFilename);
-	printf("Output will be written in : %s\n", outputFilename);
-	printf("\n");
-	printf("\n");
-	printf("*** Text segment loaded - Ready to execute ***\n");
-	printf("\n");
-
+	presentationMipsEmulator(inputFilename,outputFilename);
+	
 
 	char charInstruction;
 	char instruction[1024];
@@ -181,8 +173,12 @@ int main(int argc, char * argv[])
 		}
 	}
 
+	showRegister(tableRegister);
+	
 	fclose(inputFile);
 	fclose(outputFile);
+
+	
 
 	return 0;
 }

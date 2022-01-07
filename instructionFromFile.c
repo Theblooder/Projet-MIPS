@@ -22,6 +22,7 @@ int _main_(char *instruction, char *cleanInstruction, int *values, int *operatio
             printf("ERROR : row %d : wrong argument\n", numberOfRow);
         }
         isError = 1;
+        return isError;
     }
     // printf("operation :%d:\n", operation);
     // printf("pos :%d\n", currentPosition);
