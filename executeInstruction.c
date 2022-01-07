@@ -198,7 +198,7 @@ void ADDI_Operation(int *binaireInstruction, Register *tableRegister)
 
 	addTwoBinaryRegister(tableRegister[rs].registre, immediateValue, tableRegister[rt].registre);
 
-	// printf(" %d + R%d --> R%d\n", returnArgument(immediateValue, 0, 32), rs, rt);
+	printf(" %d + R%d --> R%d\n", returnArgument(immediateValue, 0, 32), rs, rt);
 	
 	printRegister(tableRegister[rt].registre);
 }

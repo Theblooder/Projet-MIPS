@@ -145,6 +145,7 @@ int main(int argc, char * argv[])
 		}
 	}
 
+	
 	while(getchar() != '\n');
 
 	int i;

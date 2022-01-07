@@ -4,10 +4,10 @@
 typedef struct element element;
 
 struct element {
-	int valeur[8];/* valeur de l’élément */
-	int adress;
-	int type; //Text or data (instruction or data) 0:data   1:instruction
-	element *suivant;/* adresse du successeur */
+	int valeur[8];  /*value of the byte*/
+	int adress;   /*address of the byte in the memory*/
+	int type;  /*0:data 1:instruction */
+	element *suivant; /*Next element in the list*/
 };
 typedef element* memory;
 

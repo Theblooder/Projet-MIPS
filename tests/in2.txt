@@ -1,6 +1,8 @@
 ADDI $3, $0, 10
-ADD $4, $3, $3
-NOP
-NOP
-NOP
-NOP
+ADDI $4, $0, 10
+BEQ $3, $3, 3
+ADDI $1, $0, 11
+ADDI $1, $0, 12
+ADDI $1, $0, 13
+ADDI $1, $0, 14
+ADDI $1, $0, 15
