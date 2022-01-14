@@ -87,12 +87,12 @@ int main(int argc, char * argv[])
 					if(choice == 0x32)
 					{
 						showRegister(tableRegister);
-						printf("[1] Continue	 [2] Show registers 	[3] Show memory\n\n");
+						printf("[1 or enter] Continue	 [2] Show registers 	[3] Show memory\n\n");
 					}
 					if(choice == 0x33) 
 					{
 						showMemory(&RAM);
-						printf("[1] Continue	 [2] Show registers 	[3] Show memory\n\n");
+						printf("[1 or enter] Continue	 [2] Show registers 	[3] Show memory\n\n");
 					}
 				}	
 			}	
