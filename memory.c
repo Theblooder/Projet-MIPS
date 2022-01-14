@@ -9,7 +9,7 @@ void readMemory(memory *m)
 {
 	element *actuel = *m;
 
-	int Value32Bits[32]={0};
+	int Value32Bits[32] = {0};
 	int finalValue = 0;
 
 	// int i = 0;
@@ -38,7 +38,8 @@ void readMemory(memory *m)
 
 	int i = 0;
 	int j = 0;
-	int adresse = 0;
+	int address = 0;
+	int type = 0;
 
 	while (actuel != NULL)
 	{
@@ -47,13 +48,15 @@ void readMemory(memory *m)
 			for(j=0; j<8; j++) {
 				Value32Bits[8*i + j] = actuel->valeur[j];
 			}
+			address = actuel->adress;
+			type = actuel->type;
 			actuel = actuel->suivant;
 		}
-		if(actuel == NULL) adresse += 4;
-		else adresse = (actuel->adress)-7;	
-		printf("%d : ", adresse);
-		finalValue = returnArgument(Value32Bits,0,32);
-		printf("%d\n\n",finalValue);
+		if(type == 0) {
+			printf("%d : ", address);
+			finalValue = returnArgument(Value32Bits,0,32);
+			printf("%d\n\n",finalValue);
+		}
 	}	
 	
 	

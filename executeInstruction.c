@@ -198,7 +198,7 @@ void ADDI_Operation(int *binaireInstruction, Register *tableRegister)
 
 	addTwoBinaryRegister(tableRegister[rs].registre, immediateValue, tableRegister[rt].registre);
 
-	printf(" %d + R%d --> R%d\n", returnArgument(immediateValue, 0, 32), rs, rt);
+	// printf(" %d + R%d --> R%d\n", returnArgument(immediateValue, 0, 32), rs, rt);
 	
 	printRegister(tableRegister[rt].registre);
 }
@@ -620,7 +620,7 @@ void SW_Operation(int *binaireInstruction,Register *tableRegister,  memory *m)
 	}
 
 	printf("Processing instruction: ");
-	printf("SW $%d, %d(%d)\n\n",rt,returnArgument(immediateValue, 0, 32),base);
+	printf("SW $%d, %d($%d)\n\n",rt,returnArgument(immediateValue, 0, 32),base);
 
 	swTwoBinaryRegister(tableRegister[base].registre, immediateValue, tableRegister[rt].registre, m);
 

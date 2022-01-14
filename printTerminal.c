@@ -28,6 +28,8 @@ void showRegister (Register *tableRegister)
     int k = 0;
     int j = 0;
     int length = 0;
+
+    printf("*** Register Value ***\n");
    
     while(i<32)
     {
@@ -89,7 +91,6 @@ void showRegister (Register *tableRegister)
     {
         printf(" ");
     }
-    i++;
     printf("HI: %d",returnArgument(tableRegister[34].registre,0,32));
     if(returnArgument(tableRegister[34].registre,0,32) == 0)
     {
@@ -100,16 +101,13 @@ void showRegister (Register *tableRegister)
         length = (int)log10(abs(returnArgument(tableRegister[34].registre,0,32)));
         if(returnArgument(tableRegister[34].registre,0,32)< 0) length += 1;
     }
-    for(k=length+4;k<20;k++)
-    {
-        printf(" ");
-    }
-    i++;
+    printf("\n");
     printf("\n");
 }
 
 void showMemory(memory *ram)
 {
+    printf("*** Memory Value (address : value)***\n");
     readMemory(ram);
 }
 
