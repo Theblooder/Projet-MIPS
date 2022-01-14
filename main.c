@@ -145,13 +145,13 @@ int main(int argc, char * argv[])
 		}
 	}
 
-	
-	while(getchar() != '\n');
+	if(isStepMode == 0) while(getchar() != '\n');
 
 	int i;
 	int PC = 0;
 	int tempPC = 0;
 	int moreInstruction = 1;
+	unsigned char choice = 0;
 
 	while(moreInstruction)
 	{
@@ -168,14 +168,32 @@ int main(int argc, char * argv[])
 				while(getchar() != '\n');
 			}
 			readAndDecodeInstruction(PC, tableRegister, &RAM);
+			if(isStepMode)
+			{
+				printf("[1] Continue	 [2] Show registers 	[3] Show memory\n\n");
+			
+				while (scanf("%c", &choice),(choice != 0x31) || (choice != 0x32) || (choice != 0x33))
+				{
+					if(choice == 0x31) break;
+					if(choice == 0x32)
+					{
+						showRegister(tableRegister);
+						printf("[1] Continue	 [2] Show registers 	[3] Show memory\n\n");
+					}
+					if(choice == 0x33) 
+					{
+						showMemory(&RAM);
+						printf("[1] Continue	 [2] Show registers 	[3] Show memory\n\n");
+					}
+				}	
+			}	
 		}
 		else {
 			moreInstruction = 0;
 		}
 	}
-
-	showRegister(tableRegister);
-	showMemory(&RAM);
+	
+	
 	
 	fclose(inputFile);
 	fclose(outputFile);

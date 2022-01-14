@@ -40,6 +40,7 @@ void readMemory(memory *m)
 	int j = 0;
 	int address = 0;
 	int type = 0;
+	int noData = 0;
 
 	while (actuel != NULL)
 	{
@@ -51,6 +52,7 @@ void readMemory(memory *m)
 			address = actuel->adress;
 			type = actuel->type;
 			actuel = actuel->suivant;
+			if(type == 0) noData = 1;
 		}
 		if(type == 0) {
 			printf("%d : ", address);
@@ -58,6 +60,8 @@ void readMemory(memory *m)
 			printf("%d\n\n",finalValue);
 		}
 	}	
+
+	if(noData == 0) printf("There is no DATA in memory\n\n");
 	
 	
 	// for(i=31;i>0;i--)

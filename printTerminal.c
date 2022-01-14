@@ -107,7 +107,7 @@ void showRegister (Register *tableRegister)
 
 void showMemory(memory *ram)
 {
-    printf("*** Memory Value (address : value)***\n");
+    printf("*** Memory Value (address : value)***\n\n");
     readMemory(ram);
 }
 
