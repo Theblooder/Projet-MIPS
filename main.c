@@ -8,6 +8,21 @@
 #include "printTerminal.h"
 #include <math.h>
 
+#include <termios.h>
+#include <unistd.h>
+
+int getch(void)
+{
+    struct termios oldattr, newattr;
+    int ch;
+    tcgetattr( STDIN_FILENO, &oldattr );
+    newattr = oldattr;
+    newattr.c_lflag &= ~( ICANON | ECHO );
+    tcsetattr( STDIN_FILENO, TCSANOW, &newattr );
+    ch = getchar();
+    tcsetattr( STDIN_FILENO, TCSANOW, &oldattr );
+    return ch;
+}
 
 int main(int argc, char * argv[])
 {
@@ -145,7 +160,8 @@ int main(int argc, char * argv[])
 		}
 	}
 
-	if(isStepMode == 0) while(getchar() != '\n');
+	
+	while(getchar() != '\n');
 
 	int i;
 	int PC = 0;
@@ -165,16 +181,16 @@ int main(int argc, char * argv[])
 
 		if(PC < 4*numberOfInsructionWritten) {
 			if(isStepMode) {
-				while(getchar() != '\n');
+				//while(getchar() != '\n');
 			}
 			readAndDecodeInstruction(PC, tableRegister, &RAM);
 			if(isStepMode)
 			{
-				printf("[1] Continue	 [2] Show registers 	[3] Show memory\n\n");
+				printf("[1 or enter] Continue	 [2] Show registers 	[3] Show memory\n\n");
 			
-				while (scanf("%c", &choice),(choice != 0x31) || (choice != 0x32) || (choice != 0x33))
+				while (choice = getch(),(choice != '\n') || (choice != 0x32) || (choice != 0x33) || (choice != 0x31))
 				{
-					if(choice == 0x31) break;
+					if((choice == '\n')||(choice == 0x31)) break;
 					if(choice == 0x32)
 					{
 						showRegister(tableRegister);
