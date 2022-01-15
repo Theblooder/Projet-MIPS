@@ -102,11 +102,18 @@ int _main_(char *instruction, char *cleanInstruction, int *values, int *operatio
     return isError;
 }
 
-int openFilesAndReadArguments(char *inputFilename, char *outputFilename, int argc, char *argv[])
+int openFilesAndReadArguments(char *inputFilename, char *outputHexaFilename, char *outputRegisterFilename, int argc, char *argv[])
 {
     char *PathTests = "tests/";
     char *PathHexified = "hexified/";
 
+
+    int isStepMode = 0;
+	for(int j=1; j<argc; j++) {
+		if(argv[j][0] == '-') {
+			isStepMode = 1;
+		}
+	}
 
     if(argc == 1) {
 		printf("Erreur : veuillez rentrer un fichier d'entrée\n");
@@ -116,31 +123,38 @@ int openFilesAndReadArguments(char *inputFilename, char *outputFilename, int arg
 		strcpy(inputFilename, PathTests);
 		strcat(inputFilename, argv[1]);
 
-		strcpy(outputFilename, PathHexified);
-		strcat(outputFilename, argv[1]);
+		strcpy(outputHexaFilename, PathHexified);
+		strcat(outputHexaFilename, argv[1]);
 	}
-	else {
+	else if(argc == 3) {
 		strcpy(inputFilename, PathTests);
 		strcat(inputFilename, argv[1]);
 
-		if(argv[2][0] != '-') {
-			strcpy(outputFilename, PathHexified);
-			strcat(outputFilename, argv[2]);
+		if(argv[2][0] == '-') {
+			strcpy(outputHexaFilename, PathHexified);
+			strcat(outputHexaFilename, argv[1]);
 		}
 		else {
-			strcpy(outputFilename, PathHexified);
-			strcat(outputFilename, argv[1]);
+			strcpy(outputHexaFilename, PathHexified);
+			strcat(outputHexaFilename, argv[2]);
 		}
 	}
+    else if(argc == 4) {
+        strcpy(inputFilename, PathTests);
+		strcat(inputFilename, argv[1]);
 
-	int isStepMode = 0;
-	for(int j=1; j<argc; j++) {
-		if(argv[j][0] == '-') {
-			if(1==1) {
-				isStepMode = 1;
-			}
-		}
-	}
+		strcpy(outputHexaFilename, PathHexified);
+		strcat(outputHexaFilename, argv[2]);
+
+        strcpy(outputRegisterFilename, PathHexified);
+		strcat(outputRegisterFilename, argv[3]);
+    }
+    else {
+        printf("Too much arguments ...\n");
+        printf("EXIT program...\n");
+    }
+
+	
     return isStepMode;
 }
 

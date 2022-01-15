@@ -15,7 +15,7 @@ CC = gcc
 
 
 all: $(BIN)
-	./$< in2.txt exa1.txt
+	./$< in2.txt exa1.txt in2.state
 
 exe: $(BIN)
 

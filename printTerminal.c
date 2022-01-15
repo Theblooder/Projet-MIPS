@@ -2,19 +2,25 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <termios.h>
+#include <unistd.h>
 #include "memory.h"
 #include "executeInstruction.h"
 #include "instructionsConvertBinHexa.h"
 #include "printTerminal.h"
 
-void presentationMipsEmulator(char *inputFilename,char *outputFilename)
+
+void presentationMipsEmulator(char *inputFilename,char *outputFilename, char *outputRegFilename)
 {
     printf("                  ***** MIPS EMULATOR *****\n");
 	printf("\n");
 	printf("GILGER Rémi et LAGRANGE Damien\n");
 	printf("\n");
 	printf("Assembling file : %s\n", inputFilename);
-	printf("Output will be written in : %s\n", outputFilename);
+	printf("Hexadecimal instructions will be written in : %s\n", outputFilename);
+    if(outputRegFilename[0] != '\0') {
+        printf("Registers will be written in : %s\n", outputRegFilename);
+    }
 	printf("\n");
 	printf("\n");
 	printf("*** Text segment loaded - Ready to execute ***\n");
@@ -109,5 +115,18 @@ void showMemory(memory *ram)
 {
     printf("*** Memory Value (address : value)***\n\n");
     readMemory(ram);
+}
+
+int getch(void)
+{
+    struct termios oldattr, newattr;
+    int ch;
+    tcgetattr( STDIN_FILENO, &oldattr );
+    newattr = oldattr;
+    newattr.c_lflag &= ~( ICANON | ECHO );
+    tcsetattr( STDIN_FILENO, TCSANOW, &newattr );
+    ch = getchar();
+    tcsetattr( STDIN_FILENO, TCSANOW, &oldattr );
+    return ch;
 }
 

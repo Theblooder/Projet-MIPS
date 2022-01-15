@@ -55,7 +55,7 @@ void readMemory(memory *m)
 			if(type == 0) noData = 1;
 		}
 		if(type == 0) {
-			printf("%d : ", address);
+			printf("%d : ", address - 1000);
 			finalValue = returnArgument(Value32Bits,0,32);
 			printf("%d\n\n",finalValue);
 		}

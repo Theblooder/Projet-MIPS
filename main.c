@@ -8,52 +8,49 @@
 #include "printTerminal.h"
 #include <math.h>
 
-#include <termios.h>
-#include <unistd.h>
-
-int getch(void)
-{
-    struct termios oldattr, newattr;
-    int ch;
-    tcgetattr( STDIN_FILENO, &oldattr );
-    newattr = oldattr;
-    newattr.c_lflag &= ~( ICANON | ECHO );
-    tcsetattr( STDIN_FILENO, TCSANOW, &newattr );
-    ch = getchar();
-    tcsetattr( STDIN_FILENO, TCSANOW, &oldattr );
-    return ch;
-}
-
 int main(int argc, char * argv[])
 {
 	memory RAM = NULL;
 	Register tableRegister[35] = {0} ;
 	
 	FILE *inputFile;
-	FILE *outputFile;
+	FILE *outputHexaFile;
+	FILE *outputRegisterFile;
 	char inputFilename[32];
-	char outputFilename[32];
+	char outputHexaFilename[32];
+	char outputRegisterFilename[32];
 
 	int isStepMode;
-	isStepMode = openFilesAndReadArguments(inputFilename, outputFilename, argc, argv);
+	isStepMode = openFilesAndReadArguments(inputFilename, outputHexaFilename, outputRegisterFilename, argc, argv);
 
 	inputFile = fopen(inputFilename, "r");
 		if(inputFile == NULL) {
 			perror("Probleme ouverture du fichier test");
 			exit(0);
 		}
-	outputFile = fopen(outputFilename, "w");
-		if(outputFile == NULL) {
+	outputHexaFile = fopen(outputHexaFilename, "w");
+		if(outputHexaFile == NULL) {
 			perror("Probleme ouverture du fichier hexified");
 			exit(0);
 		}
+	if(outputRegisterFilename[0] != '\0') {
+		outputRegisterFile = fopen(outputRegisterFilename, "w");
+			if(outputRegisterFile == NULL) {
+				perror("Probleme ouverture du fichier des registres");
+				exit(0);
+			}
+	}
 
-	presentationMipsEmulator(inputFilename, outputFilename);	
+	presentationMipsEmulator(inputFilename, outputHexaFilename, outputRegisterFilename);	
 	
 	int numberOfInsructionWritten = 0;
-	readFileAndPutIntoMemory(inputFile, outputFile, &numberOfInsructionWritten, &RAM);
+	readFileAndPutIntoMemory(inputFile, outputHexaFile, &numberOfInsructionWritten, &RAM);
 
 	
+
+
+
+
 	while(getchar() != '\n');
 
 	int i;
@@ -73,9 +70,6 @@ int main(int argc, char * argv[])
 		PC = tempPC;
 
 		if(PC < 4*numberOfInsructionWritten) {
-			if(isStepMode) {
-				//while(getchar() != '\n');
-			}
 			readAndDecodeInstruction(PC, tableRegister, &RAM);
 			if(isStepMode)
 			{
@@ -99,13 +93,15 @@ int main(int argc, char * argv[])
 		}
 		else {
 			moreInstruction = 0;
-		}
+		}	
 	}
+	showRegister(tableRegister);
+	showMemory(&RAM);
 	
 	
 	
 	fclose(inputFile);
-	fclose(outputFile);
+	fclose(outputHexaFile);
 
 	
 

@@ -602,7 +602,7 @@ void SUB_Operation(int *binaireInstruction, Register *tableRegister)
 	printRegister(tableRegister[rd].registre);
 }
 
-void SW_Operation(int *binaireInstruction,Register *tableRegister,  memory *m)
+void SW_Operation(int *binaireInstruction, Register *tableRegister,  memory *m)
 {
 	int rt = returnArgument(binaireInstruction, 16, 21);
 	int base = returnArgument(binaireInstruction, 21, 26);
@@ -969,7 +969,7 @@ void swTwoBinaryRegister(int *register1, int *register2, int *destinationRegiste
 		}
 
 		// printf("address :%d\n", jump);
-
+		jump += 1000;
 		writeFourOctetsInMemory(destinationRegister, jump, 0, m);
 	}
 }	
