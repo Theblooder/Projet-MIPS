@@ -44,57 +44,62 @@ int main(int argc, char * argv[])
 	presentationMipsEmulator(inputFilename, outputHexaFilename, outputRegisterFilename);	
 	
 	int numberOfInsructionWritten = 0;
-	readFileAndPutIntoMemory(inputFile, outputHexaFile, &numberOfInsructionWritten, &RAM);
-
 	
 
-
-
-
-	while(getchar() != '\n');
-
-	int i;
-	int PC = 0;
-	int tempPC = 0;
-	int moreInstruction = 1;
-	unsigned char choice = 0;
-
-	while(moreInstruction)
+	if(isStepMode == 2)
 	{
-		i = 0; tempPC = 0;
-
-		for(i=31;i>=0;i--)
-		{
-			tempPC += (unsigned long long int) (pow(2, i) * tableRegister[32].registre[i]);
-		}
-		PC = tempPC;
-
-		if(PC < 4*numberOfInsructionWritten) {
-			readAndDecodeInstruction(PC, tableRegister, &RAM);
-			if(isStepMode)
-			{
-				printf("[1 or enter] Continue	 [2] Show registers 	[3] Show memory\n\n");
-			
-				while (choice = getch(),(choice != '\n') || (choice != 0x32) || (choice != 0x33) || (choice != 0x31))
-				{
-					if((choice == '\n')||(choice == 0x31)) break;
-					if(choice == 0x32)
-					{
-						showRegister(tableRegister);
-						printf("[1 or enter] Continue	 [2] Show registers 	[3] Show memory\n\n");
-					}
-					if(choice == 0x33) 
-					{
-						showMemory(&RAM);
-						printf("[1 or enter] Continue	 [2] Show registers 	[3] Show memory\n\n");
-					}
-				}	
-			}	
-		}
-		else {
-			moreInstruction = 0;
-		}	
+		interactifMode(numberOfInsructionWritten, &RAM, tableRegister);
 	}
+	else
+	{
+		// readFileAndPutIntoMemory(inputFile, outputHexaFile, &numberOfInsructionWritten, &RAM);
+
+		// while(getchar() != '\n');
+
+		// int i;
+		// int PC = 0;
+		// int tempPC = 0;
+		// int moreInstruction = 1;
+		// unsigned char choice = 0;
+
+		// while(moreInstruction)
+		// {
+		// 	i = 0; tempPC = 0;
+
+		// 	for(i=31;i>=0;i--)
+		// 	{
+		// 		tempPC += (unsigned long long int) (pow(2, i) * tableRegister[32].registre[i]);
+		// 	}
+		// 	PC = tempPC;
+
+		// 	if(PC < 4*numberOfInsructionWritten) {
+		// 		readAndDecodeInstruction(PC, tableRegister, &RAM);
+		// 		if(isStepMode)
+		// 		{
+		// 			printf("[1 or enter] Continue	 [2] Show registers 	[3] Show memory\n\n");
+				
+		// 			while (choice = getch(),(choice != '\n') || (choice != 0x32) || (choice != 0x33) || (choice != 0x31))
+		// 			{
+		// 				if((choice == '\n')||(choice == 0x31)) break;
+		// 				if(choice == 0x32)
+		// 				{
+		// 					showRegister(tableRegister);
+		// 					printf("[1 or enter] Continue	 [2] Show registers 	[3] Show memory\n\n");
+		// 				}
+		// 				if(choice == 0x33) 
+		// 				{
+		// 					showMemory(&RAM);
+		// 					printf("[1 or enter] Continue	 [2] Show registers 	[3] Show memory\n\n");
+		// 				}
+		// 			}	
+		// 		}	
+		// 	}
+		// 	else {
+		// 		moreInstruction = 0;
+		// 	}	
+		// }
+	}
+	
 	showRegister(tableRegister);
 	showMemory(&RAM);
 	

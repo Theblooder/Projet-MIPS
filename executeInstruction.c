@@ -45,7 +45,7 @@ void readAndDecodeInstruction(int address, Register *tableRegister, memory *m)
 	/* PC += 4 */
 	// printf("\n");
 	int nextPcAdress[32] = {0};
-	// printf("PC + 4\n");
+	printf("PC + 4\n");
 	convertInToBinnary(4, nextPcAdress);
 	addTwoBinaryRegister(tableRegister[32].registre, nextPcAdress, tableRegister[32].registre);
 	

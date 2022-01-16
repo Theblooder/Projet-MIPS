@@ -11,6 +11,7 @@ int cleanInstructionReturnLength(const char *instruction, char *clearInstruction
 int getOperation(const char *instruction, int *numberRegisterOffset, int *INToperation);
 int isTexteEqual(char *operation, char *Texte);
 int getRegisterOffset(char *instruction, int *currentPosition, int regValue, int *isError);
+void interactifMode(int numberOfInsructionWritten, memory *RAM, Register *tableRegister);
 
 
 

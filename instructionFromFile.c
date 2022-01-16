@@ -4,6 +4,8 @@
 #include <math.h>
 #include "instructionFromFile.h"
 #include "instructionsConvertBinHexa.h"
+#include "printTerminal.h"
+#include "executeInstruction.h"
 
 int _main_(char *instruction, char *cleanInstruction, int *values, int *operation, int numberOfRow)
 {
@@ -26,7 +28,7 @@ int _main_(char *instruction, char *cleanInstruction, int *values, int *operatio
         isError = 1;
         return isError;
     }
-    // printf("operation :%d:\n", operation);
+    // printf("operation :%d:\n", *operation);
     // printf("pos :%d\n", currentPosition);
     // printf("reg :%d\n", nbrRegOff[0]);
     // printf("off :%d\n", nbrRegOff[1]);
@@ -344,7 +346,8 @@ int getRegisterOffset(char *instruction, int *currentPosition, int regValue, int
         number *= 10;
         number += instruction[j] - 48;
     }
-    if(instruction[j] != ',' && instruction[j] != '\0' && instruction[j] != '(' && instruction[j] != ')') {
+
+    if(instruction[j] != ',' && instruction[j] != '\0' && instruction[j] != '(' && instruction[j] != ')' && instruction[j] != '\n') {
         *isError = 1;
         return -1;
     }
@@ -355,6 +358,88 @@ int getRegisterOffset(char *instruction, int *currentPosition, int regValue, int
     if(isNegative) {
         number *= -1;
     }
-
     return number;
+}
+
+void interactifMode(int numberOfInsructionWritten, memory *RAM, Register *tableRegister)
+{
+    char interactifInstruction[100];
+    char cleanInstruction[1024];
+    int numberOfRow = 0;
+    int addressInstruction = 0;
+    int isError = 0;
+    int end = 0;
+    int PC = 0;
+    int tempPC = 0;
+    unsigned char choice = 0;
+    int i = 0;
+
+    while (end == 0)
+    {
+
+        printf("Write an instruction and press the Enter key\n");
+        fgets(interactifInstruction,100,stdin);
+
+        int values[3] = {0};
+        int operation;
+
+        isError = _main_(interactifInstruction, cleanInstruction, values, &operation, numberOfRow);
+        if(!isError) {
+            int binaireInstruction[32] = {0};
+            int hexadecimalInstruction[8] = {0};
+
+            createBinaryInstruction(operation, values, binaireInstruction);
+
+            writeFourOctetsInMemory(binaireInstruction, addressInstruction, 1, RAM);
+            (numberOfInsructionWritten)++;
+            addressInstruction += 4;
+
+            for(i=0; i<8-log10(addressInstruction-3); i++) {
+                printf("0");
+            }
+            printf("%d", addressInstruction-4);
+            convertBinaireIntoHexAndDisplay(binaireInstruction, hexadecimalInstruction);
+            printf(" : {");
+            for(i=0;cleanInstruction[i]!='\n';i++)
+            {
+                printf("%c", cleanInstruction[i]);
+            }	
+            printf("}\n");
+        }
+
+        
+        for(i=31;i>=0;i--)
+        {
+            tempPC += (unsigned long long int) (pow(2, i) * tableRegister[32].registre[i]);
+        }
+        PC = tempPC;
+        printf("%d\n%d\n",PC,4* numberOfInsructionWritten);
+        if(PC < 4* numberOfInsructionWritten) {
+            readAndDecodeInstruction(PC, tableRegister, RAM);
+            printf("[1 or enter] Continue	 [2] Show registers 	[3] Show memory 	[4] End program\n\n");
+        
+            while (choice = getch(),(choice != '\n') || (choice != 0x32) || (choice != 0x33) || (choice != 0x31) || (choice != 0x34))
+            {
+                if((choice == '\n')||(choice == 0x31)) break;
+                if(choice == 0x32)
+                {
+                    showRegister(tableRegister);
+                    printf("[1 or enter] Continue	 [2] Show registers 	[3] Show memory 	[4] End program\n\n");
+                }
+                if(choice == 0x33) 
+                {
+                    showMemory(RAM);
+                    printf("[1 or enter] Continue	 [2] Show registers 	[3] Show memory 	[4] End program\n\n");
+                }
+                if(choice == 0x34) 
+                {
+                    end = 1;
+                    break;
+                }
+            }	
+        }
+        else {
+            isError = 1;
+        }
+    }
 }
