@@ -3,4 +3,4 @@ emul-mips
 .vscode
 ForTesting/
 tests/
-hexified/
+output/
