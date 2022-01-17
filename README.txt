@@ -14,6 +14,8 @@ dossier tests pour les fichiers assembleurs et dossier hexified pour les fichier
 
 execution :
 
+./emul-mips          -mode interactif
+
 ./emul-mips <input_file>.txt [<output_file>.txt] [-pas]         --pour le mode normale (avec option -pas) dans cette ordre
 
 ./emul-mips <input_file>.txt <output_file>.txt <outputRegister_file>.state          --pas de mode pas à pas ici

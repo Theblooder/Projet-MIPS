@@ -11,7 +11,7 @@
 int main(int argc, char * argv[])
 {
 	memory RAM = NULL;
-	Register tableRegister[35] = {0} ;
+	Register tableRegister[35] = {0};
 	
 	FILE *inputFile;
 	FILE *outputHexaFile;
@@ -43,10 +43,9 @@ int main(int argc, char * argv[])
 		}
 	}
 
-	presentationMipsEmulator(inputFilename, outputHexaFilename, outputRegisterFilename);	
+	presentationMipsEmulator(inputFilename, outputHexaFilename, outputRegisterFilename);
 	
 	int numberOfInsructionWritten = 0;
-	
 
 	if(modeType == 2)
 	{
