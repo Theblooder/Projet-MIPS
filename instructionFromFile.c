@@ -118,7 +118,7 @@ int openFilesAndReadArguments(char *inputFilename, char *outputHexaFilename, cha
 	}
 
     if(argc == 1) {
-		printf("Erreur : veuillez rentrer un fichier d'entrée\n");
+		printf("Error: please enter an input file\n");
 		exit(0);
 	}
 	else if(argc == 2) {
@@ -310,7 +310,7 @@ int getOperation(const char *instruction, int *numberRegisterOffset, int *INTope
     else if(isTexteEqual(operation, "SYSCALL"))  {*INToperation = 25; numberRegisterOffset[0] = 0; numberRegisterOffset[1] = 0;}
     else if(isTexteEqual(operation, "XOR"))      {*INToperation = 26; numberRegisterOffset[0] = 3; numberRegisterOffset[1] = 0;}
     else {
-        //printf("Opération non reconnu\n");
+        //printf("Operation not recognized\n");
         *INToperation = 0;
         i = 0;
     }

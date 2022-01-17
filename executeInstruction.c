@@ -132,7 +132,7 @@ int executeTheGoodOperation(int Operation, int *binaireInstruction, Register *ta
 	// else if(Operation == -12)	SYSCALL_Operation(binaireInstruction, tableRegister); 	//SYSCALL
 	else if(Operation == -38)		XOR_Operation(binaireInstruction, tableRegister); 		//XOR
     else {	
-        printf("Opération non reconnu dans le décodage pas la lecture fichier\n");
+        printf("Operation not recognized in decoding\n");
         return 1;
     }
 }
@@ -651,11 +651,6 @@ void XOR_Operation(int *binaireInstruction, Register *tableRegister)
 }
 
 
-
-//Ne fonctionne pas avec des chiffres négatifs, je me pose la question si ADD à le droit d'avoir des chiffres négatif, ADDI oui mais juste pour le immediate j'ai l'impression
-//alors que je crois me rappeler qu'on a toujours eu le droit d'avoir des registres avec des chiffres négatifs...
-//Faut qu'on regarde, puis je ferais les modifs en conséquence
-
 int addTwoBinaryRegister(int *register1, int *register2, int *destinationRegister)
 {
 
@@ -960,7 +955,7 @@ void swTwoBinaryRegister(int *register1, int *register2, int *destinationRegiste
 	unsigned int jump = 0;
 
 	if(offset[31] == 1 || (offset[0] != 0 || offset[1] != 0)) {
-		printf("ERROR : Address pointé invalide\n");
+		printf("ERROR : Invalid pointed address\n");
 		return;
 	}
 	else {
@@ -984,7 +979,7 @@ void ldTwoBinaryRegister(int *register1, int *register2, int *destinationRegiste
 	unsigned int jump = 0;
 
 	if(offset[31] == 1 || (offset[0] != 0 && offset[1] != 0)) {
-		printf("ERROR : Address pointé invalide\n");
+		printf("ERROR : Invalid pointed address\n");
 		return;
 	}
 	else {

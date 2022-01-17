@@ -25,18 +25,18 @@ int main(int argc, char * argv[])
 
 	inputFile = fopen(inputFilename, "r");
 		if(inputFile == NULL) {
-			perror("Probleme ouverture du fichier test");
+			perror("Problem opening the test file");
 			exit(0);
 		}
 	outputHexaFile = fopen(outputHexaFilename, "w");
 		if(outputHexaFile == NULL) {
-			perror("Probleme ouverture du fichier hexified");
+			perror("Problem opening the hexified file");
 			exit(0);
 		}
 	if(outputRegisterFilename[0] != '\0') {
 		outputRegisterFile = fopen(outputRegisterFilename, "w");
 			if(outputRegisterFile == NULL) {
-				perror("Probleme ouverture du fichier des registres");
+				perror("Problem opening the registry file");
 				exit(0);
 			}
 	}
