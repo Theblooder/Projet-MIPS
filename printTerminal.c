@@ -16,8 +16,10 @@ void presentationMipsEmulator(char *inputFilename,char *outputFilename, char *ou
 	printf("\n");
 	printf("GILGER Rémi et LAGRANGE Damien\n");
 	printf("\n");
-	printf("Assembling file : %s\n", inputFilename);
-	printf("Hexadecimal instructions will be written in : %s\n", outputFilename);
+	if(inputFilename[0] != '\0') {
+        printf("Assembling file : %s\n", inputFilename);
+        printf("Hexadecimal instructions will be written in : %s\n", outputFilename);
+    }
     if(outputRegFilename[0] != '\0') {
         printf("Registers will be written in : %s\n", outputRegFilename);
     }

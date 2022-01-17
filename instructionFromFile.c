@@ -110,16 +110,16 @@ int openFilesAndReadArguments(char *inputFilename, char *outputHexaFilename, cha
     char *PathHexified = "output/";
 
 
-    int isStepMode = 0;
+
+    int modeType = 0;
 	for(int j=1; j<argc; j++) {
 		if(argv[j][0] == '-') {
-			isStepMode = 1;
+			modeType = 1;
 		}
 	}
 
     if(argc == 1) {
-		printf("Error: please enter an input file\n");
-		exit(0);
+		modeType = 2;
 	}
 	else if(argc == 2) {
 		strcpy(inputFilename, PathTests);
@@ -147,9 +147,12 @@ int openFilesAndReadArguments(char *inputFilename, char *outputHexaFilename, cha
 
 		strcpy(outputHexaFilename, PathHexified);
 		strcat(outputHexaFilename, argv[2]);
+        
 
-        strcpy(outputRegisterFilename, PathHexified);
-		strcat(outputRegisterFilename, argv[3]);
+        if(argv[3][0] != '-') {
+            strcpy(outputRegisterFilename, PathHexified);
+		    strcat(outputRegisterFilename, argv[3]);
+		}
     }
     else {
         printf("Too much arguments ...\n");
@@ -157,7 +160,7 @@ int openFilesAndReadArguments(char *inputFilename, char *outputHexaFilename, cha
     }
 
 	
-    return isStepMode;
+    return modeType;
 }
 
 void readFileAndPutIntoMemory(FILE *inputFile, FILE *outputFile, int *numberOfInsructionWritten, memory *RAM)

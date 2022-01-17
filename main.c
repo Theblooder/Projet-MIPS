@@ -20,25 +20,27 @@ int main(int argc, char * argv[])
 	char outputHexaFilename[32];
 	char outputRegisterFilename[32];
 
-	int isStepMode;
-	isStepMode = openFilesAndReadArguments(inputFilename, outputHexaFilename, outputRegisterFilename, argc, argv);
+	int modeType;
+	modeType = openFilesAndReadArguments(inputFilename, outputHexaFilename, outputRegisterFilename, argc, argv);
 
-	inputFile = fopen(inputFilename, "r");
-		if(inputFile == NULL) {
-			perror("Problem opening the test file");
-			exit(0);
-		}
-	outputHexaFile = fopen(outputHexaFilename, "w");
-		if(outputHexaFile == NULL) {
-			perror("Problem opening the hexified file");
-			exit(0);
-		}
-	if(outputRegisterFilename[0] != '\0') {
-		outputRegisterFile = fopen(outputRegisterFilename, "w");
-			if(outputRegisterFile == NULL) {
-				perror("Problem opening the registry file");
+	if(modeType != 2) {
+		inputFile = fopen(inputFilename, "r");
+			if(inputFile == NULL) {
+				perror("Problem opening the test file");
 				exit(0);
 			}
+		outputHexaFile = fopen(outputHexaFilename, "w");
+			if(outputHexaFile == NULL) {
+				perror("Problem opening the hexified file");
+				exit(0);
+			}
+		if(outputRegisterFilename[0] != '\0') {
+			outputRegisterFile = fopen(outputRegisterFilename, "w");
+				if(outputRegisterFile == NULL) {
+					perror("Problem opening the registry file");
+					exit(0);
+				}
+		}
 	}
 
 	presentationMipsEmulator(inputFilename, outputHexaFilename, outputRegisterFilename);	
@@ -46,7 +48,7 @@ int main(int argc, char * argv[])
 	int numberOfInsructionWritten = 0;
 	
 
-	if(isStepMode == 2)
+	if(modeType == 2)
 	{
 		interactifMode(numberOfInsructionWritten, &RAM, tableRegister);
 	}
@@ -74,7 +76,7 @@ int main(int argc, char * argv[])
 
 			if(PC < 4*numberOfInsructionWritten) {
 				readAndDecodeInstruction(PC, tableRegister, &RAM);
-				if(isStepMode)
+				if(modeType == 1)
 				{
 					printf("[1 or enter] Continue	 [2] Show registers 	[3] Show memory\n\n");
 				
