@@ -372,6 +372,7 @@ void interactifMode(int numberOfInsructionWritten, memory *RAM, Register *tableR
     int isError = 0;
     int end = 0;
     int PC = 0;
+    int tempPC = 0;
     unsigned char choice = 0;
     int i = 0;
 
@@ -411,22 +412,13 @@ void interactifMode(int numberOfInsructionWritten, memory *RAM, Register *tableR
             printf("}\n");
         }
 
-<<<<<<< HEAD
         tempPC = 0;
-=======
-        
-        int tempPC = 0;
->>>>>>> a66c0e1 (version presque final)
         for(i=31;i>=0;i--)
         {
             tempPC += (unsigned long long int) (pow(2, i) * tableRegister[32].registre[i]);
         }
         PC = tempPC;
-<<<<<<< HEAD
         //printf("%d\n%d\n",PC,4* numberOfInsructionWritten);
-=======
-        
->>>>>>> a66c0e1 (version presque final)
         if(PC < 4* numberOfInsructionWritten) {
             readAndDecodeInstruction(PC, tableRegister, RAM);
             printf("[1 or enter] Continue	 [2] Show registers 	[3] Show memory 	[4] End program\n\n");
