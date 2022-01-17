@@ -11,31 +11,6 @@ void readMemory(memory *m)
 
 	int Value32Bits[32] = {0};
 	int finalValue = 0;
-
-	// int i = 0;
-	// int k = 1;
-	// int j = 0;
-
-	// while(actuel != NULL)
-	// {
-	// 	for(i=i;i<((8*k)-1);i++) {
-	// 		j++;
-	// 		Value32Bits[i] = actuel->valeur[j];
-	// 		printf("%d",actuel->valeur[j]);
-	// 	}
-	// 	j = 0;
-	// 	k++;
-	// 	actuel = actuel->suivant;
-	// 	if(i >= 32)
-	// 	{
-	// 		printf("adresse : %d\n", (actuel->adress)-3);
-	// 		finalValue = returnArgument(Value32Bits,0,32);
-	// 		printf("%d\n\n",finalValue);
-	// 		k = 1;
-	// 		i = 0;
-	// 	}
-	// }
-
 	int i = 0;
 	int j = 0;
 	int address = 0;
@@ -63,14 +38,7 @@ void readMemory(memory *m)
 
 	if(noData == 0) printf("There is no DATA in memory\n\n");
 	
-	
-	// for(i=31;i>0;i--)
-	// {
-	// 	printf("%d",Value32Bits[i]);
-	// }
-
 	return;
-
 }
 
 void readFourOctets(int *value32bits, int startAddress, memory *m)
@@ -103,7 +71,7 @@ void getValueFromMemory(int *value8bits, int adresse, memory *m)
 		precedent = actuel;
 		actuel = actuel->suivant;
 	}
-	printf("Cette adresse de la mémoire ne contient pas de valeur\n");
+	printf("This memory address does not contain a value\n");
 	for(i=0; i<8; i++) 
 	{
 		value8bits[i] = 0;
@@ -124,7 +92,7 @@ void insertInMemory(int *value8bits, int adresse, int type, memory *m)
 				}
 			}
 			else {
-				printf("Tu ne peut pas écire des datas sur une instruction\n");
+				printf("You can't edit data on an instruction\n");
 			}
 			return;
 		}

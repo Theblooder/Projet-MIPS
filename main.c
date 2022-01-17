@@ -110,8 +110,10 @@ int main(int argc, char * argv[])
 		fclose(outputRegisterFile);
 	}
 	
-	fclose(inputFile);
-	fclose(outputHexaFile);	
+	if(modeType != 2) {
+		fclose(inputFile);
+		fclose(outputHexaFile);	
+	}
 
 	return 0;
 }
