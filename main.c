@@ -104,14 +104,17 @@ int main(int argc, char * argv[])
 	showRegister(tableRegister);
 	showMemory(&RAM);
 	
-	if(outputRegisterFile != NULL)
+	if(outputRegisterFilename[0] != '\0')
 	{
 		putRegisterInFile(tableRegister, outputRegisterFile);
 		fclose(outputRegisterFile);
 	}
 	
-	fclose(inputFile);
-	fclose(outputHexaFile);	
+	if(modeType != 2) {
+		fclose(inputFile);
+		fclose(outputHexaFile);
+	}
+	
 
 	return 0;
 }
