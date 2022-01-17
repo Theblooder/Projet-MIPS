@@ -130,3 +130,12 @@ int getch(void)
     return ch;
 }
 
+void putRegisterInFile(Register *tableRegister, FILE *outputRegisterFile)
+{
+    int i = 0;
+
+    for(i=0;i<32;i++)
+    {
+        fprintf(outputRegisterFile, "$%d: %d\n", i, returnArgument(tableRegister[i].registre,0,32));
+    }
+}

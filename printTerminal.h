@@ -10,6 +10,6 @@ void showMemory(memory *ram);
 
 int getch(void);
 
-
+void putRegisterInFile(Register *tableRegister, FILE *outputRegisterFile);
 
 #endif

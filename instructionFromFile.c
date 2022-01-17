@@ -107,7 +107,7 @@ int _main_(char *instruction, char *cleanInstruction, int *values, int *operatio
 int openFilesAndReadArguments(char *inputFilename, char *outputHexaFilename, char *outputRegisterFilename, int argc, char *argv[])
 {
     char *PathTests = "tests/";
-    char *PathHexified = "hexified/";
+    char *PathHexified = "output/";
 
 
     int isStepMode = 0;
@@ -379,6 +379,9 @@ void interactifMode(int numberOfInsructionWritten, memory *RAM, Register *tableR
 
         printf("Write an instruction and press the Enter key\n");
         fgets(interactifInstruction,100,stdin);
+        printf("\n");
+
+        if(isTexteEqual(interactifInstruction,"EXIT\n") || isTexteEqual(interactifInstruction,"exit\n")) break;
 
         int values[3] = {0};
         int operation;
@@ -407,13 +410,13 @@ void interactifMode(int numberOfInsructionWritten, memory *RAM, Register *tableR
             printf("}\n");
         }
 
-        
+        tempPC = 0;
         for(i=31;i>=0;i--)
         {
             tempPC += (unsigned long long int) (pow(2, i) * tableRegister[32].registre[i]);
         }
         PC = tempPC;
-        printf("%d\n%d\n",PC,4* numberOfInsructionWritten);
+        //printf("%d\n%d\n",PC,4* numberOfInsructionWritten);
         if(PC < 4* numberOfInsructionWritten) {
             readAndDecodeInstruction(PC, tableRegister, RAM);
             printf("[1 or enter] Continue	 [2] Show registers 	[3] Show memory 	[4] End program\n\n");
