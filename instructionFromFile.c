@@ -13,11 +13,10 @@ int _main_(char *instruction, char *cleanInstruction, int *values, int *operatio
     int nbrRegOff[2];
     int currentPosition;
     int isError = 0;
+    int k=0;
+    int number;
 
     lengthInstruction = cleanInstructionReturnLength(instruction, cleanInstruction);
-    // printf("ins:%s:\n", instruction);
-    // printf("clean ins:%s:\n", cleanInstruction);
-    // printf("%d\n", lengthInstruction);
 
     
     currentPosition = getOperation(cleanInstruction, nbrRegOff, operation);
@@ -28,12 +27,9 @@ int _main_(char *instruction, char *cleanInstruction, int *values, int *operatio
         isError = 1;
         return isError;
     }
-    // printf("operation :%d:\n", *operation);
-    // printf("pos :%d\n", currentPosition);
-    // printf("reg :%d\n", nbrRegOff[0]);
-    // printf("off :%d\n", nbrRegOff[1]);
 
-    int number;
+
+    
 
     if(*operation == 13 || *operation == 24) {
         if(currentPosition < lengthInstruction) {
@@ -59,7 +55,7 @@ int _main_(char *instruction, char *cleanInstruction, int *values, int *operatio
         }
     }
     else {
-        for(int k=0; k<nbrRegOff[0]; k++) {
+        for(k=0; k<nbrRegOff[0]; k++) {
             if(currentPosition < lengthInstruction) {
                 number = getRegisterOffset(cleanInstruction, &currentPosition, 1, &isError);
             }
@@ -77,7 +73,7 @@ int _main_(char *instruction, char *cleanInstruction, int *values, int *operatio
                 values[k] = number;
             }
         }
-        for(int k=0; k<nbrRegOff[1]; k++) {
+        for(k=0; k<nbrRegOff[1]; k++) {
             if(currentPosition < lengthInstruction) {
                 number = getRegisterOffset(cleanInstruction, &currentPosition, 0, &isError);
             }
@@ -97,10 +93,6 @@ int _main_(char *instruction, char *cleanInstruction, int *values, int *operatio
         }
     }
 
-    // printf("%d\n", values[0]);
-    // printf("%d\n", values[1]);
-    // printf("%d\n", values[2]);
-
     return isError;
 }
 
@@ -108,10 +100,11 @@ int openFilesAndReadArguments(char *inputFilename, char *outputHexaFilename, cha
 {
     char *PathTests = "tests/";
     char *PathHexified = "output/";
+    int j;
 
 
     int modeType = 0;
-	for(int j=1; j<argc; j++) {
+	for(j=1; j<argc; j++) {
 		if(argv[j][0] == '-') {
 			modeType = 1;
 		}
@@ -312,7 +305,6 @@ int getOperation(const char *instruction, int *numberRegisterOffset, int *INTope
     else if(isTexteEqual(operation, "SYSCALL"))  {*INToperation = 25; numberRegisterOffset[0] = 0; numberRegisterOffset[1] = 0;}
     else if(isTexteEqual(operation, "XOR"))      {*INToperation = 26; numberRegisterOffset[0] = 3; numberRegisterOffset[1] = 0;}
     else {
-        //printf("Operation not recognized\n");
         *INToperation = 0;
         i = 0;
     }
@@ -415,10 +407,9 @@ void interactifMode(int numberOfInsructionWritten, memory *RAM, Register *tableR
         tempPC = 0;
         for(i=31;i>=0;i--)
         {
-            tempPC += (unsigned long long int) (pow(2, i) * tableRegister[32].registre[i]);
+            tempPC += (unsigned long int) (pow(2, i) * tableRegister[32].registre[i]);
         }
         PC = tempPC;
-        //printf("%d\n%d\n",PC,4* numberOfInsructionWritten);
         if(PC < 4* numberOfInsructionWritten) {
             readAndDecodeInstruction(PC, tableRegister, RAM);
             printf("[1 or enter] Continue	 [2] Show registers 	[3] Show memory 	[4] End program\n\n");

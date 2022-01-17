@@ -67,7 +67,7 @@ void DIV_Operation(int *binaireInstruction, Register *tableRegister);
 
 int addTwoBinaryRegister(int *register1, int *register2, int *destinationRegister);
 
-int subTwoBinaryRegister(int *register1, int *register2, int *destinationRegister);
+void subTwoBinaryRegister(int *register1, int *register2, int *destinationRegister);
 
 void andTwoBinaryRegister(int *register1, int *register2, int *destinationRegister);
 

@@ -1,7 +1,7 @@
-#include <math.h>
-#include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <math.h>
 #include "memory.h"
 #include "executeInstruction.h"
 #include "instructionsConvertBinHexa.h"
@@ -11,13 +11,14 @@
 void convertInToBinnary(int value, int *destinationRegister)
 {
 	int isSigned = 0;
+	int i;
 
     if(value < 0) {
         isSigned = 1;
         value *= -1;
     }
 
-	int i;
+	
 	for(i=0; value>0; i++) {
         destinationRegister[i] = value % 2;  
         value = value / 2;  
@@ -40,12 +41,13 @@ void convertInToBinnary(int value, int *destinationRegister)
 void readAndDecodeInstruction(int address, Register *tableRegister, memory *m)
 {
 	int binaireInstruction[32] = {0};
+	int nextPcAdress[32] = {0};
+
 	readInstructionInMemory(address, binaireInstruction, m);
 
-	/* PC += 4 */
-	// printf("\n");
-	int nextPcAdress[32] = {0};
-	//printf("PC + 4\n");
+
+	
+
 	convertInToBinnary(4, nextPcAdress);
 	addTwoBinaryRegister(tableRegister[32].registre, nextPcAdress, tableRegister[32].registre);
 	
@@ -99,42 +101,42 @@ int decodeInstruction(int *binaireInstruction)
 			}
 		}
 	}
-	// printf("opération = %d\n",Operation);
 	return Operation;
 }
 
 int executeTheGoodOperation(int Operation, int *binaireInstruction, Register *tableRegister, memory *m)
 {
-	if(Operation == -32)          	ADD_Operation(binaireInstruction, tableRegister); 		//ADD
-    else if(Operation == 8)     	ADDI_Operation(binaireInstruction, tableRegister); 		//ADDI
-    else if(Operation == -36)		AND_Operation(binaireInstruction, tableRegister);	 	//AND
-    else if(Operation == 4)			BEQ_Operation(binaireInstruction, tableRegister); 		//BEQ
-    else if(Operation == 7)			BGTZ_Operation(binaireInstruction, tableRegister);	 	//BGTZ
-	else if(Operation == 6)			BLEZ_Operation(binaireInstruction, tableRegister);	 	//BLEZ
-	else if(Operation == 5)			BNE_Operation(binaireInstruction, tableRegister);	 	//BNE
-	else if(Operation == -26)		DIV_Operation(binaireInstruction, tableRegister); 		//DIV
-	else if(Operation == 2)			J_Operation(binaireInstruction, tableRegister); 		//J
-	else if(Operation == 3)			JAL_Operation(binaireInstruction, tableRegister); 		//JAL
-	else if(Operation == -8)		JR_Operation(binaireInstruction, tableRegister);	 	//JR
-	else if(Operation == 15)		LUI_Operation(binaireInstruction, tableRegister); 		//LUI
-	else if(Operation == 35)		LW_Operation(binaireInstruction, tableRegister, m); 	//LW
-	else if(Operation == -16)		MFHI_Operation(binaireInstruction, tableRegister);		//MFHI
-	else if(Operation == -18)		MFLO_Operation(binaireInstruction, tableRegister);	 	//MFLO
-	else if(Operation == -24)		MULT_Operation(binaireInstruction, tableRegister); 		//MULT
-	else if(Operation == 0)			NOP_Operation(binaireInstruction, tableRegister);		//NOP	
-	else if(Operation == -37)		OR_Operation(binaireInstruction, tableRegister); 		//OR
-	else if(Operation == 1000)		ROTR_Operation(binaireInstruction, tableRegister); 		//ROTR 	
-	else if(Operation == 2000)		SLL_Operation(binaireInstruction, tableRegister);	 	//SLL	
-	else if(Operation == -42)		SLT_Operation(binaireInstruction, tableRegister);	 	//SLT
-	else if(Operation == -2)		SRL_Operation(binaireInstruction, tableRegister);	 	//SRL	
-	else if(Operation == -34)		SUB_Operation(binaireInstruction, tableRegister);	 	//SUB
-	else if(Operation == 43)		SW_Operation(binaireInstruction, tableRegister, m);		//SW
-	// else if(Operation == -12)	SYSCALL_Operation(binaireInstruction, tableRegister); 	//SYSCALL
-	else if(Operation == -38)		XOR_Operation(binaireInstruction, tableRegister); 		//XOR
+	if(Operation == -32)          	ADD_Operation(binaireInstruction, tableRegister); 		
+    else if(Operation == 8)     	ADDI_Operation(binaireInstruction, tableRegister); 		
+    else if(Operation == -36)		AND_Operation(binaireInstruction, tableRegister);	 
+    else if(Operation == 4)			BEQ_Operation(binaireInstruction, tableRegister); 	
+    else if(Operation == 7)			BGTZ_Operation(binaireInstruction, tableRegister);	 
+	else if(Operation == 6)			BLEZ_Operation(binaireInstruction, tableRegister);	 
+	else if(Operation == 5)			BNE_Operation(binaireInstruction, tableRegister);	 
+	else if(Operation == -26)		DIV_Operation(binaireInstruction, tableRegister); 	
+	else if(Operation == 2)			J_Operation(binaireInstruction, tableRegister); 		
+	else if(Operation == 3)			JAL_Operation(binaireInstruction, tableRegister); 		
+	else if(Operation == -8)		JR_Operation(binaireInstruction, tableRegister);	 
+	else if(Operation == 15)		LUI_Operation(binaireInstruction, tableRegister); 		
+	else if(Operation == 35)		LW_Operation(binaireInstruction, tableRegister, m); 	
+	else if(Operation == -16)		MFHI_Operation(binaireInstruction, tableRegister);		
+	else if(Operation == -18)		MFLO_Operation(binaireInstruction, tableRegister);	 
+	else if(Operation == -24)		MULT_Operation(binaireInstruction, tableRegister); 	
+	else if(Operation == 0)			NOP_Operation(binaireInstruction, tableRegister);	
+	else if(Operation == -37)		OR_Operation(binaireInstruction, tableRegister); 	
+	else if(Operation == 1000)		ROTR_Operation(binaireInstruction, tableRegister); 	
+	else if(Operation == 2000)		SLL_Operation(binaireInstruction, tableRegister);	 	
+	else if(Operation == -42)		SLT_Operation(binaireInstruction, tableRegister);	 
+	else if(Operation == -2)		SRL_Operation(binaireInstruction, tableRegister);	 
+	else if(Operation == -34)		SUB_Operation(binaireInstruction, tableRegister);	 
+	else if(Operation == 43)		SW_Operation(binaireInstruction, tableRegister, m);	
+	/* else if(Operation == -12)	SYSCALL_Operation(binaireInstruction, tableRegister); 	SYSCALL*/
+	else if(Operation == -38)		XOR_Operation(binaireInstruction, tableRegister); 		
     else {	
         printf("Operation not recognized in decoding\n");
         return 1;
     }
+	return 0;
 }
 
 int returnArgument(int *binaireInstruction, int start, int end)
@@ -152,11 +154,12 @@ int returnArgument(int *binaireInstruction, int start, int end)
 
 void printRegister(int *registre)
 {
-	// int i;
-	// for(i=31; i>=0; i--) {
-	// 	printf("%d", registre[i]);
-	// }
-	// printf("\n");
+	/* int i;
+	for(i=31; i>=0; i--) {
+		printf("%d", registre[i]);
+	}
+	printf("\n");
+	*/
 }
 
 void ADD_Operation(int *binaireInstruction, Register *tableRegister)
@@ -169,8 +172,6 @@ void ADD_Operation(int *binaireInstruction, Register *tableRegister)
 	printf("ADD $%d, $%d, $%d\n\n",rd,rs,rt);
 
 	addTwoBinaryRegister(tableRegister[rs].registre, tableRegister[rt].registre, tableRegister[rd].registre);
-		
-	// printf("R%d + R%d --> R%d\n", rs, rt, rd);
 
 	printRegister(tableRegister[rd].registre);
 
@@ -197,8 +198,6 @@ void ADDI_Operation(int *binaireInstruction, Register *tableRegister)
 	printf("ADDI $%d, $%d, %d\n\n",rt,rs,returnArgument(immediateValue, 0, 32));
 
 	addTwoBinaryRegister(tableRegister[rs].registre, immediateValue, tableRegister[rt].registre);
-
-	// printf(" %d + R%d --> R%d\n", returnArgument(immediateValue, 0, 32), rs, rt);
 	
 	printRegister(tableRegister[rt].registre);
 }
@@ -214,8 +213,6 @@ void AND_Operation(int *binaireInstruction, Register *tableRegister)
 
 	andTwoBinaryRegister(tableRegister[rs].registre, tableRegister[rt].registre, tableRegister[rd].registre);
 
-	// printf("R%d AND R%d --> R%d\n", rd, rs, rt);
-	
 	printRegister(tableRegister[rd].registre);
 }
 
@@ -241,8 +238,6 @@ void BEQ_Operation(int *binaireInstruction, Register *tableRegister)
 	printf("BEQ $%d, $%d, %d\n\n",rs,rt,returnArgument(offset, 0, 32));
 
 	beqTwoBinaryRegister(tableRegister[rt].registre, tableRegister[rs].registre, offset, tableRegister);
-
-	// printf("BEQ R%d = R%d ? --> PC  + %d\n", rt, rs, returnArgument(offset, 0, 32));
 	
 	printRegister(tableRegister[32].registre);
 }
@@ -268,8 +263,6 @@ void BGTZ_Operation(int *binaireInstruction, Register *tableRegister)
 	printf("BGTZ $%d, %d\n\n",rs,returnArgument(offset, 0, 32));
 
 	bgtzOneBinaryRegister(tableRegister[rs].registre, offset, tableRegister);
-
-	// printf("BGTZ R%d > 0 ? --> PC + %d\n", rs, returnArgument(offset, 0, 32));
 	
 	printRegister(tableRegister[32].registre);
 }
@@ -295,8 +288,6 @@ void BLEZ_Operation(int *binaireInstruction, Register *tableRegister)
 	printf("BLEZ $%d, %d\n\n",rs,returnArgument(offset, 0, 32));
 
 	blezOneBinaryRegister(tableRegister[rs].registre, offset, tableRegister);
-
-	// printf("BLEZ R%d <= 0 ? --> PC  + %d\n", rs, returnArgument(offset, 0, 32));
 	
 	printRegister(tableRegister[32].registre);
 }
@@ -323,8 +314,6 @@ void BNE_Operation(int *binaireInstruction, Register *tableRegister)
 	printf("BNE $%d, $%d, %d\n\n",rs,rt,returnArgument(offset, 0, 32));
 
 	bneTwoBinaryRegister(tableRegister[rt].registre, tableRegister[rs].registre, offset, tableRegister);
-
-	// printf("BNE R%d != R%d ? --> PC  + %d\n", rt, rs, returnArgument(offset, 0, 32));
 	
 	printRegister(tableRegister[32].registre);
 }
@@ -357,8 +346,6 @@ void J_Operation(int *binaireInstruction, Register *tableRegister)
 	printf("J %d\n\n",returnArgument(offset, 0, 32));
 
 	jTwoBinaryRegister(offset, tableRegister);
-
-	// printf("J %d\n", returnArgument(offset, 0, 32));
 	
 	printRegister(tableRegister[32].registre);
 }
@@ -377,12 +364,9 @@ void JAL_Operation(int *binaireInstruction, Register *tableRegister)
 	printf("JAL %d\n\n",returnArgument(offset, 0, 32));
 
 	jalTwoBinaryRegister(offset, tableRegister);
-	
-	// printf("JAL %d\n", returnArgument(offset, 0, 32));
 
-	// printf("ra : ");
 	printRegister(tableRegister[31].registre);
-	// printf("PC : ");
+
 	printRegister(tableRegister[32].registre);
 }	
 
@@ -394,8 +378,6 @@ void JR_Operation(int *binaireInstruction, Register *tableRegister)
 	printf("JR $%d\n\n",rs);
 
 	jrTwoBinaryRegister(tableRegister[rs].registre, tableRegister);
-
-	// printf("Jr R%d\n", rs);
 	
 	printRegister(tableRegister[32].registre);
 }
@@ -420,8 +402,6 @@ void LUI_Operation(int *binaireInstruction, Register *tableRegister)
 	printf("LUI $%d, %d\n\n",rt,returnArgument(immediateValue, 0, 32));
 
 	luiTwoBinaryRegister(immediateValue, tableRegister[rt].registre);
-
-	// printf("LUI R%d = %d || 0^16\n", rt, returnArgument(immediateValue, 0, 32));
 	
 	printRegister(tableRegister[rt].registre);
 }
@@ -448,8 +428,6 @@ void LW_Operation(int *binaireInstruction, Register *tableRegister, memory *m)
 
 	ldTwoBinaryRegister(tableRegister[base].registre, immediateValue, tableRegister[rt].registre, m);
 
-	// printf("LW R%d <-- %d(R%d)\n", rt, returnArgument(immediateValue, 0, 32), base);
-
 	printRegister(tableRegister[rt].registre);
 }
 
@@ -461,8 +439,6 @@ void MFHI_Operation(int *binaireInstruction, Register *tableRegister)
 	printf("MFHI $%d\n\n",rd);
 
 	mfhiTwoBinaryRegister(tableRegister[rd].registre, tableRegister);
-
-	// printf("R%d <-- R34\n", rd);
 
 	printRegister(tableRegister[rd].registre);
 }
@@ -476,8 +452,6 @@ void MFLO_Operation(int *binaireInstruction, Register *tableRegister)
 
 	mfloTwoBinaryRegister(tableRegister[rd].registre, tableRegister);
 
-	// printf("R%d <-- R33\n", rd);
-
 	printRegister(tableRegister[rd].registre);
 }
 
@@ -490,8 +464,6 @@ void MULT_Operation(int *binaireInstruction, Register *tableRegister)
 	printf("MULT $%d, $%d\n\n",rs,rt);
 
 	multTwoBinaryRegister(tableRegister[rs].registre, tableRegister[rt].registre, tableRegister);
-
- 	// printf("R%d * %d --> R33/34\n", registre2, registre1);
 	
 	printRegister(tableRegister[33].registre);
 	printRegister(tableRegister[34].registre);
@@ -503,7 +475,6 @@ void NOP_Operation(int *binaireInstruction, Register *tableRegister)
 	printf("NOP\n\n");
 
 	sllTwoBinaryRegister(tableRegister[0].registre, 0, tableRegister[0].registre);
-	// printf("NOP\n");
 }
 
 void OR_Operation(int *binaireInstruction, Register *tableRegister)
@@ -516,8 +487,6 @@ void OR_Operation(int *binaireInstruction, Register *tableRegister)
 	printf("OR $%d, $%d, $%d\n\n",rd,rs,rt);
 
 	orTwoBinaryRegister(tableRegister[rs].registre, tableRegister[rt].registre, tableRegister[rd].registre);
-
-	// printf("R%d OR R%d --> R%d\n", rd, rs, rt);
 
 	printRegister(tableRegister[rd].registre);
 }
@@ -532,8 +501,6 @@ void ROTR_Operation(int *binaireInstruction, Register *tableRegister)
 	printf("ROTR $%d, $%d, $%d\n\n",rd,rt,sa);
 
 	rotrTwoBinaryRegister(tableRegister[rt].registre, sa, tableRegister[rd].registre);
-
-	// printf("R%d ROTR %d --> R%d\n", rd, sa, rd);
 	
 	printRegister(tableRegister[rd].registre);
 }
@@ -548,8 +515,6 @@ void SLL_Operation(int *binaireInstruction, Register *tableRegister)
 	printf("SLL $%d, $%d, $%d\n\n",rd,rt,sa);
 
 	sllTwoBinaryRegister(tableRegister[rt].registre, sa, tableRegister[rd].registre);
-
-	// printf("R%d << %d --> R%d\n", rt, sa, rd);
 	
 	printRegister(tableRegister[rd].registre);
 }
@@ -565,8 +530,6 @@ void SLT_Operation(int *binaireInstruction, Register *tableRegister)
 
 	sltTwoBinaryRegister(tableRegister[rt].registre, tableRegister[rs].registre, tableRegister[rd].registre);
 
-	// printf("R%d < R%d ? --> R%d\n", rs, rt, rd);
-
 	printRegister(tableRegister[rd].registre);
 }
 
@@ -580,8 +543,6 @@ void SRL_Operation(int *binaireInstruction, Register *tableRegister)
 	printf("SRL $%d, $%d, $%d\n\n",rd,rt,sa);
 
 	srlTwoBinaryRegister(tableRegister[rt].registre, sa, tableRegister[rd].registre);
-
-	// printf("R%d >> %d --> R%d\n", rt, sa, rd);
 	
 	printRegister(tableRegister[rd].registre);
 }
@@ -596,8 +557,6 @@ void SUB_Operation(int *binaireInstruction, Register *tableRegister)
 	printf("SUB $%d, $%d, $%d\n\n",rd,rs,rt);
 
 	subTwoBinaryRegister(tableRegister[rs].registre, tableRegister[rt].registre, tableRegister[rd].registre);
-
-	// printf("R%d - R%d --> R%d\n", rs, rt, rd);
 
 	printRegister(tableRegister[rd].registre);
 }
@@ -624,15 +583,8 @@ void SW_Operation(int *binaireInstruction, Register *tableRegister,  memory *m)
 
 	swTwoBinaryRegister(tableRegister[base].registre, immediateValue, tableRegister[rt].registre, m);
 
-	// printf("SW R%d --> %d(R%d)\n", rt, returnArgument(immediateValue, 0, 32), base);
-
 	printRegister(tableRegister[rt].registre);
 }
-
-// void SYSCALL_Operation(int *binaireInstruction,Register *tableRegister)
-// {
-
-// }
 
 void XOR_Operation(int *binaireInstruction, Register *tableRegister)
 {
@@ -645,22 +597,19 @@ void XOR_Operation(int *binaireInstruction, Register *tableRegister)
 
 	xorTwoBinaryRegister(tableRegister[rs].registre, tableRegister[rt].registre, tableRegister[rd].registre);
 
-	// printf("R%d XOR R%d --> R%d\n", rs, rt, rd);
-
 	printRegister(tableRegister[rd].registre);
 }
 
 
 int addTwoBinaryRegister(int *register1, int *register2, int *destinationRegister)
 {
-
-	printRegister(register1);
-	printRegister(register2);
-
 	int i;
 	int carry = 0;
 	int overflowed = 0;
 	int tempRegister[32] = {0};
+
+	printRegister(register1);
+	printRegister(register2);
 
 	for(i=0;i<32;i++)
 	{
@@ -700,11 +649,9 @@ int addTwoBinaryRegister(int *register1, int *register2, int *destinationRegiste
 	return overflowed;
 }
 
-int subTwoBinaryRegister(int *register1, int *register2, int *destinationRegister)
+void subTwoBinaryRegister(int *register1, int *register2, int *destinationRegister)
 {
 	int i;
-	int carry = 0;
-	int overflowed = 0;
 	int tempRegister[32];
 
 	printRegister(register1);
@@ -830,9 +777,9 @@ void srlTwoBinaryRegister(int *register1, int deplacement, int *destinationRegis
 
 void rotrTwoBinaryRegister(int *register1, int deplacement, int *destinationRegister)
 {
-	printRegister(register1);
-
 	int i;
+
+	printRegister(register1);
 
 	for(i=0; i<deplacement; i++)
 	{
@@ -847,9 +794,8 @@ void rotrTwoBinaryRegister(int *register1, int deplacement, int *destinationRegi
 void multTwoBinaryRegister(int *register1, int *multiplication, Register *tableRegister)
 {
 	int i;
-	int k;
-	unsigned long long int tempValueRegistre1 = 0;
-	unsigned long long int tempValueRegistre2 = 0;
+	unsigned long int tempValueRegistre1 = 0;
+	unsigned long int tempValueRegistre2 = 0;
 
 	printRegister(register1);
 	printRegister(multiplication);
@@ -869,7 +815,7 @@ void multTwoBinaryRegister(int *register1, int *multiplication, Register *tableR
 
 		for(i=30;i>=0;i--)
 		{
-			tempValueRegistre1 += (unsigned long long int) (pow(2, i) * register1[i]);
+			tempValueRegistre1 += (unsigned long int) (pow(2, i) * register1[i]);
 		}
 
 		tempValueRegistre1*= -1;
@@ -878,7 +824,7 @@ void multTwoBinaryRegister(int *register1, int *multiplication, Register *tableR
 	{
 		for(i=30;i>=0;i--)
 		{
-			tempValueRegistre1 += (unsigned long long int) (pow(2, i) * register1[i]);
+			tempValueRegistre1 += (unsigned long int) (pow(2, i) * register1[i]);
 		}
 	}
 
@@ -897,7 +843,7 @@ void multTwoBinaryRegister(int *register1, int *multiplication, Register *tableR
 
 		for(i=30;i>=0;i--)
 		{
-			tempValueRegistre2 += (unsigned long long int) (pow(2, i) * multiplication[i]);
+			tempValueRegistre2 += (unsigned long int) (pow(2, i) * multiplication[i]);
 		}
 
 		tempValueRegistre2*= -1;
@@ -906,18 +852,11 @@ void multTwoBinaryRegister(int *register1, int *multiplication, Register *tableR
 	{
 		for(i=30;i>=0;i--)
 		{
-			tempValueRegistre2 += (unsigned long long int) (pow(2, i) * multiplication[i]);
+			tempValueRegistre2 += (unsigned long int) (pow(2, i) * multiplication[i]);
 		}
 	}
-	
-	
-
-	// printf("%lld\n",tempValueRegistre1);
-	// printf("%lld\n",tempValueRegistre2);
 
 	tempValueRegistre1 *= tempValueRegistre2;
-
-	// printf("%lld\n",tempValueRegistre1);
 	
 	for(i=0; tempValueRegistre1>0 && i<32; i++) {
         tableRegister[33].registre[i] = tempValueRegistre1 % 2;  
@@ -948,11 +887,12 @@ void mfhiTwoBinaryRegister(int *destinationRegister, Register *tableRegister)
 void swTwoBinaryRegister(int *register1, int *register2, int *destinationRegister, memory *m)
 {
 	int offset[32] = {0};
+	int i;
+	unsigned int jump = 0;
 
 	addTwoBinaryRegister(register1, register2, offset);
 
-	int i;
-	unsigned int jump = 0;
+	
 
 	if(offset[31] == 1 || (offset[0] != 0 || offset[1] != 0)) {
 		printf("ERROR : Invalid pointed address\n");
@@ -963,7 +903,6 @@ void swTwoBinaryRegister(int *register1, int *register2, int *destinationRegiste
 			jump += (pow(2, i) * offset[i]);
 		}
 
-		// printf("address :%d\n", jump);
 		jump += 1000;
 		writeFourOctetsInMemory(destinationRegister, jump, 0, m);
 	}
@@ -972,11 +911,11 @@ void swTwoBinaryRegister(int *register1, int *register2, int *destinationRegiste
 void ldTwoBinaryRegister(int *register1, int *register2, int *destinationRegister, memory *m)
 {
 	int offset[32] = {0};
+	int i;
+	unsigned int jump = 0;
 
 	addTwoBinaryRegister(register1, register2, offset);
 
-	int i;
-	unsigned int jump = 0;
 
 	if(offset[31] == 1 || (offset[0] != 0 && offset[1] != 0)) {
 		printf("ERROR : Invalid pointed address\n");
@@ -986,8 +925,6 @@ void ldTwoBinaryRegister(int *register1, int *register2, int *destinationRegiste
 		for(i=31; i>=0; i--) {
 			jump += (pow(2, i) * offset[i]);
 		}
-
-		// printf("address :%d\n", jump);
 
 		readInstructionInMemory(jump, destinationRegister, m);
 	}	
@@ -1141,7 +1078,7 @@ void divTwoBinaryRegister(int *register1, int *register2, Register *tableRegiste
 
 		for(i=30;i>=0;i--)
 		{
-			tempValueRegistre1 += (unsigned long long int) (pow(2, i) * register1[i]);
+			tempValueRegistre1 += (unsigned long int) (pow(2, i) * register1[i]);
 		}
 
 		tempValueRegistre1*= -1;
@@ -1150,7 +1087,7 @@ void divTwoBinaryRegister(int *register1, int *register2, Register *tableRegiste
 	{
 		for(i=30;i>=0;i--)
 		{
-			tempValueRegistre1 += (unsigned long long int) (pow(2, i) * register1[i]);
+			tempValueRegistre1 += (unsigned long int) (pow(2, i) * register1[i]);
 		}
 	}
 
@@ -1169,7 +1106,7 @@ void divTwoBinaryRegister(int *register1, int *register2, Register *tableRegiste
 
 		for(i=30;i>=0;i--)
 		{
-			tempValueRegistre2 += (unsigned long long int) (pow(2, i) * register2[i]);
+			tempValueRegistre2 += (unsigned long int) (pow(2, i) * register2[i]);
 		}
 
 		tempValueRegistre2*= -1;
@@ -1178,17 +1115,13 @@ void divTwoBinaryRegister(int *register1, int *register2, Register *tableRegiste
 	{
 		for(i=30;i>=0;i--)
 		{
-			tempValueRegistre2 += (unsigned long long int) (pow(2, i) * register2[i]);
+			tempValueRegistre2 += (unsigned  long int) (pow(2, i) * register2[i]);
 		}
 	}
-	// printf("%d\n",tempValueRegistre1);
-	// printf("%d\n",tempValueRegistre2);
 
 	resultValue = tempValueRegistre1 / tempValueRegistre2;
 	quotient = (int) resultValue;
 	remainder = tempValueRegistre1 % tempValueRegistre2;
-	// printf("%d\n",quotient);
-	// printf("%d\n",remainder);
 	
 	
 	for(i=0; quotient>0 && i<32; i++) {

@@ -58,7 +58,6 @@ void readFourOctets(int *value32bits, int startAddress, memory *m)
 void getValueFromMemory(int *value8bits, int adresse, memory *m)
 {
 	element *actuel = *m;
-	element *precedent = NULL;
 	int i;
 
 	while(actuel != NULL) {
@@ -68,7 +67,6 @@ void getValueFromMemory(int *value8bits, int adresse, memory *m)
 			}
 			return;
 		}
-		precedent = actuel;
 		actuel = actuel->suivant;
 	}
 	printf("This memory address does not contain a value\n");

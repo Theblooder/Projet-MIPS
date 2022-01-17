@@ -11,12 +11,7 @@ struct element {
 };
 typedef element* memory;
 
-// typedef struct Register Register;
 
-// struct Register {
-// 	int registre[32];
-// };
-// typedef Register* tableRegister[32];
 typedef struct Register Register;
 
 struct Register {

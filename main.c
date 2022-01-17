@@ -20,6 +20,7 @@ int main(int argc, char * argv[])
 	char outputHexaFilename[32];
 	char outputRegisterFilename[32];
 
+	/* Ouverture des fichiers */
 	int modeType;
 	modeType = openFilesAndReadArguments(inputFilename, outputHexaFilename, outputRegisterFilename, argc, argv);
 
@@ -42,8 +43,13 @@ int main(int argc, char * argv[])
 				}
 		}
 	}
+	/*===============*/
 
-	presentationMipsEmulator(inputFilename, outputHexaFilename, outputRegisterFilename);
+
+	presentationMipsEmulator(inputFilename, outputHexaFilename, outputRegisterFilename);    /* Ecriture dans le terminal*/
+	
+
+
 	
 	int numberOfInsructionWritten = 0;
 
@@ -53,10 +59,14 @@ int main(int argc, char * argv[])
 	}
 	else
 	{
+
 		readFileAndPutIntoMemory(inputFile, outputHexaFile, &numberOfInsructionWritten, &RAM);
 
 		while(getchar() != '\n');
 
+
+
+		/*Execution des instructions*/
 		int i;
 		int PC = 0;
 		int tempPC = 0;
@@ -104,6 +114,9 @@ int main(int argc, char * argv[])
 	showRegister(tableRegister);
 	showMemory(&RAM);
 	
+
+
+
 	if(outputRegisterFilename[0] != '\0')
 	{
 		putRegisterInFile(tableRegister, outputRegisterFile);

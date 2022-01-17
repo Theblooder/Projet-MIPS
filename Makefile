@@ -1,38 +1,36 @@
+## Change this variable
+MYNAME=GILGER_LAGRANGE
+# and perhaps this one
+SRCDOC=README.md
+# testfiles are in TESTDIR and IGNORE = list of files to ignore when taring
+TESTDIR = tests/
+IGNORE =
+## Do not change below please
 BIN = emul-mips
-TAR = defalt_name
-
-SRC = $(wildcard *.c)
-OBJ = $(SRC:.c=.o)
-ENTETE = $(wildcard *.h)
-
-CFLAGS = -Wall -ansi -pedantic -lm
-
-OBJECTSPATH = objects/
-
+PREFIX=MIPS3
 CC = gcc
+FLAGS = -Wall -lm
+C_FILES = $(wildcard *.c)
+OBJ_FILES = $(C_FILES:.c=.o)
+
+all: $(OBJ_FILES)
+	$(CC) $^ $(FLAGS) -o $(BIN) 
+
+%.o: %.c
+	$(CC) $(FLAGS) -c $^
+
+clean:
+	rm -f *.o *~ $(BIN) *.hex *.s *.pdf
+
+# a useful command to generate a pdf from a .md documentation file
+doc : $(SRCDOC)
+	pandoc -f markdown -t pdf  $(SRCDOC) -o $(basename $(SRCDOC)).pdf
 
 
+# A useful command to deliver your project while keeping me sane
+tar: clean
+	dir=$$(basename $$PWD) && echo "compressing $(dir)" && cd .. && \
+	tar cvfz "$(PREFIX)-$(MYNAME).tgz" \
+	--transform="s,^$$dir,$(PREFIX)-$(MYNAME)," \
+	--exclude="$(IGNORE)" "$$dir" --verbose --show-transformed-names
 
-
-all: $(BIN)
-	./$< in2.txt exa1.txt in2.state
-
-exe: $(BIN)
-
-debug: $(BIN)                 # J'ai rajouter une option pour faire l'executable tout en l'executant avec le debugger ddd
-	ddd $<
-
-$(BIN): $(OBJ)
-	$(CC) $(OBJECTSPATH)*.o $(CFLAGS) -o $@
-	 
-%.o: %.c                   # Je rejoute l'option -g pour pouvoir utiliser le debugger   
-	$(CC) -g -c $< -o $(OBJECTSPATH)$@
-
-dist: mrproper   #tar -cf $(TAR).tar $(SRC) $(ENTETE)
-	tar -zcvf $(TAR).tar.gz [^Makefile]*
-
-mrproper: clear
-	rm -f $(BIN)
-	
-clear:
-	rm -f $(OBJECTSPATH)*.o

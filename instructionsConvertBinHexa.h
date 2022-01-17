@@ -28,57 +28,57 @@ int putToValue(int *binaireInstruction, int start, int value);
 
 int displayBinary(int *binaireInstruction);
 
-int binaryADD(int *tabValue, int *binaireInstruction);
+void binaryADD(int *tabValue, int *binaireInstruction);
 
-int binaryADDI(int *tabValue, int *binaireInstruction);
+void binaryADDI(int *tabValue, int *binaireInstruction);
 
-int binaryAND(int *tabValue, int *binaireInstruction);
+void binaryAND(int *tabValue, int *binaireInstruction);
 
-int binaryBEQ(int *tabValue, int *binaireInstruction);
+void binaryBEQ(int *tabValue, int *binaireInstruction);
 
-int binaryBGTZ(int *tabValue, int *binaireInstruction);
+void binaryBGTZ(int *tabValue, int *binaireInstruction);
 
-int binaryBLEZ(int *tabValue, int *binaireInstruction);
+void binaryBLEZ(int *tabValue, int *binaireInstruction);
 
-int binaryBNE(int *tabValue, int *binaireInstruction);
+void binaryBNE(int *tabValue, int *binaireInstruction);
 
-int binaryDIV(int *tabValue, int *binaireInstruction);
+void binaryDIV(int *tabValue, int *binaireInstruction);
 
-int binaryJ(int *tabValue, int *binaireInstruction);
+void binaryJ(int *tabValue, int *binaireInstruction);
 
-int binaryJAL(int *tabValue, int *binaireInstruction);
+void binaryJAL(int *tabValue, int *binaireInstruction);
 
-int binaryJR(int *tabValue, int *binaireInstruction);
+void binaryJR(int *tabValue, int *binaireInstruction);
 
-int binaryLUI(int *tabValue, int *binaireInstruction);
+void binaryLUI(int *tabValue, int *binaireInstruction);
 
-int binaryLW(int *tabValue, int *binaireInstruction);
+void binaryLW(int *tabValue, int *binaireInstruction);
 
-int binaryMFHI(int *tabValue, int *binaireInstruction);
+void binaryMFHI(int *tabValue, int *binaireInstruction);
 
-int binaryMFLO(int *tabValue, int *binaireInstruction);
+void binaryMFLO(int *tabValue, int *binaireInstruction);
 
-int binaryMULT(int *tabValue, int *binaireInstruction);
+void binaryMULT(int *tabValue, int *binaireInstruction);
 
-int binaryNOP(int *tabValue, int *binaireInstruction);
+void binaryNOP(int *tabValue, int *binaireInstruction);
 
-int binaryOR(int *tabValue, int *binaireInstruction);
+void binaryOR(int *tabValue, int *binaireInstruction);
 
-int binaryROTR(int *tabValue, int *binaireInstruction);
+void binaryROTR(int *tabValue, int *binaireInstruction);
 
-int binarySLL(int *tabValue, int *binaireInstruction);
+void binarySLL(int *tabValue, int *binaireInstruction);
 
-int binarySLT(int *tabValue, int *binaireInstruction);
+void binarySLT(int *tabValue, int *binaireInstruction);
 
-int binarySRL(int *tabValue, int *binaireInstruction);
+void binarySRL(int *tabValue, int *binaireInstruction);
 
-int binarySUB(int *tabValue, int *binaireInstruction);
+void binarySUB(int *tabValue, int *binaireInstruction);
 
-int binarySW(int *tabValue, int *binaireInstruction);
+void binarySW(int *tabValue, int *binaireInstruction);
 
-int binarySYSCALL(int *tabValue, int *binaireInstruction);
+void binarySYSCALL(int *tabValue, int *binaireInstruction);
 
-int binaryXOR(int *tabValue, int *binaireInstruction);
+void binaryXOR(int *tabValue, int *binaireInstruction);
 
 int displayHexadecimal(int *hexadecimalInstruction);
 
