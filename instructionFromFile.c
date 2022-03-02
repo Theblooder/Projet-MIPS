@@ -206,7 +206,7 @@ void readFileAndPutIntoMemory(FILE *inputFile, FILE *outputFile, int *numberOfIn
 			printf(" : {%s}\n", cleanInstruction);
 
 			/* writing exa in output file */
-			for(i=0; i<8; i++) {
+			for(i=7; i>=0; i--) {
 				fprintf(outputFile, "%x", hexadecimalInstruction[i]);
 			}
 			fputc('\n', outputFile);
